@@ -38,6 +38,18 @@ public class Globals : MonoBehaviour
     public const float DRAG = 5f; //1
     public const float ANGULAR_DRAG = 5f;
 
+    public const float ZOOM_DELTA = 0.5f;//0.3f;
+    public const float ZOOM_LIMIT_LOW = 30f;
+    public const float ZOOM_LIMIT_HIGH = 80f;
+
+    public static readonly Vector3 BasePosition = new Vector3(0, 9f, -5f);
+    public static readonly Vector3 BaseRotation = new Vector3(50, 0, 0);
+
+    public const float MOUSE_X_SENS = 26f;
+    public const float MOUSE_Y_SENS = 13f;
+
+    public static float WORKING_DISTANCE = 20;
+
     public const float SHADOW_Y_DISTANCE = 8f;
 
     public static bool IsMobileChecker()

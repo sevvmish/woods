@@ -19,7 +19,7 @@ public class PlayerData
     public int Trippler;
     public int Resorter;
 
-    
+    public float Zoom;
     public PlayerData()
     {        
         L = ""; //prefered language
@@ -29,6 +29,8 @@ public class PlayerData
         
         Level = 0;
         Gold = 0;
+
+        Zoom = 50;
 
         IsLowFPS = false;        
         AdvOff = false;
