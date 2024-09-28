@@ -40,6 +40,9 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<Musics>();
         builder.RegisterComponentInHierarchy<Camera>();
         builder.RegisterComponentInHierarchy<Joystick>();
+        builder.RegisterComponentInHierarchy<FPSController>();
+
+        builder.RegisterComponentInHierarchy<GameManager>();
 
     }
 }
