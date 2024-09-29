@@ -13,11 +13,11 @@ public class PlayerData
 
     public bool IsLowFPS;    
     public bool AdvOff;
-    public int Level;
-    public int Gold;
-    public int Backer;
-    public int Trippler;
-    public int Resorter;
+
+    public int Seed;
+    public System.Random MainRandom;
+
+    
 
     public float Zoom;
     public PlayerData()
@@ -27,17 +27,13 @@ public class PlayerData
         S = 1; // sound on? 1 - true;        
         Mus = 1; // music
         
-        Level = 0;
-        Gold = 0;
-
         Zoom = 50;
 
         IsLowFPS = false;        
         AdvOff = false;
 
-        Backer = 0;
-        Trippler = 0;
-        Resorter = 0;
+        Seed = 157;
+        MainRandom = new System.Random(Seed);
 
         Debug.Log("created PlayerData instance");
     }

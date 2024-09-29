@@ -29,13 +29,9 @@ public class GameLifetimeScope : LifetimeScope
             Globals.IsSoundOn = true;
             Globals.IsMusicOn = true;
             Globals.IsInitiated = true;
-            Globals.MainPlayerData.Gold = 2000;
-            Globals.MainPlayerData.Resorter = 3;
-            Globals.MainPlayerData.Trippler = 7;
-            Globals.MainPlayerData.Backer = 4;
+            
 
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
-            Globals.MainPlayerData.Level = 100;
         }
 
         builder.RegisterComponentInHierarchy<Sounds>();
@@ -43,12 +39,18 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<Camera>();
         builder.RegisterComponentInHierarchy<Joystick>();
         builder.RegisterComponentInHierarchy<FPSController>();
-
-        addPlayer(true, Vector3.zero, Vector3.zero).GetComponent<PlayerControl>();
+        
+        PlayerControl g = addPlayer(true, Vector3.zero, Vector3.zero).GetComponent<PlayerControl>();
         builder.RegisterComponentInHierarchy<PlayerControl>();
         builder.RegisterComponentInHierarchy<GameManager>();
         builder.RegisterComponentInHierarchy<CameraControl>();
         builder.RegisterComponentInHierarchy<InputControl>();
+
+        builder.RegisterComponentInHierarchy<AssetManager>();
+        builder.RegisterComponentInHierarchy<NatureGenerator>();
+        builder.RegisterComponentInHierarchy<TerrainGenerator>();
+        builder.RegisterComponentInHierarchy<WorldGenerator>();
+        
 
     }
 

@@ -74,7 +74,13 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        ignoreMask = LayerMask.GetMask(new string[] { "trigger", "player"});
+        
+                
+    }
+
+    private void OnEnable()
+    {        
+        ignoreMask = LayerMask.GetMask(new string[] { "trigger", "player" });
 
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.mass = PhysicsCustomizing.GetData(PhysicObjects.Player).Mass;
@@ -88,7 +94,8 @@ public class PlayerControl : MonoBehaviour
         IsCanAct = true;
         IsCanJump = true;
         IsCanWalk = true;
-                
+
+        _rigidbody.MovePosition(Vector3.zero + Vector3.up * 10);
     }
 
     public void SetAnimatorData(AnimationControl animationControl)
@@ -116,39 +123,6 @@ public class PlayerControl : MonoBehaviour
     }
 
     
-    public void StopWalkPermission(float seconds)
-    {
-        StartCoroutine(walkPermission(seconds));
-    }
-    private IEnumerator walkPermission(float seconds)
-    {
-        IsCanWalk = false;
-
-        for (float i = 0; i < seconds; i += 0.1f)
-        {
-            yield return ZeroOne;
-            if (IsDead) break;
-        }
-
-        IsCanWalk = true;
-    }
-
-    public void StopActPermission(float seconds)
-    {
-        StartCoroutine(actPermission(seconds));
-    }
-    private IEnumerator actPermission(float seconds)
-    {
-        IsCanAct = false;
-
-        for (float i = 0; i < seconds; i += 0.1f)
-        {
-            yield return ZeroOne;
-            if (IsDead) break;
-        }
-
-        IsCanAct = true;
-    }
 
     public void ChangeSpeed(float multiplier, float seconds)
     {        
@@ -361,7 +335,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         if (isSolidPlayerBodyON && _transform.position.y < 0.1f)
-        {
+        {            
             _rigidbody.MovePosition(new Vector3(_transform.position.x, 0.15f, _transform.position.z));
         }
     }

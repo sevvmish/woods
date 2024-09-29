@@ -45,6 +45,8 @@ public class InputControl : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;       
             Cursor.visible = false;
             mover.gameObject.SetActive(false);
+            jump.gameObject.SetActive(false);
+            joystick.gameObject.SetActive(false);
             Globals.WORKING_DISTANCE = 30;
         }
         else
@@ -90,7 +92,7 @@ public class InputControl : MonoBehaviour
             playerControl.SetVertical(vertical);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || jump.IsPressed)
         {
             playerControl.SetJump();
         }
@@ -135,7 +137,7 @@ public class InputControl : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || jump.IsPressed)
         {
             playerControl.SetJump();
         }

@@ -19,9 +19,9 @@ public class test1 : MonoBehaviour
         for (int i = 0; i < mesh.normals.Length; i++)
         {
             //print(i  + ": " + mesh.normals[i] + " - " + verts[i]);
-            GameObject g = Instantiate(pointer);
-            g.transform.position = verts[i];
-            g.transform.LookAt(verts[i] + mesh.normals[i]);
+            GameObject g = Instantiate(pointer, GameObject.Find("ttt").transform);
+            g.transform.position = mf.transform.position + verts[i];
+            //g.transform.LookAt(mf.transform.position + verts[i] + mesh.normals[i]);
             g.SetActive(true);
 
         }
