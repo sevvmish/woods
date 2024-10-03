@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private Transform location;
     public Transform Location { get => location; }
 
+    public List<GameObject> closeObjects = new List<GameObject>();
 
     private void setActivation(bool isActive)
     {
@@ -20,6 +21,11 @@ public class Cell : MonoBehaviour
         {
             setActivation(true);
         }
+
+        if (other.CompareTag("MainCameraClose"))
+        {
+            closeObjects.ForEach(p => p.SetActive(true));
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -27,6 +33,11 @@ public class Cell : MonoBehaviour
         if (other.CompareTag("MainCamera"))
         {
             setActivation(false);
+        }
+
+        if (other.CompareTag("MainCameraClose"))
+        {
+            closeObjects.ForEach(p => p.SetActive(false));
         }
     }
 

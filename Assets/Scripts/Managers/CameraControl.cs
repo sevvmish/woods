@@ -47,29 +47,6 @@ public class CameraControl : MonoBehaviour
     private WaitForSeconds fixedDelta = new WaitForSeconds(0.02f);
     private float previousDistance;
 
-    /*
-    public void Start(Transform player, Transform cam, Transform mainCamTransform)
-    {
-        
-        mainCamTransformForRaycast = mainCamTransform;
-        _camera = mainCamTransform.GetComponent<Camera>();
-        mainPlayer = player;
-        playerControl = mainPlayer.GetComponent<PlayerControl>();
-        mainCamera = cam;
-        outerCamera = mainCamera.parent;
-        mainCamera.localPosition = Globals.BasePosition;
-        mainCamera.localEulerAngles = Globals.BaseRotation;
-        baseCameraBodyPosition = Globals.BasePosition;
-
-        ignoreMask = LayerMask.GetMask(new string[] { "trigger", "player", "ragdoll", "danger" });
-
-        currentZoom = Globals.MainPlayerData.Zoom;
-        Zoom(Globals.MainPlayerData.Zoom);
-
-        outerCamera.eulerAngles += new Vector3(-25, 0, 0);
-        defaultCameraDistance = (mainPlayerPoint - mainCamTransformForRaycast.position).magnitude;
-        //skinControl = playerControl.SkinControl;
-    }*/
 
     private void Start()
     {
@@ -220,28 +197,7 @@ public class CameraControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        /*
-        if (gm.IsBuildMode && !isBuildRegimeCorrected)
-        {
-            isBuildRegimeCorrected = true;
-            isNonBuildRegimeCorrected = false;
-
-            mainCamera.localPosition = Globals.BasePosition + new Vector3(1, 0, 1);
-            baseCameraBodyPosition = Globals.BasePosition + new Vector3(1, 0, 1);
-            previousDistance = 0;
-
-        }
-        else if (!gm.IsBuildMode && !isNonBuildRegimeCorrected)
-        {
-            isBuildRegimeCorrected = false;
-            isNonBuildRegimeCorrected = true;
-
-            mainCamera.localPosition = Globals.BasePosition;
-            baseCameraBodyPosition = Globals.BasePosition;
-            previousDistance = 0;
-        }*/
-
+    {        
         mainCamera.localPosition = Globals.BasePosition;
         baseCameraBodyPosition = Globals.BasePosition;
 

@@ -42,7 +42,7 @@ public class Globals : MonoBehaviour
     public const float ZOOM_LIMIT_LOW = 30f;
     public const float ZOOM_LIMIT_HIGH = 80f;
 
-    public static readonly Vector3 BasePosition = new Vector3(0, 9f, -5f);
+    public static readonly Vector3 BasePosition = new Vector3(0, 8.5f, -5f);
     public static readonly Vector3 BaseRotation = new Vector3(50, 0, 0);
 
     public const float MOUSE_X_SENS = 26f;
