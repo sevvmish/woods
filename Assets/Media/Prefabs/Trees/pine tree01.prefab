@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 4235675900459048417}
   - component: {fileID: 7241423721795083169}
   - component: {fileID: 7366554913577598937}
+  - component: {fileID: 8731268598293792841}
   m_Layer: 0
   m_Name: Lowpoly_Pine_01
   m_TagString: Untagged
@@ -98,7 +99,7 @@ MeshRenderer:
   m_GameObject: {fileID: 8278768927522089718}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -109,7 +110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 90ba8b2c777f9fb459bd3bdf795acde4, type: 2}
+  - {fileID: 2100000, guid: 0c08d3704d59ad84a9717fc6b6010a9d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,3 +132,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8731268598293792841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8278768927522089718}
+  m_Material: {fileID: 13400000, guid: 1a948bc06b95da84fb83fe9fb6c6c91b, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 3.5, z: 0.3}
+  m_Center: {x: 0, y: 1.7, z: -0.07224998}

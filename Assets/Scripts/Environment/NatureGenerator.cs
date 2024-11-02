@@ -45,6 +45,7 @@ public class NatureGenerator : MonoBehaviour
             forRandom.Remove(forRandom[index]);
         }
 
+        /*
         for (int i = 0; i < verts.Length; i++)
         {
             GameObject g = Instantiate(testGrass);
@@ -61,6 +62,7 @@ public class NatureGenerator : MonoBehaviour
                 }
             }
         }
+        */
 
     }
 }

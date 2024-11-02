@@ -27,7 +27,7 @@ public class PlayerData
         S = 1; // sound on? 1 - true;        
         Mus = 1; // music
         
-        Zoom = 40;
+        Zoom = 50;
 
         IsLowFPS = false;        
         AdvOff = false;

@@ -5,22 +5,7 @@ using VContainer.Unity;
 public class GameLifetimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
-    {
-        /*
-        
-
-
-        builder.RegisterComponentInHierarchy<Musics>();
-        builder.RegisterComponentInHierarchy<Interstitial>();
-        builder.RegisterComponentInHierarchy<Musics>();
-        builder.RegisterComponentInHierarchy<Sounds>();
-        builder.RegisterComponentInHierarchy<Camera>();
-        builder.RegisterComponentInHierarchy<ScreenSaver>();
-
-        builder.RegisterComponentInHierarchy<GameManager>();
-        builder.RegisterComponentInHierarchy<OptionsMenu>();
-        */
-
+    {        
         if (Globals.MainPlayerData == null)
         {
 

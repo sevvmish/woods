@@ -144,8 +144,8 @@ public class InputControl : MonoBehaviour
           
 
         Vector3 mouseDelta = new Vector3(
-            Input.GetAxis("Mouse X") * Globals.MOUSE_X_SENS, 
-            Input.GetAxis("Mouse Y") * Globals.MOUSE_Y_SENS, 0);
+            Input.GetAxis("Mouse X") * Globals.MOUSE_X_SENS * Time.deltaTime, 
+            Input.GetAxis("Mouse Y") * Globals.MOUSE_Y_SENS * Time.deltaTime, 0);
 
                 
         if ((mouseDelta.x > 0) || (mouseDelta.x < 0))

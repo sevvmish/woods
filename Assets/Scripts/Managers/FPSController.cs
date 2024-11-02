@@ -48,12 +48,23 @@ public class FPSController : MonoBehaviour
                 float ave = GetAverage();
 
                 if (fps.Count > 40 && ave > 5 && ave < 45)
-                {
+                {                    
+                    if (Globals.IsMobile)
+                    {
+                        QualitySettings.antiAliasing = 0;
+                        QualitySettings.shadows = ShadowQuality.Disable;
+                    }
+                    else
+                    {
+                        QualitySettings.antiAliasing = 2;
+                        QualitySettings.shadowDistance = 40;
+                        QualitySettings.shadows = ShadowQuality.HardOnly;
+                    }
+
                     Globals.IsLowFPS = true;
-                    QualitySettings.shadows = ShadowQuality.Disable;
+                    
                 }
             }
-                
         }
         else
         {
