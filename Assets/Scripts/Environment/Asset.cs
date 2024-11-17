@@ -19,9 +19,12 @@ public enum AssetTypes
 {
     none,
     terrain,
-    tree,
+    tree_small,
+    tree_hard,
     stone,
-    rock
+    rock,
+    bush,
+    grass
 }
 
 public enum TerrainTypes

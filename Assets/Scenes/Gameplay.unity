@@ -14,12 +14,12 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 100
-  m_LinearFogEnd: 140
+  m_LinearFogStart: 80
+  m_LinearFogEnd: 100
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 264032890}
   - component: {fileID: 264032889}
   m_Layer: 0
-  m_Name: occlusion (1)
+  m_Name: occlusion close
   m_TagString: MainCameraClose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,8 +217,8 @@ Transform:
   m_GameObject: {fileID: 264032887}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 19.4}
-  m_LocalScale: {x: 0.2, y: 0.3, z: 0.35}
+  m_LocalPosition: {x: 0, y: 2, z: 20}
+  m_LocalScale: {x: 0.4, y: 0.3, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 963194228}
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4faa71b998fe6a24697dffee948f098a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testGrass: {fileID: 3212469198408178070, guid: fba0612c8682b1e4b8d68f37bcfb761e, type: 3}
+  testGrass: {fileID: 1867445683989947914, guid: 19783e56b6ed0ef418ef52cd47f0f375, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,13 +559,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 426857767}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!1 &819588837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,6 +1227,13 @@ MonoBehaviour:
   - {fileID: 5493047231344212123, guid: ed6eb2b603b81294eaab588bb9ddd479, type: 3}
   - {fileID: 3464653651170862956, guid: 98a4c3054ce7642408b3793da4fbfc22, type: 3}
   - {fileID: 1814828971791170092, guid: 7486938e401a11c408c67d73e5370121, type: 3}
+  - {fileID: 7023969133984491812, guid: c6dd159d75de0854db0b6568bf9d567f, type: 3}
+  - {fileID: 2011191245916323211, guid: 2083b5a1cf26c9a42af0fd6cb4acdcd2, type: 3}
+  - {fileID: 3493481247443936711, guid: 138510983ea08f34d8e50f4c1e9bb151, type: 3}
+  - {fileID: 8622239616390361148, guid: 8f23fbf9447f1994e920f14c65cf3a73, type: 3}
+  - {fileID: 362735966373143583, guid: b90cab70af0d9ea42b0c969ac4994ef8, type: 3}
+  - {fileID: 1726663339277722388, guid: e83e90556de76da4f88365703266bfcf, type: 3}
+  - {fileID: 2287473610556357512, guid: cdd5402c148449a4b895c38ee6a04e9c, type: 3}
 --- !u!1 &1434894497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,7 +1428,7 @@ GameObject:
   - component: {fileID: 1872719247}
   - component: {fileID: 1872719246}
   m_Layer: 0
-  m_Name: occlusion
+  m_Name: occlusion far
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,8 +1443,8 @@ Transform:
   m_GameObject: {fileID: 1872719244}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 5, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 0.75}
+  m_LocalPosition: {x: 0, y: 5, z: 54}
+  m_LocalScale: {x: 1.15, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 963194228}
@@ -1490,7 +1497,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -8637720962198562628, guid: ca95eb0fceeb3634b8cf8f488e68d1c2, type: 3}
+  m_Mesh: {fileID: 1101688140015033246, guid: c121408a9e28a72418f2dfc697d4b300, type: 3}
 --- !u!1001 &1991493784
 PrefabInstance:
   m_ObjectHideFlags: 0

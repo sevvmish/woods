@@ -86,8 +86,20 @@ public class AssetManager : MonoBehaviour
 
     public GameObject GetTree()
     {
-        List<Asset> pool = assetsByTypes[AssetTypes.tree];
+        List<Asset> pool = assetsByTypes[AssetTypes.tree_hard];
+        List<Asset> pool1 = assetsByTypes[AssetTypes.tree_small];
 
-        return pool[UnityEngine.Random.Range(0, pool.Count)].gameObject;
+        int rnd = UnityEngine.Random.Range(0, 2);
+
+        if (rnd == 0)
+        {
+            return pool[UnityEngine.Random.Range(0, pool.Count)].gameObject;
+        }
+        else
+        {
+            return pool1[UnityEngine.Random.Range(0, pool1.Count)].gameObject;
+        }
+
+        
     }
 }

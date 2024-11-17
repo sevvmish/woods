@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
             QualitySettings.shadowDistance = 40;
             QualitySettings.shadows = ShadowQuality.HardOnly;
         }
+
+        //QualitySettings.antiAliasing = 0;
+        //QualitySettings.shadows = ShadowQuality.Disable;
     }
 
 

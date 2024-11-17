@@ -20,9 +20,8 @@ public class NatureGenerator : MonoBehaviour
         Mesh mesh = mf.mesh;
         Vector3[] verts = mesh.vertices;
         List<Vector3> forRandom = verts.ToList();
-        //System.Random rnd = new System.Random((int)(terrainChunk.transform.position.x*1000000 + terrainChunk.transform.position.z));
 
-        for (int i = 0; i < 300; i++)
+        for (int i = 0; i < 50; i++)
         {
             int index = Globals.MainPlayerData.MainRandom.Next(0, forRandom.Count);
 
@@ -45,24 +44,35 @@ public class NatureGenerator : MonoBehaviour
             forRandom.Remove(forRandom[index]);
         }
 
-        /*
+        
+
+        
         for (int i = 0; i < verts.Length; i++)
         {
-            GameObject g = Instantiate(testGrass);
-            g.transform.position = mf.transform.position + verts[i] + Vector3.down * 0.1f;
-            g.SetActive(false);
+            int rnd = UnityEngine.Random.Range(0, 12);
 
-            for (int j = 0; j < data.Cells.Count; j++)
+            if (rnd == 0)
             {
-                if (data.Cells[j].IsInsideBounds(g.transform.position))
+                GameObject g = Instantiate(testGrass);
+                g.transform.position = mf.transform.position + verts[i] + Vector3.down * 0.1f;
+                g.transform.localEulerAngles += new Vector3(0, UnityEngine.Random.Range(90, 270), 0);
+                g.SetActive(false);
+
+                for (int j = 0; j < data.Cells.Count; j++)
                 {
-                    g.transform.parent = data.Cells[j].Location;
-                    data.Cells[j].closeObjects.Add(g);
-                    break;
+                    if (data.Cells[j].IsInsideBounds(g.transform.position))
+                    {
+                        g.transform.parent = data.Cells[j].Location;
+                        data.Cells[j].closeObjects.Add(g);
+                        break;
+                    }
                 }
             }
+
+            
         }
-        */
+        
 
     }
+
 }

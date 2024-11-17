@@ -223,6 +223,7 @@ public class CameraControl : MonoBehaviour
                 
     }
 
+    /*
     private void FixedUpdate()
     {
         
@@ -237,6 +238,7 @@ public class CameraControl : MonoBehaviour
             _timer += Time.deltaTime;
         }
     }
+    */
 
     private Vector3 mainPlayerPoint => mainPlayer.position + Vector3.up * 1.2f;
 
