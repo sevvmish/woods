@@ -1,8 +1,10 @@
 using DG.Tweening;
+using Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using YG;
 
 public class Globals : MonoBehaviour
@@ -42,7 +44,7 @@ public class Globals : MonoBehaviour
     public const float ZOOM_LIMIT_LOW = 30f;
     public const float ZOOM_LIMIT_HIGH = 80f;
 
-    public static readonly Vector3 BasePosition = new Vector3(0, 8f, -4f);
+    public static readonly Vector3 BasePosition = new Vector3(0.5f, 8f, -4f);
     public static readonly Vector3 BaseRotation = new Vector3(50, 0, 0);
 
     public const float MOUSE_X_SENS = 600f;
@@ -73,5 +75,33 @@ public class Globals : MonoBehaviour
             YandexGame.StickyAdActivity(true);
         }
     }
+
+    public static void SetQualityLevel()
+    {
+        if (Globals.IsMobile && !Globals.IsLowFPS)
+        {
+            QualitySettings.antiAliasing = 2;
+            QualitySettings.shadowDistance = 80;
+            QualitySettings.shadows = ShadowQuality.HardOnly;
+        }
+        else if (Globals.IsMobile && Globals.IsLowFPS)
+        {
+            QualitySettings.antiAliasing = 0;
+            QualitySettings.shadows = ShadowQuality.Disable;
+        }
+        else if (!Globals.IsMobile && !Globals.IsLowFPS)
+        {
+            QualitySettings.antiAliasing = 4;
+            QualitySettings.shadowDistance = 100;
+            QualitySettings.shadows = ShadowQuality.All;
+        }
+        else if (!Globals.IsMobile && Globals.IsLowFPS)
+        {
+            QualitySettings.antiAliasing = 2;
+            QualitySettings.shadowDistance = 60;
+            QualitySettings.shadows = ShadowQuality.HardOnly;
+        }
+    }
+
 
 }

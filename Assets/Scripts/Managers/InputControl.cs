@@ -16,8 +16,9 @@ public class InputControl : MonoBehaviour
 
     private readonly float XLimit = 10;
         
-    [SerializeField] private PointerDownOnly jump;
-    [SerializeField] private PointerMoveOnly mover;
+    [SerializeField] private PointerDownOnly jumpButton;
+    [SerializeField] private PointerDownOnly useButton;
+    [SerializeField] private PointerMoveOnly moverSurface;
 
     private Ray ray;
     private RaycastHit hit;
@@ -44,14 +45,19 @@ public class InputControl : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;       
             Cursor.visible = false;
-            mover.gameObject.SetActive(false);
-            jump.gameObject.SetActive(false);
-            joystick.gameObject.SetActive(false);
+            //Destroy(moverSurface.gameObject);
+            //Destroy(jumpButton.gameObject);
+            //Destroy(useButton.gameObject);
+            Destroy(joystick.gameObject);
             Globals.WORKING_DISTANCE = 30;
         }
         else
         {            
             Globals.WORKING_DISTANCE = 20;
+
+            moverSurface.gameObject.SetActive(true);
+            jumpButton.gameObject.SetActive(true);
+            useButton.gameObject.SetActive(true);
         }
 
         mainPlayer = playerControl.transform;
@@ -61,9 +67,7 @@ public class InputControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-              
-
+    {
         if (Globals.IsMobile)
         {
             forMobile();
@@ -71,8 +75,7 @@ public class InputControl : MonoBehaviour
         else
         {
             forPC();
-        }
-                                
+        }                       
     }
 
 
@@ -92,13 +95,13 @@ public class InputControl : MonoBehaviour
             playerControl.SetVertical(vertical);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || jump.IsPressed)
+        if (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed)
         {
             playerControl.SetJump();
         }
 
         
-        Vector2 delta2 = mover.DeltaPosition;
+        Vector2 delta2 = moverSurface.DeltaPosition;
         Vector2 delta = delta2.normalized;
 
                 
@@ -137,7 +140,7 @@ public class InputControl : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.Space) || jump.IsPressed)
+        if (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed)
         {
             playerControl.SetJump();
         }

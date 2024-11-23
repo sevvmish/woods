@@ -5,39 +5,28 @@ using VContainer;
 
 public class GameManager : MonoBehaviour
 {
-    
+    [Inject] private Musics musics;
 
     private void Awake()
     {
-        if (Globals.IsMobile && !Globals.IsLowFPS)
-        {
-            QualitySettings.antiAliasing = 2;
-            QualitySettings.shadowDistance = 40;
-            QualitySettings.shadows = ShadowQuality.HardOnly;
-        }
-        else if (Globals.IsMobile && Globals.IsLowFPS)
-        {
-            QualitySettings.antiAliasing = 0;
-            QualitySettings.shadows = ShadowQuality.Disable;
-        }
-        else if (!Globals.IsMobile && !Globals.IsLowFPS)
-        {
-            QualitySettings.antiAliasing = 4;
-            QualitySettings.shadowDistance = 60;
-            QualitySettings.shadows = ShadowQuality.All;
-        }
-        else if (!Globals.IsMobile && Globals.IsLowFPS)
-        {
-            QualitySettings.antiAliasing = 2;
-            QualitySettings.shadowDistance = 40;
-            QualitySettings.shadows = ShadowQuality.HardOnly;
-        }
+        Globals.SetQualityLevel();
 
-        //QualitySettings.antiAliasing = 0;
-        //QualitySettings.shadows = ShadowQuality.Disable;
     }
 
+    private void Start()
+    {
+        musics.StartMusic();        
+    }
 
+    /*
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            Globals.MainPlayerData = new PlayerData();
+            SaveLoadManager.Save();
+        }
+    }
+    */
 
-    
 }

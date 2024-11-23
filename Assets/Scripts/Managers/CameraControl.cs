@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ public class CameraControl : MonoBehaviour
 {
     [Inject] private GameManager gm;
     [Inject] private Camera _camera;
+    [Inject] private FOVControl fovControl;
     [Inject] private PlayerControl playerControl;
 
 
@@ -47,6 +47,10 @@ public class CameraControl : MonoBehaviour
     private WaitForSeconds fixedDelta = new WaitForSeconds(0.02f);
     private float previousDistance;
 
+    private void Awake()
+    {
+        fovControl.SetFOV();
+    }
 
     private void Start()
     {

@@ -25,7 +25,7 @@ public class Musics : MonoBehaviour
             
             case MusicTypes.loop01:                
                 _audio.Stop();
-                _audio.volume = 0.2f;
+                _audio.volume = 0.4f;
                 _audio.clip = loop01;
                 _audio.Play();
                 break;

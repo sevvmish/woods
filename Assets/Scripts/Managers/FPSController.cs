@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
 public class FPSController : MonoBehaviour
-{       
+{
+    [Inject] private FOVControl fovControl;
+
     private List<float> fps = new List<float>();
     private float _timer, _firstTimer;
     private bool isFirst;
@@ -34,7 +37,7 @@ public class FPSController : MonoBehaviour
             return;
         }
                
-        if (_timer > 0.1f)
+        if (_timer > 0.05f)
         {
             _timer = 0;
             if (EasyFpsCounter.EasyFps != null)
@@ -48,7 +51,8 @@ public class FPSController : MonoBehaviour
                 float ave = GetAverage();
 
                 if (fps.Count > 40 && ave > 5 && ave < 45)
-                {                    
+                {             
+                    /*
                     if (Globals.IsMobile)
                     {
                         QualitySettings.antiAliasing = 0;
@@ -59,9 +63,11 @@ public class FPSController : MonoBehaviour
                         QualitySettings.antiAliasing = 2;
                         QualitySettings.shadowDistance = 40;
                         QualitySettings.shadows = ShadowQuality.HardOnly;
-                    }
-
+                    }*/
+                    
                     Globals.IsLowFPS = true;
+                    Globals.SetQualityLevel();
+                    fovControl.SetFOV();
                     
                 }
             }

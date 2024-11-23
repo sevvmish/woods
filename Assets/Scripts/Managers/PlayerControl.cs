@@ -19,20 +19,18 @@ public class PlayerControl : MonoBehaviour
     public void SetVertical(float ver) => vertical = ver;
     public void SetRotationAngle(float ang) => angleY = ang;
     public void SetJump() => isJump = true;
-    public void SetJumpUP() => isJumpUp = true;
-    public void SetJumpDOWN() => isJumpDown = true;
+    public void SetUse() => isUse = true;
     public Rigidbody GetRigidbody => _rigidbody;
     public void SetForward(bool isOk) => isForward = isOk;
     private float horizontal;
     private float vertical;
     private float angleY;
-    
+
+    public Transform FarMarker { get; private set; }
+
     private bool isJump;
-    private bool isJumpUp;
-    private bool isJumpDown;
-    private bool isForward;
-    private bool isChekingCollision;
-    private bool isCollisionON;
+    private bool isUse;
+    private bool isForward;    
     private bool isSolidPlayerBodyON;
 
 
@@ -73,9 +71,12 @@ public class PlayerControl : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
-        
-                
+    {
+        GameObject g = new GameObject();
+        g.name = "Marker";
+        g.transform.position = this.transform.forward * 150;
+        g.transform.parent = this.transform;
+        FarMarker = g.transform;                
     }
 
     private void OnEnable()

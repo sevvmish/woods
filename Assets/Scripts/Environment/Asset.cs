@@ -6,31 +6,29 @@ public class Asset : MonoBehaviour
 {
     [SerializeField] private int id;
     [SerializeField] private AssetTypes assetType;
-    [SerializeField] private TerrainTypes terrainType;
 
     public int ID { get => id; }
-    public AssetTypes AssetType { get => assetType; }        
-    public TerrainTypes TerrainType { get => terrainType; }
-
+    public AssetTypes AssetType { get => assetType; }
 
 }
 
 public enum AssetTypes
 {
     none,
-    terrain,
+    terrain_flat,
     tree_small,
     tree_hard,
     stone,
     rock,
     bush,
-    grass
-}
+    grass,
+    flowers,
+    campfire,
+    branch_on_ground,
+    resource_wood_simple,
+    small_stone,
+    resource_stone_simple,
+    resource_wood_hard,
+    wood_log
 
-public enum TerrainTypes
-{
-    none,
-    flat,
-    mediumHighlands,
-    mountains
 }

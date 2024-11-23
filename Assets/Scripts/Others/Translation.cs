@@ -5,21 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Translations", menuName = "Languages", order = 1)]
 public class Translation : ScriptableObject
 {   
-    public string PressButton;
-    public string Level;
-    public string Victory;
-    public string Continue;
-    public string GameLose;
-    public string OpenCellForRewarded;
-    public string NoPlace;
-    public string Repeat;
+    public string W;
+    public string A;
+    public string S;
+    public string D;
 
-    public string BackerHint;
-    public string TriplerHint;
-    public string ResorterHint;
-
-    public string Hint0Level;
-
+    public string Attack;
+    public string Block;
+    public string Jump;
 
 
     public Translation() { }

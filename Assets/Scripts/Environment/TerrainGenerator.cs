@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,22 @@ public class TerrainGenerator : MonoBehaviour
     [Inject] private PlayerControl pc;
     [Inject] private AssetManager assetManager;
     [Inject] private NatureGenerator natureGenerator;
+    [Inject] private WorldGenerator worldGenerator;
 
     private Transform mainPlayer;
     private Transform terrainLocation;
     
     //making terrain in update
     private float _currentTimer = 0;
-    private float _cooldown = 5;
+    private float _cooldown = 2;
     private float distanceForCheking = 100;
 
     private Dictionary<Vector3, GameObject> readyTerrains = new Dictionary<Vector3, GameObject>();
     private List<Vector3> currentlyActivePoints = new List<Vector3>();
+
+    private Queue<TerrainData> terrainsToClear = new Queue<TerrainData>();
+    private bool isCleaningTerrain;
+    
 
     void Start()
     {
@@ -40,6 +46,20 @@ public class TerrainGenerator : MonoBehaviour
         {
             _currentTimer += Time.deltaTime;
         }
+
+        if (!isCleaningTerrain && terrainsToClear.Count > 0)
+        {
+            cleanTerrain(terrainsToClear.Dequeue()).Forget();
+        }
+    }
+    private async UniTaskVoid cleanTerrain(TerrainData data)
+    {
+        isCleaningTerrain = true;
+
+        data.ReleaseCells(assetManager);
+
+        await UniTask.Delay(500);
+        isCleaningTerrain = false;
     }
 
     private void checkAround()
@@ -47,25 +67,48 @@ public class TerrainGenerator : MonoBehaviour
         List<Vector3> regions = new List<Vector3>();
 
         //center
-        regions.Add(new Vector3(Mathf.RoundToInt(mainPlayer.transform.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.transform.position.z / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100));
         //left up
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z + distanceForCheking) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z + distanceForCheking) / 100f) * 100));
         //left down
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z - distanceForCheking) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z - distanceForCheking) / 100f) * 100));
         //up
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z + distanceForCheking) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z + distanceForCheking) / 100f) * 100));
         //down
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z - distanceForCheking) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z - distanceForCheking) / 100f) * 100));
         //left
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z) / 100f) * 100));
         //right
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z) / 100f) * 100));
         //right up
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z + distanceForCheking) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z + distanceForCheking) / 100f) * 100));
         //right down
-        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.transform.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.transform.position.z - distanceForCheking) / 100f) * 100));
+        regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z - distanceForCheking) / 100f) * 100));
 
         
+        if (!Globals.IsMobile)
+        {
+            Vector3 farPos = pc.FarMarker.position;
+
+            regions.Add(new Vector3(Mathf.RoundToInt(farPos.x / 100f) * 100, 0, Mathf.RoundToInt(farPos.z / 100f) * 100));
+
+            if (Mathf.Abs(farPos.z - mainPlayer.position.z) > Mathf.Abs(farPos.x - mainPlayer.position.x))
+            {
+                //left
+                regions.Add(new Vector3(Mathf.RoundToInt((farPos.x - distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((farPos.z) / 100f) * 100));
+                //right
+                regions.Add(new Vector3(Mathf.RoundToInt((farPos.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((farPos.z) / 100f) * 100));
+            }
+            else
+            {
+                //up
+                regions.Add(new Vector3(Mathf.RoundToInt((farPos.x) / 100f) * 100, 0, Mathf.RoundToInt((farPos.z + distanceForCheking) / 100f) * 100));
+                //down
+                regions.Add(new Vector3(Mathf.RoundToInt((farPos.x) / 100f) * 100, 0, Mathf.RoundToInt((farPos.z - distanceForCheking) / 100f) * 100));
+            }
+
+        }
+
         arrangeTerrains(regions);
     }
 
@@ -94,11 +137,34 @@ public class TerrainGenerator : MonoBehaviour
                 readyTerrains[regions[i]].SetActive(true);
             }
         }
+
+        List<Vector3> keysToRemove = new List<Vector3>();
+        foreach (Vector3 key in readyTerrains.Keys)
+        {
+            if (!readyTerrains[key].activeSelf)
+            {
+                float distance = (key - mainPlayer.position).magnitude;
+                if (distance > 200)
+                {
+                    //readyTerrains[key].GetComponent<TerrainData>().ReleaseCells(assetManager);
+                    TerrainData data = readyTerrains[key].GetComponent<TerrainData>();
+                    if (!terrainsToClear.Contains(data)) terrainsToClear.Enqueue(data);
+                    assetManager.ReturnAsset(readyTerrains[key]);                    
+                    keysToRemove.Add(key);
+                }
+            }
+        }
+
+        for (int i = 0; i < keysToRemove.Count; i++)
+        {
+            if (readyTerrains.ContainsKey(keysToRemove[i])) readyTerrains.Remove(keysToRemove[i]);
+        }
     }
 
     private void makeTerrainChunk(Vector3 pos)
-    {
-        GameObject g = Instantiate(assetManager.GetAssetByTerrainType(TerrainTypes.flat), terrainLocation);
+    {        
+        GameObject g = assetManager.GetAssetByTerrainType(AssetTypes.terrain_flat, worldGenerator.GetTerrainIndex(pos));
+        g.transform.parent = terrainLocation;
         g.transform.position = pos;
         g.transform.eulerAngles = Vector3.zero;
         g.SetActive(true);

@@ -14,7 +14,17 @@ public class GameLifetimeScope : LifetimeScope
             Globals.IsSoundOn = true;
             Globals.IsMusicOn = true;
             Globals.IsInitiated = true;
-            
+
+            if (Globals.IsMobile)
+            {
+                Globals.MainPlayerData.Zoom = 50;
+            }
+            else
+            {
+                Globals.MainPlayerData.Zoom = 55;
+            }
+
+            //Globals.IsLowFPS = true;
 
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
         }
@@ -27,14 +37,17 @@ public class GameLifetimeScope : LifetimeScope
         
         PlayerControl g = addPlayer(true, Vector3.zero, Vector3.zero).GetComponent<PlayerControl>();
         builder.RegisterComponentInHierarchy<PlayerControl>();
+        builder.RegisterComponentInHierarchy<FOVControl>();
         builder.RegisterComponentInHierarchy<GameManager>();
         builder.RegisterComponentInHierarchy<CameraControl>();
         builder.RegisterComponentInHierarchy<InputControl>();
+        builder.RegisterComponentInHierarchy<ScreenCenterCursor>();
 
+        builder.RegisterComponentInHierarchy<WorldGenerator>();
         builder.RegisterComponentInHierarchy<AssetManager>();
         builder.RegisterComponentInHierarchy<NatureGenerator>();
         builder.RegisterComponentInHierarchy<TerrainGenerator>();
-        builder.RegisterComponentInHierarchy<WorldGenerator>();
+        
         
 
     }

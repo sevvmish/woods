@@ -17,7 +17,10 @@ public class PlayerData
     public int Seed;
     public System.Random MainRandom;
 
-    
+    public int TerrainSeed;
+    public int NatureSeed;
+
+
 
     public float Zoom;
     public PlayerData()
@@ -27,13 +30,16 @@ public class PlayerData
         S = 1; // sound on? 1 - true;        
         Mus = 1; // music
         
-        Zoom = 50;
+        Zoom = 55;
 
         IsLowFPS = false;        
         AdvOff = false;
 
         Seed = 157;
         MainRandom = new System.Random(Seed);
+
+        TerrainSeed = 22;
+        NatureSeed = 199;
 
         Debug.Log("created PlayerData instance");
     }
