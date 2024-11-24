@@ -15,7 +15,7 @@ public class GameLifetimeScope : LifetimeScope
             Globals.IsMusicOn = true;
             Globals.IsInitiated = true;
 
-            Globals.MainPlayerData.T = 0;
+            Globals.MainPlayerData.T = 43200;
             Globals.MainPlayerData.D = 0;
 
             if (Globals.IsMobile)
@@ -31,12 +31,12 @@ public class GameLifetimeScope : LifetimeScope
 
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
         }
-
-        builder.RegisterComponentInHierarchy<DayTimeCycle>();
+                
         builder.RegisterComponentInHierarchy<Sounds>();
         builder.RegisterComponentInHierarchy<Musics>();
         builder.RegisterComponentInHierarchy<Camera>();
         builder.RegisterComponentInHierarchy<Joystick>();
+        builder.RegisterComponentInHierarchy<DayTimeCycle>();
         builder.RegisterComponentInHierarchy<FPSController>();
 
         builder.RegisterComponentInHierarchy<AimInformerUI>();

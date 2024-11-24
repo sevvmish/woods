@@ -31,7 +31,7 @@ public class Globals : MonoBehaviour
         
     public static MusicTypes LastPlayedMelody;
 
-    public const float TIME_SPEED_KOEF = 100;
+    public const float TIME_SPEED_KOEF = 1000;
     
     public const float BASE_SPEED = 7f;
     public const float JUMP_POWER = 40f;
