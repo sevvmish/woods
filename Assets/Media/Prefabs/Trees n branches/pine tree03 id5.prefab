@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6008616210547521884}
   - component: {fileID: 3464653651170862956}
-  m_Layer: 0
+  - component: {fileID: 5023419038700052222}
+  m_Layer: 9
   m_Name: pine tree03 id5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +48,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   assetType: 3
-  terrainType: 0
+--- !u!65 &5023419038700052222
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4730611598479679051}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 6, z: 2}
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1001 &4855767642471035398
 PrefabInstance:
   m_ObjectHideFlags: 0

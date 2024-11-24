@@ -198,7 +198,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3725709473189333818}
   - component: {fileID: 6952117106063266218}
-  m_Layer: 0
+  - component: {fileID: 4646190330354340299}
+  m_Layer: 9
   m_Name: Small tree02 id30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,4 +237,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30
   assetType: 2
-  terrainType: 0
+--- !u!65 &4646190330354340299
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206076559682662641}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4, z: 1}
+  m_Center: {x: 0, y: 2, z: 0}

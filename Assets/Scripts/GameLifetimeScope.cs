@@ -15,6 +15,9 @@ public class GameLifetimeScope : LifetimeScope
             Globals.IsMusicOn = true;
             Globals.IsInitiated = true;
 
+            Globals.MainPlayerData.T = 0;
+            Globals.MainPlayerData.D = 0;
+
             if (Globals.IsMobile)
             {
                 Globals.MainPlayerData.Zoom = 50;
@@ -29,20 +32,27 @@ public class GameLifetimeScope : LifetimeScope
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
         }
 
+        builder.RegisterComponentInHierarchy<DayTimeCycle>();
         builder.RegisterComponentInHierarchy<Sounds>();
         builder.RegisterComponentInHierarchy<Musics>();
         builder.RegisterComponentInHierarchy<Camera>();
         builder.RegisterComponentInHierarchy<Joystick>();
         builder.RegisterComponentInHierarchy<FPSController>();
-        
-        PlayerControl g = addPlayer(true, Vector3.zero, Vector3.zero).GetComponent<PlayerControl>();
+
+        builder.RegisterComponentInHierarchy<AimInformerUI>();
+
+        PlayerControl g = addPlayer(true, Vector3.zero, Vector3.zero, builder).GetComponent<PlayerControl>();
         builder.RegisterComponentInHierarchy<PlayerControl>();
         builder.RegisterComponentInHierarchy<FOVControl>();
         builder.RegisterComponentInHierarchy<GameManager>();
         builder.RegisterComponentInHierarchy<CameraControl>();
         builder.RegisterComponentInHierarchy<InputControl>();
+
+        //UI        
+        builder.RegisterComponentInHierarchy<GameplayUI>();        
         builder.RegisterComponentInHierarchy<ScreenCenterCursor>();
 
+        //Env
         builder.RegisterComponentInHierarchy<WorldGenerator>();
         builder.RegisterComponentInHierarchy<AssetManager>();
         builder.RegisterComponentInHierarchy<NatureGenerator>();
@@ -52,7 +62,7 @@ public class GameLifetimeScope : LifetimeScope
 
     }
 
-    private GameObject addPlayer(bool isMain, Vector3 pos, Vector3 rot)
+    private GameObject addPlayer(bool isMain, Vector3 pos, Vector3 rot, IContainerBuilder builder)
     {
         //main template
         GameObject g = Instantiate(Resources.Load<GameObject>("main player"));
@@ -76,6 +86,18 @@ public class GameLifetimeScope : LifetimeScope
         g.AddComponent<AudioListener>();
 
         g.SetActive(true);
+
+        //aimer
+        if (Globals.IsMobile)
+        {
+            GameObject aimer = Instantiate(Resources.Load<GameObject>("MobileAimBox"));
+            aimer.SetActive(true);
+
+            aimer.transform.parent = g.transform;
+            aimer.transform.localPosition = new Vector3(0, 2.5f, 0);
+
+            builder.RegisterComponentInHierarchy<AimerForMobile>();
+        }
 
         return g;
     }

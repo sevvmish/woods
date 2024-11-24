@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 4690670792134407416}
   location: {fileID: 203951568444010248}
+  closeObjects: []
 --- !u!65 &4690670792134407416
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -98,5 +99,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12, y: 100, z: 12}
+  m_Size: {x: 14, y: 100, z: 14}
   m_Center: {x: 0, y: 0, z: 0}

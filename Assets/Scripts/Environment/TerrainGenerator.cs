@@ -170,9 +170,9 @@ public class TerrainGenerator : MonoBehaviour
         g.SetActive(true);
         TerrainData data = g.GetComponent<TerrainData>();
 
-        for (int x = -40; x <= 40; x+=20)
+        for (float x = -37.5f; x <= 37.7f; x+=25)
         {
-            for (int z = -40; z <= 40; z+=20)
+            for (float z = -37.5f; z <= 37.5f; z+=25)
             {
                 Cell cell = Instantiate(assetManager.Cell, g.transform);
                 cell.transform.localPosition = new Vector3(x, 0, z);

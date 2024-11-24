@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5426462338145800665}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000074484824, y: 0.40488207, z: -0.00000003298183, w: 0.914369}
+  m_LocalRotation: {x: 0, y: 0.025828, z: 0, w: 0.9996664}
   m_LocalPosition: {x: 0.2567118, y: 0, z: -0.0009213984}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2409755865136755882}
-  m_LocalEulerAnglesHint: {x: 0, y: 47.767, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 2.96, z: 0}
 --- !u!33 &8199434023319966644
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -93,7 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2409755865136755882}
   - component: {fileID: 5784601110714384965}
-  m_Layer: 0
+  - component: {fileID: 8954203033089841798}
+  m_Layer: 9
   m_Name: Branch on ground01 id20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,4 +131,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 20
   assetType: 10
-  terrainType: 0
+--- !u!65 &8954203033089841798
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426380678690800320}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.54, y: 0.5, z: 2}
+  m_Center: {x: 0.28, y: 0.12, z: -0.26}

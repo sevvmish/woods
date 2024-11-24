@@ -31,6 +31,8 @@ public class Globals : MonoBehaviour
         
     public static MusicTypes LastPlayedMelody;
 
+    public const float TIME_SPEED_KOEF = 100;
+    
     public const float BASE_SPEED = 7f;
     public const float JUMP_POWER = 40f;
     public const float GRAVITY_KOEFF = 2.75f;
@@ -93,13 +95,13 @@ public class Globals : MonoBehaviour
         {
             QualitySettings.antiAliasing = 4;
             QualitySettings.shadowDistance = 100;
-            QualitySettings.shadows = ShadowQuality.All;
+            QualitySettings.shadows = ShadowQuality.HardOnly;
         }
         else if (!Globals.IsMobile && Globals.IsLowFPS)
         {
             QualitySettings.antiAliasing = 2;
             QualitySettings.shadowDistance = 60;
-            QualitySettings.shadows = ShadowQuality.HardOnly;
+            QualitySettings.shadows = ShadowQuality.Disable;
         }
     }
 

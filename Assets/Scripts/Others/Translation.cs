@@ -14,6 +14,16 @@ public class Translation : ScriptableObject
     public string Block;
     public string Jump;
 
+    public string Collect;
+    public string Chop;
+    public string Mine;
+    public string E;
+
+    [Header("Assets")]
+    public string TreeSmall;
+    public string TreeHard;
+
+
 
     public Translation() { }
 }

@@ -198,7 +198,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8454727339224144085}
   - component: {fileID: 5723881167108964798}
-  m_Layer: 0
+  - component: {fileID: 1191054326504750313}
+  m_Layer: 9
   m_Name: Spruce01 id28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,4 +237,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   assetType: 3
-  terrainType: 0
+--- !u!65 &1191054326504750313
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4158859466505016814}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 5, z: 3}
+  m_Center: {x: 0, y: 2.5, z: 0}

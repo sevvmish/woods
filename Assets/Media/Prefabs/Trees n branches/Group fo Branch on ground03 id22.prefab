@@ -93,7 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2845120058245134703}
   - component: {fileID: 2364542734851234100}
-  m_Layer: 0
+  - component: {fileID: 4290138452044808435}
+  m_Layer: 9
   m_Name: Group fo Branch on ground03 id22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,4 +131,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   assetType: 10
-  terrainType: 0
+--- !u!65 &4290138452044808435
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981568428334504160}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.58, y: 1, z: 5.45}
+  m_Center: {x: 0.45, y: 0.3, z: 0}

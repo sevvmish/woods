@@ -19,3 +19,9 @@ MonoBehaviour:
   Attack: Attack
   Block: Block
   Jump: Jump
+  Collect: Collect
+  Chop: Chop
+  Mine: Extract
+  E: E
+  TreeSmall: Young tree
+  TreeHard: Solid tree

@@ -20,6 +20,8 @@ public class PlayerData
     public int TerrainSeed;
     public int NatureSeed;
 
+    public float T;
+    public int D;
 
 
     public float Zoom;
@@ -31,6 +33,9 @@ public class PlayerData
         Mus = 1; // music
         
         Zoom = 55;
+
+        T = 0; //time
+        D = 0; //day
 
         IsLowFPS = false;        
         AdvOff = false;

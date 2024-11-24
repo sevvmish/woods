@@ -43,7 +43,7 @@ public class Cell : MonoBehaviour
 
     public bool IsInsideBounds(Vector3 pos)
     {
-        float limit = 10.5f;
+        float limit = 12.9f;//10.5f;
 
         if (pos.x >= (transform.position.x - limit) && pos.x <= (transform.position.x + limit) && pos.z >= (transform.position.z - limit) && pos.z <= (transform.position.z + limit))
         {

@@ -115,7 +115,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4332219817782079557}
   - component: {fileID: 1789316937802195786}
-  m_Layer: 0
+  - component: {fileID: 6774494726635469445}
+  m_Layer: 9
   m_Name: Leaf tree LP 01 id31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,4 +153,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   assetType: 3
-  terrainType: 0
+--- !u!65 &6774494726635469445
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6132285218510757018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 8, z: 3}
+  m_Center: {x: 0, y: 4, z: 0}

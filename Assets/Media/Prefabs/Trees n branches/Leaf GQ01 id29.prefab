@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 893531645922925764}
   - component: {fileID: 5853140801662355613}
-  m_Layer: 0
+  - component: {fileID: 5809857947577646492}
+  m_Layer: 9
   m_Name: Leaf GQ01 id29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +49,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 29
   assetType: 3
-  terrainType: 0
+--- !u!65 &5809857947577646492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260506025541402758}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5, y: 8, z: 2.5}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &5482147635773466365
 GameObject:
   m_ObjectHideFlags: 0

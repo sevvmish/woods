@@ -36,7 +36,7 @@ public class FOVControl : MonoBehaviour
         else
         {
             fovFar.localScale = new Vector3(1.1f, 1, 1.3f);
-            fovFar.localPosition = new Vector3(0, 5, 85);
+            fovFar.localPosition = new Vector3(0, 5, 90);
             fovFar.localEulerAngles = new Vector3(180, 0, 0);
 
             fovClose.localScale = new Vector3(0.65f, 0.3f, 0.6f);
