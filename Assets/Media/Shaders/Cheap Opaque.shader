@@ -3,12 +3,12 @@ Shader "Cheap Opaque" {
  
     Properties {
         _MainTex ("Main Texture", 2D) = "white" {}
-        
+        _Color ("Color", Color) = (1,1,1,1)
 
     }
  
     SubShader {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry"}
+        Tags {"RenderType"="Opaque" "Queue"="Geometry"}
 
         CGPROGRAM
         #pragma target 3.0
@@ -16,7 +16,7 @@ Shader "Cheap Opaque" {
 
             
             sampler2D _MainTex;
-            
+            fixed4 _Color;
 
                 //Structs
                 struct Input {
@@ -30,7 +30,7 @@ Shader "Cheap Opaque" {
 
                 // Surface Shader
                 void surf (Input IN, inout SurfaceOutput o) {
-                    fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+                    fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
                     o.Albedo = c.rgb;
                     o.Alpha = c.a;
                 }

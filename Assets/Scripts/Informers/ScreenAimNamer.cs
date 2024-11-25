@@ -17,11 +17,11 @@ public class ScreenAimNamer : MonoBehaviour
                 
         if (lastObject!= null && lastObject.Equals(g))
         {
-            if (isCollect(lastAsset.AssetType))
+            if (IsCollect(lastAsset.AssetType))
             {
                 isCollectable = true;
             }
-            else if (isChop(lastAsset.AssetType))
+            else if (IsChop(lastAsset.AssetType))
             {
                 isChopable = true;
             }
@@ -34,11 +34,11 @@ public class ScreenAimNamer : MonoBehaviour
             lastAsset = asset;
             lastName = getName(asset.AssetType);
 
-            if (isCollect(asset.AssetType))
+            if (IsCollect(asset.AssetType))
             {
                 isCollectable = true;
             }
-            else if (isChop(asset.AssetType))
+            else if (IsChop(asset.AssetType))
             {
                 isChopable = true;
             }
@@ -48,6 +48,7 @@ public class ScreenAimNamer : MonoBehaviour
 
         return result;
     }
+
 
     public static string GetNameByAsset(GameObject g)
     {
@@ -70,7 +71,7 @@ public class ScreenAimNamer : MonoBehaviour
         return result;
     }
 
-    private static bool isCollect(AssetTypes _type)
+    public static bool IsCollect(AssetTypes _type)
     {
         switch (_type)
         {
@@ -86,7 +87,7 @@ public class ScreenAimNamer : MonoBehaviour
         }
     }
 
-    private static bool isChop(AssetTypes _type)
+    public static bool IsChop(AssetTypes _type)
     {
         switch (_type)
         {
@@ -102,7 +103,7 @@ public class ScreenAimNamer : MonoBehaviour
         }
     }
 
-    private static string getName(AssetTypes _type)
+    public static string getName(AssetTypes _type)
     {
         Translation lang = Globals.Language;
 

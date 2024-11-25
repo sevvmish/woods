@@ -40,39 +40,8 @@ public class AssetManager : MonoBehaviour
 
                     int amount = 1;
 
-                    /*
-                    switch(assets[i].AssetType)
-                    {
-                        case AssetTypes.terrain_flat:
-                            amount = 9;
-                            break;
-
-                        case AssetTypes.tree_small:
-                            amount = (int)(4 * 25 * 12 / 2f);
-                            break;
-
-                        case AssetTypes.tree_hard:
-                            amount = (int)(4 * 25 * 12 / 2f);
-                            break;
-
-                        case AssetTypes.grass:
-                            if (Globals.IsLowFPS)
-                            {
-                                
-                            }
-                            else
-                            {
-
-                            }
-
-                            amount = (int)(50 * 25 * 9 / 3f);
-                            break;
-                    }*/
-
                     assetsPools.Add(assets[i].ID, new ObjectPool(amount, assets[i].gameObject, transform));
-                    addAssetByType(assets[i]);
-                    //print("ID: " + assets[i].ID + ", pool size: " + amount);
-                    //print("last id: " + assets[i].ID);
+                    addAssetByType(assets[i]);                    
                 }
             }
         }

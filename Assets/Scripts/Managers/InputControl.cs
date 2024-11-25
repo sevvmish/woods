@@ -14,6 +14,7 @@ public class InputControl : MonoBehaviour
     [Inject] private CameraControl cameraControl;
     [Inject] private PlayerControl playerControl;
 
+    private ActionControl actions;
     private readonly float XLimit = 10;
         
     [SerializeField] private PointerDownOnly jumpButton;
@@ -24,22 +25,14 @@ public class InputControl : MonoBehaviour
     private RaycastHit hit;
     private float cameraRayCast = 50f;
 
-    private Vector3 markerPosition;
     
-    public Vector3 GetMarkerPosition => markerPosition;
-    
-    private Transform mainPlayer;
-    
-
-    private LayerMask ignoreMask;
-    private LayerMask blockMask;
-
 
     // Start is called before the first frame update
     void Start()
-    {       
-        ignoreMask = LayerMask.GetMask(new string[] { "player" });
-        blockMask = LayerMask.GetMask(new string[] { "block" });
+    {
+        actions = playerControl.GetComponent<ActionControl>();
+
+
 
         if (!Globals.IsMobile)
         {
@@ -59,9 +52,7 @@ public class InputControl : MonoBehaviour
             jumpButton.gameObject.SetActive(true);
             useButton.gameObject.SetActive(true);
         }
-
-        mainPlayer = playerControl.transform;
-        
+                
     }
 
 
@@ -144,7 +135,17 @@ public class InputControl : MonoBehaviour
         {
             playerControl.SetJump();
         }
-          
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            actions.UsePressed();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            actions.UseHit();
+        }
+
 
         Vector3 mouseDelta = new Vector3(
             Input.GetAxis("Mouse X") * Globals.MOUSE_X_SENS * Time.deltaTime, 

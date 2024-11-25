@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,12 @@ public class AnimationControl : MonoBehaviour
         checkMovement();
     }
 
+    public async UniTask<bool> Hit()
+    {
+        await hit().AsUniTask();
+        return true;
+    }
+
     public void JumpStart()
     {
         _animator.Play("JumpStart");
@@ -54,10 +61,10 @@ public class AnimationControl : MonoBehaviour
 
     private void checkMovement()
     {
-        if (pc.IsGrounded)
+        if (pc.IsGrounded && AnimationState != AnimationStates.Hit)
         {
             float speed = pc.PlayerVelocity;
-
+                        
             if (speed < speedLimit && speed > minSpeed)
             {
                 walk();
@@ -71,18 +78,8 @@ public class AnimationControl : MonoBehaviour
                 idle();
             }
         }
-        else
-        {
-            /*
-            if (IsJumping)
-            {
-                if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("JumpStart") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("JumpLoop")) _animator.Play("JumpStart");
-            }
-            else if (howLongNonGrounded > 0.1f)
-            {
-                if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("JumpLoop")) _animator.Play("JumpLoop");
-            }*/
-
+        else if (!pc.IsGrounded)
+        {            
             fly();
         }
         
@@ -140,6 +137,57 @@ public class AnimationControl : MonoBehaviour
         {
             fly();
         }
+    }
+
+    private async UniTask<bool> hit()
+    {
+        if (AnimationState == AnimationStates.Hit) return false;
+        AnimationState = AnimationStates.Hit;
+
+        string anim = "";
+
+        if (1 == 1)
+        {
+            int rnd = UnityEngine.Random.Range(0, 2);
+
+            switch(rnd)
+            {
+                case 0:
+                    anim = "Unarmed Hit R";
+                    
+                    break;
+
+                case 1:
+                    anim = "Unarmed Hit L";
+                    break;
+            }
+            
+        }
+
+        _animator.Play(anim);
+        int awaited = 0;
+        bool isHitted = false;
+
+        await UniTask.Delay(100);
+
+        while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
+        {
+            awaited += 20;
+            print("=======");
+            await UniTask.Delay(20);
+            
+
+            if (awaited > 200 && !isHitted)
+            {
+                isHitted = true;
+                HitControl.MakeHit(pc.transform);
+            }
+        }
+
+        print(awaited);
+
+        AnimationState = AnimationStates.Idle;
+        return true;
     }
 
 

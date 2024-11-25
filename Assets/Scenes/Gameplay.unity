@@ -735,7 +735,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainSun: {fileID: 705507994}
-  materialForLight: {fileID: 0}
+  materialForTransparent: {fileID: 2100000, guid: 9108792a01a73124db4eca0968ac9af7, type: 2}
+  materialForNonTransparent:
+  - {fileID: 2100000, guid: 53f43e3d49b80ba4cba266ace99cd7b2, type: 2}
+  - {fileID: 2100000, guid: 749d113e6f98d0a49b774a8d60155e61, type: 2}
+  - {fileID: 2100000, guid: 90ba8b2c777f9fb459bd3bdf795acde4, type: 2}
+  - {fileID: 2100000, guid: ff97aae7de8bc264a914e49cec13fb2e, type: 2}
 --- !u!1 &517718206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,13 +1177,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7064895, y: -0, z: -0, w: -0.70772356}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 426857767}
-  m_LocalEulerAnglesHint: {x: 270.1, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!1 &768107222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4533,7 +4538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16985accec3d9a44a9495645c8ae76c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loop01: {fileID: 8300000, guid: ddca2049b7a198b40b5d3241e35a34b2, type: 3}
+  ForestDay: {fileID: 8300000, guid: ddca2049b7a198b40b5d3241e35a34b2, type: 3}
+  ForestNight: {fileID: 8300000, guid: 213ddb4b77a66d741a46db89bc7f4f10, type: 3}
 --- !u!1 &2069491865
 GameObject:
   m_ObjectHideFlags: 0

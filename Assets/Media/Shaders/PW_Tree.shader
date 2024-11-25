@@ -35,7 +35,7 @@ Shader "Polygon Wind/Tree" {
  
     Properties {
         _MainTex ("Main Texture", 2D) = "white" {}
-        _Tint ("Tint", Color) = (1,1,1,1)
+        _Color ("Color", Color) = (1,1,1,1)
 
         _wind_dir ("Wind Direction", Vector) = (0.5,0.05,0.5,0)
         _wind_size ("Wind Wave Size", range(5,50)) = 15
@@ -76,7 +76,7 @@ Shader "Polygon Wind/Tree" {
             float _b_influence;
 
             sampler2D _MainTex;
-            fixed4 _Tint;
+            fixed4 _Color;
 
                 //Structs
                 struct Input {
@@ -105,7 +105,7 @@ Shader "Polygon Wind/Tree" {
 
                 // Surface Shader
                 void surf (Input IN, inout SurfaceOutput o) {
-                    fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Tint;
+                    fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
                     o.Albedo = c.rgb;
                     o.Alpha = c.a;
                 }

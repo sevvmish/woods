@@ -1,5 +1,5 @@
 {
-  "idSave": 70,
+  "idSave": 116,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -10,5 +10,5 @@
     true,
     false
   ],
-  "MainSave1": "{\"L\":\"\",\"M\":0,\"S\":1,\"Mus\":1,\"IsLowFPS\":false,\"AdvOff\":false,\"Seed\":157,\"TerrainSeed\":22,\"NatureSeed\":199,\"T\":43200.0,\"D\":2,\"Zoom\":55.0}"
+  "MainSave1": "{\"L\":\"\",\"M\":0,\"S\":1,\"Mus\":1,\"IsLowFPS\":false,\"AdvOff\":false,\"Seed\":157,\"TerrainSeed\":22,\"NatureSeed\":199,\"T\":43200.0,\"D\":1,\"Zoom\":55.0}"
 }

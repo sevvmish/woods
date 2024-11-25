@@ -4,14 +4,37 @@ using VContainer;
 
 public class Musics : MonoBehaviour
 {
-    
-    [SerializeField] private AudioClip loop01;
+    [Inject] private DayTimeCycle cycle;
+
+    [SerializeField] private AudioClip ForestDay;
+    [SerializeField] private AudioClip ForestNight;
 
     private AudioSource _audio;
+    private bool isAmbient;
+    private bool isDay;
 
     private void Awake()
     {
         _audio = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if (isAmbient)
+        {
+            if ((cycle.CurrentHour() > 21 || cycle.CurrentHour() < 6) && isDay)
+            {
+                PlayMusic(MusicTypes.forestNight);
+                StartCoroutine(playMusicGradient());
+                isDay = false;
+            }
+            else if(cycle.CurrentHour() <= 21 && cycle.CurrentHour() >= 6 && !isDay)
+            {
+                isDay = true;
+                StartCoroutine(playMusicGradient());
+                PlayMusic(MusicTypes.forestDay);
+            }
+        }
     }
 
     public void PlayMusic(MusicTypes _type)
@@ -23,10 +46,19 @@ public class Musics : MonoBehaviour
         switch (_type)
         {
             
-            case MusicTypes.loop01:                
+            case MusicTypes.forestDay:                
                 _audio.Stop();
-                _audio.volume = 0.4f;
-                _audio.clip = loop01;
+                _audio.pitch = 0.8f;
+                _audio.volume = 0.35f;
+                _audio.clip = ForestDay;
+                _audio.Play();
+                break;
+
+            case MusicTypes.forestNight:
+                _audio.Stop();
+                _audio.pitch = 0.8f;
+                _audio.volume = 0.5f;
+                _audio.clip = ForestNight;
                 _audio.Play();
                 break;
 
@@ -40,7 +72,11 @@ public class Musics : MonoBehaviour
 
     public void StartMusic()
     {
-        
+        isAmbient = true;
+        isDay = true;
+        StartCoroutine(playMusicGradient());
+        PlayMusic(MusicTypes.forestDay);
+        /*
         MusicTypes rnd = (MusicTypes)UnityEngine.Random.Range(0, 1);
 
         for (int i = 0; i < 10; i++)
@@ -57,13 +93,15 @@ public class Musics : MonoBehaviour
 
         Globals.LastPlayedMelody = rnd;
         PlayMusic(rnd);
-        StartCoroutine(playMusicGradient());
+        StartCoroutine(playMusicGradient());*/
     }
+    
     private IEnumerator playMusicGradient()
     {
-        //yield return new WaitForSeconds(0.1f);
+        
         float volume = _audio.volume;
         float delta = volume / 10f;
+                
         _audio.volume = 0;
 
         for (int i = 0; i < 10; i++)
@@ -77,5 +115,6 @@ public class Musics : MonoBehaviour
 
 public enum MusicTypes
 {
-    loop01
+    forestDay,
+    forestNight
 }

@@ -7,8 +7,8 @@ public class ScreenCenterCursor : MonoBehaviour
     [Inject] private PlayerControl playerControl;
     [Inject] private AimInformerUI UI;
 
-    
 
+    private ActionControl actions;
     private Transform playerTransform;
     private LayerMask ignoreMask;    
     private RaycastHit hit;
@@ -21,6 +21,8 @@ public class ScreenCenterCursor : MonoBehaviour
     void Start()
     {
         if (Globals.IsMobile) this.enabled = false;
+
+        actions = playerControl.GetComponent<ActionControl>();
 
         playerTransform = playerControl.transform;
         ignoreMask = LayerMask.GetMask(new string[] { "interactable" });        
@@ -47,12 +49,14 @@ public class ScreenCenterCursor : MonoBehaviour
             if (hit.collider.gameObject != null)
             {
                 UI.ShowAimCursorText(hit.collider.gameObject, true);
+                actions.SetAim(hit.collider.gameObject);
                 isZeroText = false;
             }            
         }       
         else if (!isZeroText)
         {
             isZeroText = true;
+            actions.SetAim(null);
             UI.ShowAimCursorText("");
         }
     }

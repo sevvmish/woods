@@ -1,13 +1,15 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerControl : MonoBehaviour
 {
-    
+    [Inject] private Camera _camera;
 
     [Header("Controls")]    
     private AnimationControl animationControl;
@@ -20,6 +22,7 @@ public class PlayerControl : MonoBehaviour
     public void SetRotationAngle(float ang) => angleY = ang;
     public void SetJump() => isJump = true;
     public void SetUse() => isUse = true;
+    public void SetHit() => isHit = true;
     public Rigidbody GetRigidbody => _rigidbody;
     public void SetForward(bool isOk) => isForward = isOk;
     private float horizontal;
@@ -30,6 +33,7 @@ public class PlayerControl : MonoBehaviour
 
     private bool isJump;
     private bool isUse;
+    private bool isHit;
     private bool isForward;    
     private bool isSolidPlayerBodyON;
 
@@ -50,7 +54,9 @@ public class PlayerControl : MonoBehaviour
     public bool IsJumping { get; private set; }
     public bool IsRunning { get; private set; }
     public bool IsIdle { get; private set; }
-    
+    public bool IsUse { get; private set; }
+    public bool IsHit { get; private set; }
+
     public bool IsFloating { get; private set; }
     public bool IsCanAct { get; private set; }
     public bool IsDead { get; private set; }
@@ -156,6 +162,41 @@ public class PlayerControl : MonoBehaviour
         {
             movement(false);
         }
+
+        if (isHit && IsCanAct)
+        {
+            MakeHit().Forget();
+        }
+
+    }
+
+    private async UniTaskVoid MakeHit()
+    {        
+        IsCanAct = false;
+
+        if (Mathf.Abs(angleY) > 0)
+        {
+            angleYForMobile += angleY;
+        }
+
+        float angle = Mathf.Atan2(horizontal, vertical) * 180 / Mathf.PI;
+
+        if (Globals.IsMobile)
+        {
+            _rigidbody.DORotate(new Vector3(_transform.eulerAngles.x, angleYForMobile + angle, _transform.eulerAngles.z), Time.deltaTime * 10);
+        }
+        else
+        {
+            _rigidbody.MoveRotation(Quaternion.Euler(new Vector3(_transform.eulerAngles.x, angleYForMobile + angle, _transform.eulerAngles.z)));
+        }
+
+        horizontal = 0;
+        vertical = 0;
+
+        await animationControl.Hit().AsUniTask();
+
+        isHit = false;
+        IsCanAct = true;
     }
 
     // Update is called once per frame
@@ -420,5 +461,6 @@ public enum AnimationStates
     Idle,
     Run,
     Fly,
-    Walk
+    Walk,
+    Hit
 }

@@ -1,6 +1,8 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using VContainer;
 
@@ -9,22 +11,31 @@ public class DayTimeCycle : MonoBehaviour
     [Inject] private Camera _camera;
 
     [SerializeField] private Light mainSun;
-    [SerializeField] private Material materialForLight;
+    [SerializeField] private Material materialForTransparent;
+    [SerializeField] private Material[] materialForNonTransparent;
 
     private Transform cameraTransform;
     private Transform sunTransform;
     private float currentTime;
     private float currentDay;
 
+    //Sun data
     private int currentHourForLight;
     private float maxLightIntensity = 1.2f;
+    private float midLightIntensity = 0.7f;
     private float minLightIntensity = 0.2f;
     private float from6AngleStart = 25f;
     private float to21AngleEnd = 155f;
 
+    //Colors for back camera
     private Color maxDayColor = new Color(210f / 255f, 1f, 1f);
     private Color minDayColor = new Color(0, 0, 0);
     private Color startDayColor = new Color(1f, 1f, 210f / 255f);
+
+    //Transparent material data
+    private Color maxMatLight = new Color(1, 1, 1, 1);
+    private Color mediumMatLight = new Color(0.8f, 0.8f, 0.8f, 1);
+    private Color minMaxLight = new Color(0.1f, 0.1f, 0.1f, 1);
 
     public int CurrentHour()
     {
@@ -36,6 +47,11 @@ public class DayTimeCycle : MonoBehaviour
         return (int)(currentTime / 60f - CurrentHour() * 60);
     }
 
+    private void OnApplicationQuit()
+    {
+        materialForTransparent.SetColor("_Color", maxDayColor);
+        materialForNonTransparent.ToList().ForEach(m => m.SetColor("_Color", maxDayColor));
+    }
 
     private void Awake()
     {
@@ -60,10 +76,9 @@ public class DayTimeCycle : MonoBehaviour
             SaveLoadManager.Save();
         }
 
-        print(CurrentHour() + " : " + CurrentMinutes());
+        //print(CurrentHour() + " : " + CurrentMinutes());
 
         lightDuringDay(CurrentHour());
-
     }
 
     private void lightDuringDay(int hour)
@@ -71,53 +86,138 @@ public class DayTimeCycle : MonoBehaviour
         if (currentHourForLight == hour) { return; }
         currentHourForLight = hour;
 
+        sunRotation(hour);
+        colorsAndLights(hour);                
+    }
+
+    private void sunRotation(int hour)
+    {
+        //SUN rotating
         if (hour >= 6 && hour < 12)
         {
-            float curAngle = Mathf.Lerp(from6AngleStart, 90, (hour - 6) / 6f);
+            float lerpForCurrentHour = (hour - 6) / 6f;
+
+            float curAngle = Mathf.Lerp(from6AngleStart, 90, lerpForCurrentHour);
             sunTransform.localEulerAngles = new Vector3(curAngle, 0, 0);
 
-            Color curLight = Color.Lerp(startDayColor, maxDayColor, (hour - 6) / 6f);
-            _camera.backgroundColor = curLight;
-            
-
-            float _timer = (12 - hour)*60*60/Globals.TIME_SPEED_KOEF;
-            sunTransform.DOLocalRotate(new Vector3(90,0,0), _timer).SetEase(Ease.Linear);
-            _camera.DOColor(maxDayColor, _timer).SetEase(Ease.Linear);
+            float _timer = (12 - hour) * 60 * 60 / Globals.TIME_SPEED_KOEF;
+            sunTransform.DOLocalRotate(new Vector3(90, 0, 0), _timer).SetEase(Ease.Linear);
         }
         else if (hour >= 12 && hour < 21)
         {
-            float curAngle = Mathf.Lerp(90, to21AngleEnd, (hour - 12) / 9f);
-            sunTransform.localEulerAngles = new Vector3(curAngle, 0, 0);
+            float lerpForCurrentHour = (hour - 12) / 9f;
 
-            Color curLight = Color.Lerp(maxDayColor, startDayColor, (hour - 12) / 9f);
-            _camera.backgroundColor = curLight;
+            float curAngle = Mathf.Lerp(90, to21AngleEnd, lerpForCurrentHour);
+            sunTransform.localEulerAngles = new Vector3(curAngle, 0, 0);
 
             float _timer = (21 - hour) * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.DOLocalRotate(new Vector3(to21AngleEnd, 0, 0), _timer).SetEase(Ease.Linear);
-            _camera.DOColor(startDayColor, _timer).SetEase(Ease.Linear);
         }
         else if (hour >= 21 && hour < 22)
         {
             float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.localEulerAngles = new Vector3(to21AngleEnd, 0, 0);
             sunTransform.DOLocalRotate(new Vector3(270, 0, 0), _timer).SetEase(Ease.Linear);
-
-            _camera.backgroundColor = startDayColor;
-            _camera.DOColor(minDayColor, _timer).SetEase(Ease.Linear);
         }
-        else if (hour >= 22 && hour <5)
+        else if ((hour >= 22 && hour <= 23) || (hour >= 0 && hour < 5))
         {
             sunTransform.localEulerAngles = new Vector3(270, 0, 0);
-            _camera.backgroundColor = minDayColor;
         }
         else if (hour >= 5 && hour < 6)
         {
             float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.localEulerAngles = new Vector3(270, 0, 0);
             sunTransform.DOLocalRotate(new Vector3(385, 0, 0), _timer, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+        }        
+    }
+
+    private void colorsAndLights(int hour)
+    {
+        //Colors and lights
+        if (hour >= 6 && hour < 10)
+        {
+            float lerpForCurrentHour = (hour - 6) / 4f;
+
+            Color curLight = Color.Lerp(startDayColor, maxDayColor, lerpForCurrentHour);
+            _camera.backgroundColor = curLight;
+
+            float _timer = (10 - hour) * 60 * 60 / Globals.TIME_SPEED_KOEF;
+            _camera.DOColor(maxDayColor, _timer).SetEase(Ease.Linear);
+
+            Color curColor = Color.Lerp(mediumMatLight, maxMatLight, lerpForCurrentHour);
+            materialForTransparent.SetColor("_Color", curColor);
+            materialForTransparent.DOColor(maxMatLight, "_Color", _timer).SetEase(Ease.Linear);
+            materialForNonTransparent.ToList().ForEach(m=> m.SetColor("_Color", curColor));
+            materialForNonTransparent.ToList().ForEach(m => m.DOColor(maxMatLight, "_Color", _timer).SetEase(Ease.Linear));
+
+            float curIntensity = Mathf.Lerp(midLightIntensity, maxLightIntensity, lerpForCurrentHour);
+            mainSun.intensity = curIntensity;
+            mainSun.DOIntensity(maxLightIntensity, _timer).SetEase(Ease.Linear);
+
+        }        
+        else if (hour >= 10 && hour < 16)
+        {
+            _camera.backgroundColor = maxDayColor;
+            materialForTransparent.SetColor("_Color", maxMatLight);
+            materialForNonTransparent.ToList().ForEach(m => m.SetColor("_Color", maxMatLight));
+            mainSun.intensity = maxLightIntensity;
+        }
+        else if (hour >= 16 && hour < 21)
+        {
+            float lerpForCurrentHour = (hour - 16) / 5f;
+
+            Color curLight = Color.Lerp(maxDayColor, startDayColor, lerpForCurrentHour);
+            _camera.backgroundColor = curLight;
+
+            float _timer = (21 - hour) * 60 * 60 / Globals.TIME_SPEED_KOEF;
+            _camera.DOColor(startDayColor, _timer).SetEase(Ease.Linear);
+
+            Color curColor = Color.Lerp(maxMatLight, mediumMatLight, lerpForCurrentHour);
+            materialForTransparent.SetColor("_Color", curColor);
+            materialForTransparent.DOColor(mediumMatLight, "_Color", _timer).SetEase(Ease.Linear);
+            materialForNonTransparent.ToList().ForEach(m => m.SetColor("_Color", curColor));
+            materialForNonTransparent.ToList().ForEach(m => m.DOColor(mediumMatLight, "_Color", _timer).SetEase(Ease.Linear));
+
+            float curIntensity = Mathf.Lerp(maxLightIntensity, midLightIntensity, lerpForCurrentHour);
+            mainSun.intensity = curIntensity;
+            mainSun.DOIntensity(midLightIntensity, _timer).SetEase(Ease.Linear);
+        }
+        else if (hour >= 21 && hour < 22)
+        {
+            float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
+
+            _camera.backgroundColor = startDayColor;
+            _camera.DOColor(minDayColor, _timer).SetEase(Ease.Linear);
+
+            materialForTransparent.SetColor("_Color", mediumMatLight);
+            materialForTransparent.DOColor(minMaxLight, "_Color", _timer).SetEase(Ease.Linear);
+            materialForNonTransparent.ToList().ForEach(m => m.SetColor("_Color", mediumMatLight));
+            materialForNonTransparent.ToList().ForEach(m => m.DOColor(minMaxLight, "_Color", _timer).SetEase(Ease.Linear));
+
+            mainSun.intensity = midLightIntensity;
+            mainSun.DOIntensity(minLightIntensity, _timer).SetEase(Ease.Linear);
+        }
+        else if ((hour >= 22 && hour <= 23) || (hour >= 0 && hour < 5))
+        {
+            _camera.backgroundColor = minDayColor;
+            materialForTransparent.SetColor("_Color", minMaxLight);
+            materialForNonTransparent.ToList().ForEach(m => m.SetColor("_Color", minMaxLight));
+            mainSun.intensity = minLightIntensity;
+        }
+        else if (hour >= 5 && hour < 6)
+        {
+            float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
 
             _camera.backgroundColor = minDayColor;
             _camera.DOColor(startDayColor, _timer).SetEase(Ease.Linear);
+
+            materialForTransparent.SetColor("_Color", minMaxLight);
+            materialForTransparent.DOColor(mediumMatLight, "_Color", _timer).SetEase(Ease.Linear);
+            materialForNonTransparent.ToList().ForEach(m => m.SetColor("_Color", minMaxLight));
+            materialForNonTransparent.ToList().ForEach(m => m.DOColor(mediumMatLight, "_Color", _timer).SetEase(Ease.Linear));
+
+            mainSun.intensity = minLightIntensity;
+            mainSun.DOIntensity(midLightIntensity, _timer).SetEase(Ease.Linear);
         }
     }
 }

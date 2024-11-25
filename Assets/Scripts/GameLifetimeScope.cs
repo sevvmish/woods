@@ -70,6 +70,8 @@ public class GameLifetimeScope : LifetimeScope
         g.transform.position = pos;
         g.transform.eulerAngles = rot;
         g.AddComponent<PlayerControl>();
+        g.AddComponent<ActionControl>();
+
 
         //vfx
         //GameObject vfx = Instantiate(Resources.Load<GameObject>("player vfx"), g.transform);
@@ -78,7 +80,7 @@ public class GameLifetimeScope : LifetimeScope
         //g.GetComponent<PlayerControl>().SetEffectControl(vfx.GetComponent<EffectsControl>());
 
         //player
-        GameObject skin = Instantiate(Resources.Load<GameObject>("skin"), g.transform);
+        GameObject skin = Instantiate(Resources.Load<GameObject>("SkinMale"), g.transform);
         skin.transform.localPosition = Vector3.zero;
         skin.transform.localEulerAngles = Vector3.zero;
 
@@ -98,6 +100,8 @@ public class GameLifetimeScope : LifetimeScope
 
             builder.RegisterComponentInHierarchy<AimerForMobile>();
         }
+
+        
 
         return g;
     }
