@@ -28,8 +28,10 @@ public class Globals : MonoBehaviour
         
     public static MusicTypes LastPlayedMelody;
 
-    public const float TIME_SPEED_KOEF = 1000;
-    
+    public const float TIME_SPEED_KOEF = 500;
+    public const float DISTANCE_FOR_USE = 5f;
+
+
     public const float BASE_SPEED = 7f;
     public const float JUMP_POWER = 40f;
     public const float GRAVITY_KOEFF = 2.75f;
@@ -43,14 +45,13 @@ public class Globals : MonoBehaviour
     public const float ZOOM_LIMIT_LOW = 30f;
     public const float ZOOM_LIMIT_HIGH = 80f;
 
-    public static readonly Vector3 BasePosition = new Vector3(0.5f, 8f, -4f);
+    public static readonly Vector3 BasePosition = new Vector3(0.25f, 8f, -4f);
     public static readonly Vector3 BaseRotation = new Vector3(50, 0, 0);
 
     public const float MOUSE_X_SENS = 600f;
     public const float MOUSE_Y_SENS = 450f;
 
     public static float WORKING_DISTANCE = 20;
-
     public const float SHADOW_Y_DISTANCE = 8f;
 
     public static bool IsMobileChecker()

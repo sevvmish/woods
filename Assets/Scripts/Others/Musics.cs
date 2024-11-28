@@ -31,8 +31,9 @@ public class Musics : MonoBehaviour
             else if(cycle.CurrentHour() <= 21 && cycle.CurrentHour() >= 6 && !isDay)
             {
                 isDay = true;
-                StartCoroutine(playMusicGradient());
                 PlayMusic(MusicTypes.forestDay);
+                StartCoroutine(playMusicGradient());
+                
             }
         }
     }
@@ -49,7 +50,7 @@ public class Musics : MonoBehaviour
             case MusicTypes.forestDay:                
                 _audio.Stop();
                 _audio.pitch = 0.8f;
-                _audio.volume = 0.35f;
+                _audio.volume = 0.4f;
                 _audio.clip = ForestDay;
                 _audio.Play();
                 break;
@@ -74,8 +75,9 @@ public class Musics : MonoBehaviour
     {
         isAmbient = true;
         isDay = true;
-        StartCoroutine(playMusicGradient());
         PlayMusic(MusicTypes.forestDay);
+        StartCoroutine(playMusicGradient());
+        
         /*
         MusicTypes rnd = (MusicTypes)UnityEngine.Random.Range(0, 1);
 
@@ -100,14 +102,15 @@ public class Musics : MonoBehaviour
     {
         
         float volume = _audio.volume;
-        float delta = volume / 10f;
+
+        float delta = volume / 15f;
                 
         _audio.volume = 0;
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 15; i++)
         {
             _audio.volume += delta;
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
     

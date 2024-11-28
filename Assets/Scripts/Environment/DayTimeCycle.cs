@@ -2,13 +2,13 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using VContainer;
 
 public class DayTimeCycle : MonoBehaviour
 {
     [Inject] private Camera _camera;
+    [Inject] private PlayerControl pc;
 
     [SerializeField] private Light mainSun;
     [SerializeField] private Material materialForTransparent;
@@ -28,14 +28,24 @@ public class DayTimeCycle : MonoBehaviour
     private float to21AngleEnd = 155f;
 
     //Colors for back camera
-    private Color maxDayColor = new Color(210f / 255f, 1f, 1f);
+    private Color maxDayColor = new Color(220f / 255f, 1f, 1f);
     private Color minDayColor = new Color(0, 0, 0);
-    private Color startDayColor = new Color(1f, 1f, 210f / 255f);
+    private Color startDayColor = new Color(220f / 255f, 226f / 255f, 226f / 255f);
 
     //Transparent material data
     private Color maxMatLight = new Color(1, 1, 1, 1);
     private Color mediumMatLight = new Color(0.8f, 0.8f, 0.8f, 1);
-    private Color minMaxLight = new Color(0.1f, 0.1f, 0.1f, 1);
+    private Color minMaxLight = new Color(0.2f, 0.2f, 0.2f, 1);
+
+
+    //Sun and Moon
+    [SerializeField] private Transform baseSunMoon;
+    [SerializeField] private Transform sun;
+    [SerializeField] private Transform moon;
+    [SerializeField] private GameObject stars;
+    private Transform player;
+    private float _timer;
+    private float _cooldown = 0.1f;
 
     public int CurrentHour()
     {
@@ -60,7 +70,9 @@ public class DayTimeCycle : MonoBehaviour
 
         cameraTransform = _camera.transform;
         sunTransform = mainSun.transform;
-                
+
+        player = pc.transform;
+        baseSunMoon.position = player.position;        
     }
 
     // Update is called once per frame
@@ -79,6 +91,16 @@ public class DayTimeCycle : MonoBehaviour
         //print(CurrentHour() + " : " + CurrentMinutes());
 
         lightDuringDay(CurrentHour());
+
+        if (_timer > _cooldown)
+        {
+            _timer = 0;
+            baseSunMoon.position = player.position;
+        }
+        else
+        {
+            _timer += Time.deltaTime;
+        }
     }
 
     private void lightDuringDay(int hour)
@@ -102,6 +124,12 @@ public class DayTimeCycle : MonoBehaviour
 
             float _timer = (12 - hour) * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.DOLocalRotate(new Vector3(90, 0, 0), _timer).SetEase(Ease.Linear);
+
+            moon.gameObject.SetActive(false);
+            stars.gameObject.SetActive(false);
+            sun.gameObject.SetActive(true);
+            sun.localEulerAngles = new Vector3(Mathf.Lerp(-90, 0, lerpForCurrentHour), 0, 0);
+            sun.DOLocalRotate(Vector3.zero, _timer).SetEase(Ease.Linear);
         }
         else if (hour >= 12 && hour < 21)
         {
@@ -112,22 +140,82 @@ public class DayTimeCycle : MonoBehaviour
 
             float _timer = (21 - hour) * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.DOLocalRotate(new Vector3(to21AngleEnd, 0, 0), _timer).SetEase(Ease.Linear);
+
+            moon.gameObject.SetActive(false);
+            stars.gameObject.SetActive(false);
+            sun.gameObject.SetActive(true);
+            sun.localEulerAngles = new Vector3(Mathf.Lerp(0, 90, lerpForCurrentHour), 0, 0);
+            sun.DOLocalRotate(new Vector3(90,0,0), _timer).SetEase(Ease.Linear);
         }
         else if (hour >= 21 && hour < 22)
         {
             float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.localEulerAngles = new Vector3(to21AngleEnd, 0, 0);
             sunTransform.DOLocalRotate(new Vector3(270, 0, 0), _timer).SetEase(Ease.Linear);
+
+            moon.gameObject.SetActive(false);
+            stars.gameObject.SetActive(false);
+            sun.gameObject.SetActive(true);
+            sun.localEulerAngles = new Vector3(90, 0, 0);
+            sun.DOLocalRotate(new Vector3(130, 0, 0), _timer).SetEase(Ease.Linear);
         }
         else if ((hour >= 22 && hour <= 23) || (hour >= 0 && hour < 5))
         {
             sunTransform.localEulerAngles = new Vector3(270, 0, 0);
+            sun.gameObject.SetActive(false);
+            stars.gameObject.SetActive(true);
+            moon.gameObject.SetActive(true);
+            float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
+            switch (hour)
+            {
+                case 22:
+                    
+                    moon.localEulerAngles = new Vector3(-120, 0, 0);
+                    moon.DOLocalRotate(new Vector3(-100, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+
+                case 23:
+                    moon.localEulerAngles = new Vector3(-100, 0, 0);
+                    moon.DOLocalRotate(new Vector3(-75, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+
+                case 0:
+                    moon.localEulerAngles = new Vector3(-75, 0, 0);
+                    moon.DOLocalRotate(new Vector3(-40, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+
+                case 1:
+                    moon.localEulerAngles = new Vector3(-40, 0, 0);
+                    moon.DOLocalRotate(new Vector3(0, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+
+                case 2:
+                    moon.localEulerAngles = new Vector3(0, 0, 0);
+                    moon.DOLocalRotate(new Vector3(40, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+
+                case 3:
+                    moon.localEulerAngles = new Vector3(40, 0, 0);
+                    moon.DOLocalRotate(new Vector3(75, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+
+                case 4:
+                    moon.localEulerAngles = new Vector3(75, 0, 0);
+                    moon.DOLocalRotate(new Vector3(110, 0, 0), _timer).SetEase(Ease.Linear);
+                    break;
+            }                        
         }
         else if (hour >= 5 && hour < 6)
         {
             float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
             sunTransform.localEulerAngles = new Vector3(270, 0, 0);
             sunTransform.DOLocalRotate(new Vector3(385, 0, 0), _timer, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+
+            stars.gameObject.SetActive(false);
+            moon.gameObject.SetActive(false);
+            sun.gameObject.SetActive(true);
+            sun.localEulerAngles = new Vector3(-130, 0, 0);
+            sun.DOLocalRotate(new Vector3(-90, 0, 0), _timer).SetEase(Ease.Linear);
         }        
     }
 

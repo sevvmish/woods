@@ -18,14 +18,15 @@ public class InputControl : MonoBehaviour
     private readonly float XLimit = 10;
         
     [SerializeField] private PointerDownOnly jumpButton;
-    [SerializeField] private PointerDownOnly useButton;
-    [SerializeField] private PointerMoveOnly moverSurface;
-
-    private Ray ray;
-    private RaycastHit hit;
-    private float cameraRayCast = 50f;
-
     
+    [SerializeField] private PointerDownOnly useButton;
+    [SerializeField] private GameObject iconUseButtonUse;
+    [SerializeField] private GameObject iconUseButtonHit;
+    private bool isUseNotHit;
+
+    [SerializeField] private PointerMoveOnly moverSurface;
+    
+        
 
     // Start is called before the first frame update
     void Start()
@@ -47,10 +48,12 @@ public class InputControl : MonoBehaviour
         else
         {            
             Globals.WORKING_DISTANCE = 20;
-
+            playerControl.GetComponent<ActionControl>().SetInput(this);
             moverSurface.gameObject.SetActive(true);
             jumpButton.gameObject.SetActive(true);
             useButton.gameObject.SetActive(true);
+
+            ShowHitButton();
         }
                 
     }
@@ -69,7 +72,19 @@ public class InputControl : MonoBehaviour
         }                       
     }
 
+    public void ShowUseButton()
+    {
+        iconUseButtonUse.gameObject.SetActive(true);
+        iconUseButtonHit.gameObject.SetActive(false);
+        isUseNotHit = true;
+    }
 
+    public void ShowHitButton()
+    {
+        iconUseButtonUse.gameObject.SetActive(false);
+        iconUseButtonHit.gameObject.SetActive(true);
+        isUseNotHit = false;
+    }
 
     private void forMobile()
     {        
@@ -91,7 +106,19 @@ public class InputControl : MonoBehaviour
             playerControl.SetJump();
         }
 
-        
+        if (useButton.IsPressed || (Globals.IsMobile && Input.GetKeyDown(KeyCode.Q)))
+        {
+            if (isUseNotHit)
+            {
+                actions.UsePressed();
+            }
+            else
+            {
+                actions.UseHit();
+            }
+        }
+
+
         Vector2 delta2 = moverSurface.DeltaPosition;
         Vector2 delta = delta2.normalized;
 

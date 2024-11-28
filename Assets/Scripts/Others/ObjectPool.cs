@@ -89,7 +89,7 @@ public class ObjectPool : MonoBehaviour
         }
             
 
-        //print("instantiated new object of type: queue is full");
+        //print("instantiated new object of type: queue is full - " + example.name);
         index++;
         GameObject _object = null;
         if (storage == null)

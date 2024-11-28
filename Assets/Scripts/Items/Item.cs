@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class Item : ScriptableObject
     public string DescriptionEng;
     public ItemTypes ItemType;
     public Sprite UISprite;
+    public int MaxStack;
 
     public static bool IsItemWeapon(int ID)
     {
@@ -20,12 +22,23 @@ public class Item : ScriptableObject
         return IDsForWeapons.Contains(ID);
     }
 
-    
+    public override bool Equals(object obj)
+    {
+        return obj is Item item &&
+               base.Equals(obj) &&
+               ID == item.ID;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(base.GetHashCode(), ID);
+    }
 }
 
 public enum ItemTypes
 {
     None,
     Wood_simple,
-    Axe
+    Axe1H,
+    Stone
 }

@@ -15,6 +15,9 @@ public class AimInformerUI : MonoBehaviour
     [SerializeField] private GameObject informerExample;
     [SerializeField] private Transform location;
 
+    private ActionControl actions;
+    private GameObject objectForActionsForMobile;
+
     private ObjectPool informerPool;
     private Dictionary<GameObject, RectTransform> assetsForMobileVisibility = new Dictionary<GameObject, RectTransform>();
 
@@ -28,13 +31,12 @@ public class AimInformerUI : MonoBehaviour
     {
         informerPool = new ObjectPool(10, informerExample, location);
 
-
         //aim text data
         aimSign.text = "";
         if (Globals.IsMobile)
         {
             aimSign.fontSize = 32;
-            
+            actions = pc.GetComponentInChildren<ActionControl>();
         }
         else
         {
@@ -45,9 +47,9 @@ public class AimInformerUI : MonoBehaviour
 
     private void Update()
     {
+        float minDistance = 1000;
         if (assetsForMobileVisibility.Count > 0)
-        {
-            
+        {            
             if (_timer > _cooldown)
             {
                 _timer = 0;
@@ -69,6 +71,11 @@ public class AimInformerUI : MonoBehaviour
 
                 assetsForMobileVisibility[key].anchoredPosition = _camera.WorldToScreenPoint(key.transform.position + Vector3.up * 1.5f);
 
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    objectForActionsForMobile = key;
+                }
             }
 
             if ( places.Count > 0)
@@ -90,7 +97,17 @@ public class AimInformerUI : MonoBehaviour
             isCheck = false;
         }
 
-        
+        if (Globals.IsMobile)
+        {
+            if (objectForActionsForMobile == null)
+            {
+                actions.SetAim(null);
+            }
+            else
+            {
+                actions.SetAim(objectForActionsForMobile);
+            }            
+        }
     }
 
     public void ShowAimCursorText(GameObject g, bool isCollect)
@@ -99,7 +116,7 @@ public class AimInformerUI : MonoBehaviour
         bool isChopable = false;
         bool isMinable = false;
         
-        aimSign.text = ScreenAimNamer.GetNameByAsset(g, out isCollectable, out isChopable, out isMinable);
+        aimSign.text = Asset.GetNameByAsset(g, out isCollectable, out isChopable, out isMinable);
         string actionText = Globals.Language.Collect;
 
         if (isChopable)
@@ -135,7 +152,7 @@ public class AimInformerUI : MonoBehaviour
         {
             GameObject g = informerPool.GetObject();
             g.SetActive(true);
-            g.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = ScreenAimNamer.GetNameByAsset(asset.gameObject);
+            g.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Asset.GetNameByAsset(asset.gameObject);
             g.GetComponent<RectTransform>().anchoredPosition = _camera.WorldToScreenPoint(asset.gameObject.transform.position + Vector3.up * 1.5f);
             assetsForMobileVisibility.Add(asset.gameObject, g.GetComponent<RectTransform>());
         }

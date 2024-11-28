@@ -17,7 +17,7 @@ public class AnimationControl : MonoBehaviour
 
     private void OnEnable()
     {
-        _animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();        
         pc = transform.parent.GetComponent<PlayerControl>();
         pc.SetAnimatorData(this);
         AnimationState = AnimationStates.None;
@@ -37,6 +37,12 @@ public class AnimationControl : MonoBehaviour
     public async UniTask<bool> Hit()
     {
         await hit().AsUniTask();
+        return true;
+    }
+
+    public async UniTask<bool> Collect(Asset asset)
+    {
+        await collect(asset).AsUniTask();
         return true;
     }
 
@@ -61,7 +67,7 @@ public class AnimationControl : MonoBehaviour
 
     private void checkMovement()
     {
-        if (pc.IsGrounded && AnimationState != AnimationStates.Hit)
+        if (pc.IsGrounded && AnimationState != AnimationStates.Hit && AnimationState != AnimationStates.Collect)
         {
             float speed = pc.PlayerVelocity;
                         
@@ -142,6 +148,7 @@ public class AnimationControl : MonoBehaviour
     private async UniTask<bool> hit()
     {
         if (AnimationState == AnimationStates.Hit) return false;
+
         AnimationState = AnimationStates.Hit;
 
         string anim = "";
@@ -169,24 +176,78 @@ public class AnimationControl : MonoBehaviour
         bool isHitted = false;
 
         await UniTask.Delay(100);
+        pc.Effects.PlayEffectAtLocation(pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
 
         while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
         {
             awaited += 20;
-            print("=======");
             await UniTask.Delay(20);
             
 
-            if (awaited > 200 && !isHitted)
+            if (awaited > 100 && !isHitted)
             {
                 isHitted = true;
-                HitControl.MakeHit(pc.transform);
+                pc.Hits.MakeHit(pc.transform, Vector3.up * 1.2f);
             }
         }
 
-        print(awaited);
+        AnimationState = AnimationStates.Idle;
+        checkMovement();
+        return true;
+    }
+
+    private async UniTask<bool> collect(Asset asset)
+    {
+        if (AnimationState == AnimationStates.Collect) return false;
+
+        AnimationState = AnimationStates.Collect;
+
+        string anim = "Loot fast";
+                   
+
+        switch(Asset.GetBodyLevelByAsset(asset.AssetType))
+        {
+            default:
+                anim = "Loot fast";
+                break;
+
+            case BodyLevel.Low:
+                anim = "Loot fast";
+                break;
+
+            case BodyLevel.Medium:
+                anim = "Loot fast";
+                break;
+
+            case BodyLevel.High:
+                anim = "Loot fast";
+                break;
+        }
+
+        _animator.Play(anim);
+        int awaited = 0;
+        bool isHitted = false;
+
+        await UniTask.Delay(100);
+        
+        while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            awaited += 20;
+            await UniTask.Delay(20);
+
+
+            if (awaited > 100 && !isHitted)
+            {
+                isHitted = true;
+                if (asset.TryGetComponent(out Interactable i))
+                {
+                    i.GetHit(2);
+                }
+            }
+        }
 
         AnimationState = AnimationStates.Idle;
+        checkMovement();
         return true;
     }
 

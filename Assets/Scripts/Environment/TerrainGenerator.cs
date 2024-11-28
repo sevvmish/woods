@@ -86,7 +86,7 @@ public class TerrainGenerator : MonoBehaviour
         regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z - distanceForCheking) / 100f) * 100));
 
         
-        if (!Globals.IsMobile)
+        if (!Globals.IsLowFPS)
         {
             Vector3 farPos = pc.FarMarker.position;
 

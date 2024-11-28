@@ -7,6 +7,7 @@ public class AimerForMobile : MonoBehaviour
 {
     [Inject] private AimInformerUI UI;
 
+    
     private HashSet<GameObject> informers = new HashSet<GameObject>();
         
     private void OnTriggerEnter(Collider other)

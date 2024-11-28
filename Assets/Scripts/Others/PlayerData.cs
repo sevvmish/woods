@@ -23,6 +23,8 @@ public class PlayerData
     public float T;
     public int D;
 
+    public int[,] Inv;
+
 
     public float Zoom;
     public PlayerData()
@@ -45,6 +47,8 @@ public class PlayerData
 
         TerrainSeed = 22;
         NatureSeed = 199;
+
+        Inv = new int[32, 3];
 
         Debug.Log("created PlayerData instance");
     }

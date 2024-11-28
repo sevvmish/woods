@@ -37,7 +37,8 @@ public class NatureGenerator : MonoBehaviour
             emptyZones.Add(new VoidZone(terrainChunk.transform.position, 40));            
         }
 
-        generateTrees();        
+        generateTrees();
+        generateResources();
         generateGrass();
         clearAll();
     }
@@ -71,22 +72,28 @@ public class NatureGenerator : MonoBehaviour
             {
                 if (isInEmpty)
                 {
-                    AddNewGrass(assetManager.GetAssetByID(18),
-                    mf.transform.position + verts[i] + Vector3.down * 0.1f,
-                    new Vector3(90, 0, 0),
-                    normals[i]
-                    );
+                    int rndIndexGrass = worldGenerator.GetRandomIndex(0, i, 3, Globals.MainPlayerData.NatureSeed + 3);
 
-                    lowerIndex = -15;
+                    if (rndIndexGrass < 2)
+                    {
+                        AddNewGrass(assetManager.GetAssetByID(18),
+                        mf.transform.position + verts[i] + Vector3.down * 0.1f,
+                        new Vector3(90, 0, 0),
+                        normals[i]
+                        );
+                    }
+
+
+                    lowerIndex = -50;
                     listWithIDs = new List<int> { 34, 35, 33, 15, 16 };
                 }
                 else
                 {
-                    lowerIndex = -17;
+                    lowerIndex = -80;
                     listWithIDs = new List<int> { 18, 18, 18, 9, 9, 9, 17 };
                 }
 
-                if (Globals.IsLowFPS) lowerIndex -= 7;
+                if (Globals.IsLowFPS) lowerIndex -= 10;
             }
             else
             {
@@ -94,20 +101,27 @@ public class NatureGenerator : MonoBehaviour
                 {
                     if (!Globals.IsLowFPS)
                     {
-                        AddNewGrass(assetManager.GetAssetByID(18),
+                        int rndIndexGrass = worldGenerator.GetRandomIndex(0, i, 3, Globals.MainPlayerData.NatureSeed + 3);
+
+                        if (rndIndexGrass == 1)
+                        {
+                            AddNewGrass(assetManager.GetAssetByID(18),
                             mf.transform.position + verts[i] + Vector3.down * 0.1f,
                             new Vector3(90, 0, 0),
                             normals[i]
                             );
+                        }
+                        
 
-                        lowerIndex = -20;
+                        lowerIndex = -70;
                         listWithIDs = new List<int> { 34, 35, 33, 15, 16 };
                     }
                     else
                     {
-                        int rnd = UnityEngine.Random.Range(0, 4);
+                                                
+                        int rndIndexGrass = worldGenerator.GetRandomIndex(0, i, 5, Globals.MainPlayerData.NatureSeed + 3);
 
-                        if (rnd > 0)
+                        if (rndIndexGrass == 1)
                         {
                             AddNewGrass(assetManager.GetAssetByID(18),
                             mf.transform.position + verts[i] + Vector3.down * 0.1f,
@@ -116,9 +130,8 @@ public class NatureGenerator : MonoBehaviour
                             );
                         }
 
-                        
 
-                        lowerIndex = -55;
+                        lowerIndex = -100;
                         listWithIDs = new List<int> { 34, 35, 33, 15, 16 };
                     }
                     
@@ -127,12 +140,12 @@ public class NatureGenerator : MonoBehaviour
                 {
                     if (!Globals.IsLowFPS)
                     {
-                        lowerIndex = -25;
+                        lowerIndex = -90;
                         listWithIDs = new List<int> { 18, 18, 18, 9, 9, 9, 17 };
                     }
                     else
                     {
-                        lowerIndex = -50;
+                        lowerIndex = -150;
                         listWithIDs = new List<int> { 18, 18, 18, 9, 9, 9, 17 };
                     }
                     
@@ -141,7 +154,7 @@ public class NatureGenerator : MonoBehaviour
 
 
 
-            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);
+            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 2);
 
             if (rndIndex >= 0)
             {                
@@ -180,13 +193,64 @@ public class NatureGenerator : MonoBehaviour
             if (IsInVoidZone(mf.transform.position + positionOnMesh[i])) continue;
             if (IsInEmptyZone(mf.transform.position + positionOnMesh[i])) continue;
 
-            int rndIndex = worldGenerator.GetRandomIndex(-150, i, 6, Globals.MainPlayerData.NatureSeed);
+            int rndIndex = worldGenerator.GetRandomIndex(-150, i, 8, Globals.MainPlayerData.NatureSeed);
 
             if (rndIndex >= 0)
             {
                 AddNewTree(assetManager.GetTree(AssetTypes.terrain_flat, rndIndex),
                     mf.transform.position + positionOnMesh[i] + Vector3.down * 0.2f,
                     new Vector3(0, UnityEngine.Random.Range(90, 270), 0), i);
+            }
+        }
+    }
+
+    private void generateResources()
+    {
+        //resources
+        for (int i = 0; i < verts.Length; i++)
+        {
+            if (IsInVoidZone(mf.transform.position + positionOnMesh[i])) continue;
+
+            List<int> listWithIDs = new List<int>();
+            int lowerIndex = 0;
+
+            bool isInEmpty = IsInEmptyZone(mf.transform.position + positionOnMesh[i]);
+
+            if (isInEmpty)
+            {
+                lowerIndex = -700;
+                listWithIDs = new List<int> { 22, 22, 23, 23, 20, 20, 21, 21, 36 };
+            }
+            else
+            {
+                lowerIndex = -500;
+                listWithIDs = new List<int> { 10, 10, 19, 19, 22, 22, 23, 23, 20, 20, 21, 21, 36 };
+            }
+
+            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);
+
+            if (rndIndex >= 0)
+            {
+                AddNewResource(assetManager.GetAssetByIndexFromLists(listWithIDs, rndIndex),
+                    mf.transform.position + verts[i] + Vector3.down * 0.1f,
+                    new Vector3(0, UnityEngine.Random.Range(90, 270), 0));
+            }
+        }
+    }
+
+    private void AddNewResource(GameObject g, Vector3 pos, Vector3 eulerAngle)
+    {
+        g.transform.position = pos;        
+        g.transform.localEulerAngles += eulerAngle;
+        g.SetActive(false);
+
+        for (int j = 0; j < data.Cells.Count; j++)
+        {
+            if (data.Cells[j].IsInsideBounds(g.transform.position))
+            {
+                g.transform.parent = data.Cells[j].Location;
+                data.Cells[j].closeObjects.Add(g);
+                break;
             }
         }
     }

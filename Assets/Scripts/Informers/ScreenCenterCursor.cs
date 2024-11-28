@@ -44,7 +44,7 @@ public class ScreenCenterCursor : MonoBehaviour
 
     private void checkAim()
     {
-        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward * 100, out hit, 20, ignoreMask))
+        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward * 100, out hit, 16, ignoreMask))
         {
             if (hit.collider.gameObject != null)
             {

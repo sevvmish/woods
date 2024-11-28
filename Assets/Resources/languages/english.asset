@@ -25,3 +25,10 @@ MonoBehaviour:
   E: E
   TreeSmall: Young tree
   TreeHard: Solid tree
+  Brunches: Branches
+  Bushes: Bushes
+  Stone: Stone
+  Mushroom: Mushroom
+  Flower: Flower
+  WoodLog: Wood log
+  Campfire: Campfire

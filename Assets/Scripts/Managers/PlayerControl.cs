@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,15 @@ using VContainer;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerControl : MonoBehaviour
 {
-    [Inject] private Camera _camera;
+    [Inject] private EffectsManager effects;
+    [Inject] private HitControl hitControl;
 
     [Header("Controls")]    
     private AnimationControl animationControl;
     private Transform playerLocation;
+
+    public EffectsManager Effects => effects;
+    public HitControl Hits => hitControl;
 
     //INPUT
     public float angleYForMobile { get; private set; }
@@ -21,7 +26,10 @@ public class PlayerControl : MonoBehaviour
     public void SetVertical(float ver) => vertical = ver;
     public void SetRotationAngle(float ang) => angleY = ang;
     public void SetJump() => isJump = true;
-    public void SetUse() => isUse = true;
+    
+    public Action<Asset> ActivateCollect;
+
+        
     public void SetHit() => isHit = true;
     public Rigidbody GetRigidbody => _rigidbody;
     public void SetForward(bool isOk) => isForward = isOk;
@@ -32,7 +40,8 @@ public class PlayerControl : MonoBehaviour
     public Transform FarMarker { get; private set; }
 
     private bool isJump;
-    private bool isUse;
+
+    
     private bool isHit;
     private bool isForward;    
     private bool isSolidPlayerBodyON;
@@ -78,6 +87,8 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ActivateCollect = makeCollect;
+
         GameObject g = new GameObject();
         g.name = "Marker";
         g.transform.position = this.transform.forward * 150;
@@ -150,10 +161,12 @@ public class PlayerControl : MonoBehaviour
         PlayerCurrentSpeed /= multiplier;
     }
 
+    
+
     private void Update()
     {        
         if (jumpCooldown > 0) jumpCooldown -= Time.deltaTime;
-
+                
         if (isForward && IsCanWalk)
         {
             movement(true);
@@ -163,41 +176,79 @@ public class PlayerControl : MonoBehaviour
             movement(false);
         }
 
-        if (isHit && IsCanAct)
+
+        if (isHit && IsCanAct && animationControl.AnimationState != AnimationStates.Fly)
         {
             MakeHit().Forget();
         }
+        else
+        {
+            isHit = false;
+            if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0 || Mathf.Abs(angleY) > 0)
+            {
+                float turnKoeff = PlayerCurrentSpeed * 0.03f;
+            
+                if (!Globals.IsMobile)
+                {
+                    angleYForMobile += angleY;
 
+
+                    if (Globals.IsMobile)
+                    {
+                        _rigidbody.DORotate(new Vector3(_transform.eulerAngles.x, angleYForMobile, _transform.eulerAngles.z), Time.deltaTime * 10);
+                    }
+                    else
+                    {
+                        _rigidbody.MoveRotation(Quaternion.Euler(new Vector3(_transform.eulerAngles.x, angleYForMobile, _transform.eulerAngles.z)));
+                    }
+
+                    angleY = 0;
+
+
+                    howLongMoving = 0;
+                    horizontal = 0;
+                    vertical = 0;
+                }
+                
+            }
+        }
+    }
+
+    private void makeCollect(Asset asset)
+    {
+        if (IsCanAct && animationControl.AnimationState != AnimationStates.Fly)
+        {
+            playCollect(asset).Forget();
+        }
+    }
+    private async UniTaskVoid playCollect(Asset asset)
+    {
+        IsCanAct = false;
+        IsCanWalk = false;        
+        _rigidbody.velocity = Vector3.zero;
+        
+        await animationControl.Collect(asset).AsUniTask();
+
+        IsCanAct = true;
+        IsCanWalk = true;        
     }
 
     private async UniTaskVoid MakeHit()
     {        
         IsCanAct = false;
+        IsCanWalk = false;
 
-        if (Mathf.Abs(angleY) > 0)
-        {
-            angleYForMobile += angleY;
-        }
-
-        float angle = Mathf.Atan2(horizontal, vertical) * 180 / Mathf.PI;
-
-        if (Globals.IsMobile)
-        {
-            _rigidbody.DORotate(new Vector3(_transform.eulerAngles.x, angleYForMobile + angle, _transform.eulerAngles.z), Time.deltaTime * 10);
-        }
-        else
-        {
-            _rigidbody.MoveRotation(Quaternion.Euler(new Vector3(_transform.eulerAngles.x, angleYForMobile + angle, _transform.eulerAngles.z)));
-        }
-
-        horizontal = 0;
-        vertical = 0;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.AddRelativeForce(Vector3.forward * 10f, ForceMode.Impulse);
 
         await animationControl.Hit().AsUniTask();
-
+        
         isHit = false;
         IsCanAct = true;
+      
+        IsCanWalk = true;
     }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -462,5 +513,6 @@ public enum AnimationStates
     Run,
     Fly,
     Walk,
-    Hit
+    Hit,
+    Collect
 }

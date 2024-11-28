@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 10
-  assetType: 0
-  terrainType: 0
+  assetType: 6
 --- !u!1 &9133161124041005799
 GameObject:
   m_ObjectHideFlags: 0

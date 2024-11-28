@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 999387982918498089}
   - component: {fileID: 5169089517637578942}
   m_Layer: 0
-  m_Name: Wood_hard id21
+  m_Name: Wood_hard id37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,6 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c816706f4cb0f3b499eeea805188d3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 21
+  id: 37
   assetType: 14
-  terrainType: 0

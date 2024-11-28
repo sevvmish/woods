@@ -22,10 +22,14 @@ public class AssetManager : MonoBehaviour
     private Dictionary<int, int> howmany = new Dictionary<int, int>();
     private Dictionary<int, int> howmanyReturnedDictionary = new Dictionary<int, int>();
     private int howmanyReturned;
-    
+
+    private AssetInteraction assetInteraction;
+    public void SpawnAssetGiverAtLocation(Vector3 pos, int resourceID, int itemID, int amountOfItem) => assetInteraction.SpawnAssetGiverAtLocation(pos, resourceID, itemID, amountOfItem);
 
     private void Awake()
     {
+        assetInteraction = GetComponent<AssetInteraction>();
+
         if (assets != null && assets.Length > 0)
         {
             for (int i = 0; i < assets.Length; i++)
@@ -67,7 +71,16 @@ public class AssetManager : MonoBehaviour
         {
             if (howmany[item] > 1)
             {
-                assetsPools[item].AddAdditionalLimit((int)(howmany[item] * 0.7f));
+                HashSet<int> doubleIDs = new HashSet<int>() {9,15,16,17,18,33,34,35,   10,19,    22,23 };
+                float koef = 0.7f;
+
+                if (doubleIDs.Contains(item))
+                {
+                    koef = 2f;
+                }
+
+
+                assetsPools[item].AddAdditionalLimit((int)(howmany[item] * koef));
             }
             //print("ID taken: " + item + ", amount taken: " + howmany[item]);
         }
@@ -102,33 +115,9 @@ public class AssetManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            foreach (var item in howmany.Keys)
-            {
-                print("ID taken: " + item + ", amount taken: " + howmany[item]);
-            }
-
-            howmany.Clear();
+            SpawnAssetGiverAtLocation(new Vector3(0, 1.2f, 5), 25, 1, 10);
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            foreach (var item in assetsPools.Keys)
-            {
-                if (assetsPools[item].OverallAmount > 2)
-                {
-                    int returnedBack = 0;
-
-                    if (howmanyReturnedDictionary.ContainsKey(item))
-                    {
-                        returnedBack = howmanyReturnedDictionary[item];
-                    }
-                    print("ID: " + item + ", amount: " + assetsPools[item].OverallAmount + ", active now:" + assetsPools[item].AmountOfActive() + ", returned: " + returnedBack);
-                }
-                    
-            }
-
-            howmany.Clear();
-        }
     }
 
     public void ReturnAsset(GameObject g)
@@ -256,13 +245,13 @@ public class AssetManager : MonoBehaviour
         {
             case AssetTypes.terrain_flat:           
 
-                if (Globals.IsLowFPS)
+                if (Globals.IsLowFPS && Globals.IsMobile)
                 {
                     IDs = new List<int>() { 8, 3, 4, 32,    7, 5, 6, 31 };
                 }
                 else
                 {
-                    IDs = new List<int>() { 14, 12, 13,    11, 28 };
+                    IDs = new List<int>() { 14, 12, 13, 30,    11, 28, 29 };
                 }
 
                 if (index >= IDs.Count)

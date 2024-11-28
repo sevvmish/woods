@@ -22,6 +22,14 @@ public class Translation : ScriptableObject
     [Header("Assets")]
     public string TreeSmall;
     public string TreeHard;
+    public string Brunches;
+    public string Bushes;
+    public string Stone;
+    public string Mushroom;
+    public string Flower;
+    public string WoodLog;
+    public string Campfire;
+
 
 
 

@@ -19,3 +19,4 @@ MonoBehaviour:
   DescriptionEng: Simple material
   ItemType: 1
   UISprite: {fileID: 21300000, guid: 82e56a16dc0067d4d8754bf2dcb6647d, type: 3}
+  MaxStack: 20
