@@ -101,8 +101,6 @@ public class Asset : MonoBehaviour
                 return true;
 
             
-
-
             default:
                 return false;
 
@@ -152,6 +150,19 @@ public class Asset : MonoBehaviour
         }
     }
 
+    public static bool IsMine(AssetTypes _type)
+    {
+        switch (_type)
+        {
+            case AssetTypes.medium_stone:
+                return true;
+
+            default:
+                return false;
+
+        }
+    }
+
     public static string getName(AssetTypes _type)
     {
         Translation lang = Globals.Language;
@@ -174,6 +185,9 @@ public class Asset : MonoBehaviour
                 return lang.Stone;
 
             case AssetTypes.stone:
+                return lang.Stone;
+
+            case AssetTypes.medium_stone:
                 return lang.Stone;
 
             case AssetTypes.mushroom:
@@ -214,6 +228,8 @@ public enum AssetTypes
     resource_stone_simple,
     resource_wood_hard,
     wood_log,
-    mushroom
+    mushroom,
+    resource_mushroom,
+    medium_stone
 
 }

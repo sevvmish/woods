@@ -69,15 +69,15 @@ public class AssetGiver : MonoBehaviour
         boxC.enabled = false;
 
         transform.parent = t;
-        transform.DOLocalMove(new Vector3(0, 2f, 0), 0.3f).SetEase(Ease.Linear);
+        transform.DOLocalMove(new Vector3(0, 2f, 0), 0.2f).SetEase(Ease.Linear);
 
         _audio.Play();        
 
-        await UniTask.Delay(300);
-        
-        transform.DOLocalMove(new Vector3(0, 0, 0), 0.2f).SetEase(Ease.Linear);
-        
         await UniTask.Delay(200);
+        
+        transform.DOLocalMove(new Vector3(0, 0, 0), 0.14f).SetEase(Ease.Linear);
+        
+        await UniTask.Delay(140);
         
         assets.ReturnAsset(resource);
         returnPool.ReturnObject(this.gameObject);

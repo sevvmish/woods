@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1409741658635864679}
   - component: {fileID: 7915671405858144428}
   - component: {fileID: 3471386976912538276}
+  - component: {fileID: 7290471310136529280}
   m_Layer: 9
   m_Name: Branch on ground02 id21
   m_TagString: Untagged
@@ -67,8 +68,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.75, y: 0.7, z: 1}
-  m_Center: {x: -0.15, y: 0.21, z: 0.18}
+  m_Size: {x: 2.75, y: 1, z: 1}
+  m_Center: {x: -0.15, y: 0.7, z: 0.18}
+--- !u!114 &7290471310136529280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479065055714435904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010147ae4cd00044e9d49da936df7743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPamount: 1000
+  dropsBeforeEnd: 0
+  dropsAtEnd: 1
+  resourceID: 25
+  itemID: 1
+  forUpVector: 1
 --- !u!1 &8079590505195018256
 GameObject:
   m_ObjectHideFlags: 0

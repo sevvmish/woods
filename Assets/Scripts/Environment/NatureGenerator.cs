@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using VContainer;
 
@@ -172,14 +173,14 @@ public class NatureGenerator : MonoBehaviour
         g.transform.position = pos;
         g.transform.LookAt(g.transform.position + normals);
         g.transform.eulerAngles += eulerAngle;
-        g.SetActive(false);
+        g.SetActive(true);
 
         for (int j = 0; j < data.Cells.Count; j++)
         {
             if (data.Cells[j].IsInsideBounds(g.transform.position))
             {
-                g.transform.parent = data.Cells[j].Location;
-                data.Cells[j].closeObjects.Add(g);
+                g.transform.parent = data.Cells[j].LocationClose;
+                //data.Cells[j].closeObjects.Add(g);
                 break;
             }
         }
@@ -213,7 +214,7 @@ public class NatureGenerator : MonoBehaviour
 
             List<int> listWithIDs = new List<int>();
             int lowerIndex = 0;
-
+            
             bool isInEmpty = IsInEmptyZone(mf.transform.position + positionOnMesh[i]);
 
             if (isInEmpty)
@@ -224,7 +225,7 @@ public class NatureGenerator : MonoBehaviour
             else
             {
                 lowerIndex = -500;
-                listWithIDs = new List<int> { 10, 10, 19, 19, 22, 22, 23, 23, 20, 20, 21, 21, 36 };
+                listWithIDs = new List<int> { 44, 45, 38, 38, 38, 10, 10, 10, 19, 19, 19, 22, 22, 22, 23, 23, 23, 20, 20, 20, 21, 21, 21, 36 };
             }
 
             int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);
@@ -234,6 +235,12 @@ public class NatureGenerator : MonoBehaviour
                 AddNewResource(assetManager.GetAssetByIndexFromLists(listWithIDs, rndIndex),
                     mf.transform.position + verts[i] + Vector3.down * 0.1f,
                     new Vector3(0, UnityEngine.Random.Range(90, 270), 0));
+
+                //medium stones
+                if (listWithIDs[rndIndex] == 44 || listWithIDs[rndIndex] == 45)
+                {
+                    busyIndexes.Add(i);
+                }
             }
         }
     }
@@ -242,14 +249,14 @@ public class NatureGenerator : MonoBehaviour
     {
         g.transform.position = pos;        
         g.transform.localEulerAngles += eulerAngle;
-        g.SetActive(false);
+        g.SetActive(true);
 
         for (int j = 0; j < data.Cells.Count; j++)
         {
             if (data.Cells[j].IsInsideBounds(g.transform.position))
             {
-                g.transform.parent = data.Cells[j].Location;
-                data.Cells[j].closeObjects.Add(g);
+                g.transform.parent = data.Cells[j].LocationClose;
+                //data.Cells[j].closeObjects.Add(g);
                 break;
             }
         }
@@ -281,7 +288,7 @@ public class NatureGenerator : MonoBehaviour
         {
             if (data.Cells[j].IsInsideBounds(g.transform.position))
             {
-                g.transform.parent = data.Cells[j].Location;
+                g.transform.parent = data.Cells[j].LocationFar;
                 break;
             }
         }

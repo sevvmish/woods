@@ -36,14 +36,14 @@ public class Interactable : MonoBehaviour
         {
             assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID, itemID, dropsAtEnd);
 
-            if (!isBefore)
+            if (!isBefore && dropsBeforeEnd > 0)
             {
                 assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID, itemID, dropsBeforeEnd);
             }
 
             assets.ReturnAsset(gameObject);
         }
-        else if (!isBefore && (HPamount/2f) >= CurrentHP)
+        else if (dropsBeforeEnd > 0 && !isBefore && (HPamount/2f) >= CurrentHP)
         {
             isBefore = true;
             assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID, itemID, dropsBeforeEnd);

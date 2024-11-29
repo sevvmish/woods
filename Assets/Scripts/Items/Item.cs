@@ -40,5 +40,6 @@ public enum ItemTypes
     None,
     Wood_simple,
     Axe1H,
-    Stone
+    Stone,
+    Mushroom
 }

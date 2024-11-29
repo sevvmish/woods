@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2845120058245134703}
   - component: {fileID: 2364542734851234100}
   - component: {fileID: 4290138452044808435}
+  - component: {fileID: 1775344572489208939}
   m_Layer: 9
   m_Name: Group fo Branch on ground03 id36
   m_TagString: Untagged
@@ -150,5 +151,23 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.58, y: 1, z: 5.45}
-  m_Center: {x: 0.45, y: 0.3, z: 0}
+  m_Size: {x: 3.58, y: 1.5, z: 5.45}
+  m_Center: {x: 0.45, y: 0.8, z: 0}
+--- !u!114 &1775344572489208939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981568428334504160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010147ae4cd00044e9d49da936df7743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPamount: 1000
+  dropsBeforeEnd: 0
+  dropsAtEnd: 2
+  resourceID: 25
+  itemID: 1
+  forUpVector: 1

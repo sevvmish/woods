@@ -91,7 +91,7 @@ public class PlayerControl : MonoBehaviour
 
         GameObject g = new GameObject();
         g.name = "Marker";
-        g.transform.position = this.transform.forward * 150;
+        g.transform.position = this.transform.forward * 160;
         g.transform.parent = this.transform;
         FarMarker = g.transform;                
     }

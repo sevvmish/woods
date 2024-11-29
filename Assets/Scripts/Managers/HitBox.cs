@@ -29,6 +29,16 @@ public class HitBox : MonoBehaviour
                 showDPS.ShowDPS(2, other.gameObject.transform, Vector3.up * 1.2f);
                 effects.PlayEffectAtLocation(effects.PunchImpactBluntPool, other.gameObject.transform.position + Vector3.up * 1.2f, 0.5f);
             }
+            else  if (Asset.IsMine(asset.AssetType))
+            {
+                if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)
+                {
+                    i.GetHit(2);
+                }
+
+                showDPS.ShowDPS(2, other.gameObject.transform, Vector3.up * 1.2f);
+                effects.PlayEffectAtLocation(effects.PunchImpactBluntPool, other.gameObject.transform.position + Vector3.up * 1.2f, 0.5f);
+            }
             else if (Asset.IsCollect(asset.AssetType))
             {
                 if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)

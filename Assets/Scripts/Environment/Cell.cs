@@ -5,26 +5,39 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     [SerializeField] private BoxCollider _collider;
-    [SerializeField] private Transform location;
-    public Transform Location { get => location; }
+    [SerializeField] private Transform locationFar;
+    [SerializeField] private Transform locationClose;
+    public Transform LocationFar { get => locationFar; }
+    public Transform LocationClose { get => locationClose; }
 
-    public List<GameObject> closeObjects = new List<GameObject>();
+    //public List<GameObject> closeObjects = new List<GameObject>();
 
-    private void setActivation(bool isActive)
+    private void OnEnable()
     {
-        location.gameObject.SetActive(isActive);
+        setActivationFar(false);
+        setActivationClose(false);
+    }
+
+    private void setActivationFar(bool isActive)
+    {
+        locationFar.gameObject.SetActive(isActive);
+    }
+
+    private void setActivationClose(bool isActive)
+    {
+        locationClose.gameObject.SetActive(isActive);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("MainCamera"))
         {
-            setActivation(true);
+            setActivationFar(true);
         }
 
         if (other.CompareTag("MainCameraClose"))
         {
-            closeObjects.ForEach(p => p.SetActive(true));
+            setActivationClose(true);
         }
     }
 
@@ -32,12 +45,12 @@ public class Cell : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            setActivation(false);
+            setActivationFar(false);
         }
 
         if (other.CompareTag("MainCameraClose"))
         {
-            closeObjects.ForEach(p => p.SetActive(false));
+            setActivationClose(false);
         }
     }
 

@@ -241,7 +241,7 @@ public class AnimationControl : MonoBehaviour
                 isHitted = true;
                 if (asset.TryGetComponent(out Interactable i))
                 {
-                    i.GetHit(2);
+                    i.GetHit(1000);
                 }
             }
         }

@@ -7,7 +7,16 @@ using UnityEngine;
 public class AssetManager : MonoBehaviour
 {
     [SerializeField] private Cell cell;
-    public Cell Cell { get => cell; }
+    public Cell GetCell()
+    {
+        return cellPool.GetObject().GetComponent<Cell>();
+    }
+    public void ReturnCell(Cell c)
+    {
+        cellPool.ReturnObject(c.gameObject);
+    }
+    private ObjectPool cellPool;
+
 
 
     [SerializeField] private Asset[] assets;
@@ -29,6 +38,8 @@ public class AssetManager : MonoBehaviour
     private void Awake()
     {
         assetInteraction = GetComponent<AssetInteraction>();
+
+        cellPool = new ObjectPool(200, cell.gameObject, transform);
 
         if (assets != null && assets.Length > 0)
         {
@@ -111,15 +122,7 @@ public class AssetManager : MonoBehaviour
         return assetsPools[id].GetObject();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SpawnAssetGiverAtLocation(new Vector3(0, 1.2f, 5), 25, 1, 10);
-        }
-
-    }
-
+    
     public void ReturnAsset(GameObject g)
     {
         int id = -1;

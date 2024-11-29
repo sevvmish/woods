@@ -174,10 +174,14 @@ public class TerrainGenerator : MonoBehaviour
         {
             for (float z = -37.5f; z <= 37.5f; z+=25)
             {
-                Cell cell = Instantiate(assetManager.Cell, g.transform);
+                Cell cell = assetManager.GetCell();//Instantiate(assetManager.Cell, g.transform);
+                cell.transform.parent = g.transform;
                 cell.transform.localPosition = new Vector3(x, 0, z);
                 cell.transform.eulerAngles = Vector3.zero;
                 cell.gameObject.SetActive(true);
+
+                //print("0: " + cell.transform.GetChild(0).gameObject.name + " - " + cell.transform.GetChild(0).childCount + ", 1: " + cell.transform.GetChild(1).gameObject.name + " - " + cell.transform.GetChild(1).childCount);
+
                 data.AddCell(cell);
             }
         }

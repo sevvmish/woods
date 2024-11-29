@@ -68,6 +68,11 @@ public class ActionControl : MonoBehaviour
                     lookAt(asset.gameObject.transform.position);
                     UseCollect(asset);
                 }
+                if (Asset.IsMine(asset.AssetType))
+                {
+                    lookAt(asset.gameObject.transform.position);
+                    UseHit();
+                }
             }
 
             
