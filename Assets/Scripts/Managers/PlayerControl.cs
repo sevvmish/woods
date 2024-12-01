@@ -12,10 +12,12 @@ public class PlayerControl : MonoBehaviour
 {
     [Inject] private EffectsManager effects;
     [Inject] private HitControl hitControl;
+    [Inject] private AssetManager assetManager;
 
     [Header("Controls")]    
     private AnimationControl animationControl;
     private Transform playerLocation;
+    
 
     public EffectsManager Effects => effects;
     public HitControl Hits => hitControl;
@@ -96,6 +98,8 @@ public class PlayerControl : MonoBehaviour
         FarMarker = g.transform;                
     }
 
+
+
     private void OnEnable()
     {        
         ignoreMask = LayerMask.GetMask(new string[] { "trigger", "player" });
@@ -114,14 +118,17 @@ public class PlayerControl : MonoBehaviour
         IsCanWalk = true;
 
         _rigidbody.MovePosition(Vector3.zero + Vector3.up * 10);
+
+
     }
 
     public void SetAnimatorData(AnimationControl animationControl)
     {
         this.animationControl = animationControl;
+        
+        EquipControl e = GetComponent<EquipControl>();
+        e.SetPlaceForWeapon(animationControl.GetComponent<PlaceForWeapon>());
     }
-
-
 
     public void StopJumpPermission(float seconds)
     {
@@ -139,8 +146,6 @@ public class PlayerControl : MonoBehaviour
 
         IsCanJump = true;
     }
-
-    
 
     public void ChangeSpeed(float multiplier, float seconds)
     {        
@@ -175,8 +180,7 @@ public class PlayerControl : MonoBehaviour
         {
             movement(false);
         }
-
-
+                
         if (isHit && IsCanAct && animationControl.AnimationState != AnimationStates.Fly)
         {
             MakeHit().Forget();

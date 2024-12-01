@@ -78,6 +78,10 @@ public class GameLifetimeScope : LifetimeScope
         g.transform.parent = GameObject.Find("MainPlayer").transform;
         g.transform.position = pos;
         g.transform.eulerAngles = rot;
+
+        g.AddComponent<EquipControl>();
+        builder.RegisterComponentInHierarchy<EquipControl>();
+
         g.AddComponent<PlayerControl>();
         g.AddComponent<ActionControl>();
         g.AddComponent<Inventory>();

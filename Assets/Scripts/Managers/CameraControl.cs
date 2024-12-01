@@ -25,8 +25,9 @@ public class CameraControl : MonoBehaviour
     private bool isZooming;
 
     private bool isUpdate = true;
-    private float _timer;
+    private float _timer;    
     private float _timerCooldown;
+    private LayerMask mainMask;
     private LayerMask ignoreMask;
     private Ray ray;
     private RaycastHit hit;
@@ -54,7 +55,7 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        mainCamTransformForRaycast = _camera.transform;        
+        mainCamTransformForRaycast = _camera.transform;
         mainPlayer = playerControl.transform;
         playerControl = mainPlayer.GetComponent<PlayerControl>();
         mainCamera = _camera.transform.parent;
@@ -64,6 +65,7 @@ public class CameraControl : MonoBehaviour
         baseCameraBodyPosition = Globals.BasePosition;
 
         ignoreMask = LayerMask.GetMask(new string[] { "trigger", "player", "ragdoll", "danger" });
+        mainMask = LayerMask.GetMask(new string[] { "terrain" });
 
         currentZoom = Globals.MainPlayerData.Zoom;
         Zoom(Globals.MainPlayerData.Zoom);
@@ -234,7 +236,7 @@ public class CameraControl : MonoBehaviour
         if (_timer > _timerCooldown)
         {            
             _timer = 0;
-            _timerCooldown = 0.02f;
+            _timerCooldown = 0.05f;
             newSystem();
         }
         else
@@ -253,7 +255,7 @@ public class CameraControl : MonoBehaviour
 
         Vector3 playerPoint = mainPlayerPoint;
 
-        if (Physics.Raycast(playerPoint + Vector3.up * 0.5f, (mainCamera.position - playerPoint).normalized, out hit, defaultCameraDistance, ~ignoreMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(playerPoint + Vector3.up * 0.5f, (mainCamera.position - playerPoint).normalized, out hit, defaultCameraDistance, mainMask))
         {
             float distToBarrier = (playerPoint - hit.point).magnitude;
 

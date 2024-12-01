@@ -9,6 +9,7 @@ public class AnimationControl : MonoBehaviour
 
     private Animator _animator;
     private PlayerControl pc;
+    private EquipControl equipControl;
     private float speedLimit = 1f;
     private float minSpeed = 0.1f;
     private float _timer;

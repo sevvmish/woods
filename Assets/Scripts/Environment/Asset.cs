@@ -230,6 +230,8 @@ public enum AssetTypes
     wood_log,
     mushroom,
     resource_mushroom,
-    medium_stone
+    medium_stone,
+    axe_1h,
+    hammer_1h
 
 }

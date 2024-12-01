@@ -21,9 +21,10 @@ public class NatureGenerator : MonoBehaviour
     private Vector3[] verts;
     private Vector3[] normals;
     private List<Vector3> positionOnMesh;
+        
 
-    public void GenerateNatureInTerrainChunk(GameObject terrainChunk)
-    {
+    public async UniTaskVoid GenerateNatureInTerrainChunk(GameObject terrainChunk, bool isFast)
+    {        
         data = terrainChunk.GetComponent<TerrainData>();
         mf = data.MeshFilter;
 
@@ -39,13 +40,18 @@ public class NatureGenerator : MonoBehaviour
         }
 
         generateTrees();
+        if (!isFast) await UniTask.Delay(50);
         generateResources();
+        if (!isFast) await UniTask.Delay(50);
         generateGrass();
+        if (!isFast) await UniTask.Delay(50);
         clearAll();
+
     }
 
+    
     private void clearAll()
-    {
+    {        
         //CLEAN ALL
         busyIndexes.Clear();
         voidZones.Clear();
@@ -60,7 +66,7 @@ public class NatureGenerator : MonoBehaviour
     }
 
     private void generateGrass()
-    {
+    {        
         for (int i = 0; i < verts.Length; i++)
         {
             if (busyIndexes.Contains(i)) continue;
@@ -188,6 +194,7 @@ public class NatureGenerator : MonoBehaviour
 
     private void generateTrees()
     {
+                
         //TREE GENERATOR
         for (int i = 0; i < verts.Length; i++)
         {
@@ -207,6 +214,7 @@ public class NatureGenerator : MonoBehaviour
 
     private void generateResources()
     {
+        
         //resources
         for (int i = 0; i < verts.Length; i++)
         {

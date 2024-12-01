@@ -14,6 +14,7 @@ public class Item : ScriptableObject
     public ItemTypes ItemType;
     public Sprite UISprite;
     public int MaxStack;
+    public int AssetID;
 
     public static bool IsItemWeapon(int ID)
     {

@@ -19,13 +19,16 @@ public class TerrainGenerator : MonoBehaviour
     private float _currentTimer = 0;
     private float _cooldown = 2;
     private float distanceForCheking = 100;
+    private bool isFirstRow;
 
     private Dictionary<Vector3, GameObject> readyTerrains = new Dictionary<Vector3, GameObject>();
     private List<Vector3> currentlyActivePoints = new List<Vector3>();
 
     private Queue<TerrainData> terrainsToClear = new Queue<TerrainData>();
+    private Queue<GameObject> terrainsToCreate = new Queue<GameObject>();
     private bool isCleaningTerrain;
-    
+    private bool isCreatingTerrain;
+
 
     void Start()
     {
@@ -38,6 +41,7 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (_currentTimer > _cooldown)
         {
+            isFirstRow = true;
             _currentTimer = 0;
 
             checkAround();
@@ -51,6 +55,11 @@ public class TerrainGenerator : MonoBehaviour
         {
             cleanTerrain(terrainsToClear.Dequeue()).Forget();
         }
+
+        if (!isCreatingTerrain && terrainsToCreate.Count > 0)
+        {
+            createTerrain(terrainsToCreate.Dequeue()).Forget();
+        }
     }
     private async UniTaskVoid cleanTerrain(TerrainData data)
     {
@@ -58,8 +67,18 @@ public class TerrainGenerator : MonoBehaviour
 
         data.ReleaseCells(assetManager);
 
-        await UniTask.Delay(500);
+        await UniTask.Delay(400);
         isCleaningTerrain = false;
+    }
+
+    private async UniTaskVoid createTerrain(GameObject data)
+    {
+        isCreatingTerrain = true;
+
+        natureGenerator.GenerateNatureInTerrainChunk(data, false).Forget();
+
+        await UniTask.Delay(1100);
+        isCreatingTerrain = false;
     }
 
     private void checkAround()
@@ -189,7 +208,15 @@ public class TerrainGenerator : MonoBehaviour
         readyTerrains.Add(pos, g);
         currentlyActivePoints.Add(pos);
 
-        natureGenerator.GenerateNatureInTerrainChunk(g);
+        if (!isFirstRow)
+        {
+            natureGenerator.GenerateNatureInTerrainChunk(g, true).Forget();
+        }
+        else
+        {
+            terrainsToCreate.Enqueue(g);
+        }
+        
     }
 
 }
