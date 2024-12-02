@@ -7,6 +7,7 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public int ID;
+    public ItemsQuality Quality;
     public string NameRus;
     public string NameEng;
     public string DescriptionRus;
@@ -42,5 +43,18 @@ public enum ItemTypes
     Wood_simple,
     Axe1H,
     Stone,
-    Mushroom
+    Mushroom,
+    Axe2H,
+    Pickaxe1H,
+    Pickaxe2H,
+    Flare1H
+}
+
+public enum ItemsQuality
+{
+    common,//обычный
+    good,//хороший
+    perfect,//отличный
+    super,//супер
+    legendary//легендарный
 }

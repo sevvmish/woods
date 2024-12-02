@@ -9,6 +9,12 @@ public class ItemManager : MonoBehaviour
 
     public Item GetItemByID(int ID)
     {        
+        if (ID <= 0)
+        {
+            print("wrong ID number: " + ID);
+            return null;
+        }
+
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].ID == ID) return items[i];

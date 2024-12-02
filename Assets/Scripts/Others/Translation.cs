@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,14 @@ public class Translation : ScriptableObject
     public string Attack;
     public string Block;
     public string Jump;
+    public string Inventory;
+    public string Menu;
+    public string Crafting;
+    public string Map;
+
+    [Header("UIs")]
+    public string QuickBar;
+
 
     public string Collect;
     public string Chop;
@@ -30,8 +39,21 @@ public class Translation : ScriptableObject
     public string WoodLog;
     public string Campfire;
 
+    [Header("Items")]
+    public ItemTranslation[] ItemsTranslation;
 
 
 
     public Translation() { }
+}
+
+[Serializable]
+public struct ItemTranslation
+{
+    public int ID;
+    [TextArea]
+    public string Name;
+    [TextArea]
+    public string Description;
+
 }

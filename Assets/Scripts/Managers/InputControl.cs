@@ -13,12 +13,15 @@ public class InputControl : MonoBehaviour
     [Inject] private Joystick joystick;
     [Inject] private CameraControl cameraControl;
     [Inject] private PlayerControl playerControl;
+    [Inject] private CharacterPanelUI characterPanel;
 
     private ActionControl actions;
     private readonly float XLimit = 10;
         
     [SerializeField] private PointerDownOnly jumpButton;
-    
+    [SerializeField] private PointerDownOnly inventoryButton;
+    [SerializeField] private PointerDownOnly optionsButton;
+
     [SerializeField] private PointerDownOnly useButton;
     [SerializeField] private GameObject iconUseButtonUse;
     [SerializeField] private GameObject iconUseButtonHit;
@@ -52,6 +55,8 @@ public class InputControl : MonoBehaviour
             moverSurface.gameObject.SetActive(true);
             jumpButton.gameObject.SetActive(true);
             useButton.gameObject.SetActive(true);
+            inventoryButton.gameObject.SetActive(true);
+            optionsButton.gameObject.SetActive(true);
 
             ShowHitButton();
         }
@@ -95,18 +100,18 @@ public class InputControl : MonoBehaviour
         //TODEL        
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        if (horizontal != 0 || vertical != 0)
+        if (!Globals.IsOptions && (horizontal != 0 || vertical != 0))
         {
             playerControl.SetHorizontal(horizontal);
             playerControl.SetVertical(vertical);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed)
+        
+        if (!Globals.IsOptions && (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed))
         {
             playerControl.SetJump();
         }
-
-        if (useButton.IsPressed || (Globals.IsMobile && Input.GetKeyDown(KeyCode.Q)))
+        else if (!Globals.IsOptions && (useButton.IsPressed || (Globals.IsMobile && Input.GetKeyDown(KeyCode.Q))))
         {
             if (isUseNotHit)
             {
@@ -114,10 +119,18 @@ public class InputControl : MonoBehaviour
             }
             else
             {
-                actions.UseHit();
+                actions.UseHit(HitType.None);
             }
         }
+        else if (inventoryButton.IsPressed)
+        {
+            if (!characterPanel.IsMainPanelOpened)
+            {
+                characterPanel.OpenInventory();
+            }            
+        }
 
+        if (Globals.IsOptions) return;
 
         Vector2 delta2 = moverSurface.DeltaPosition;
         Vector2 delta = delta2.normalized;
@@ -151,28 +164,46 @@ public class InputControl : MonoBehaviour
         
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        if (horizontal != 0 || vertical != 0)
+        if (!Globals.IsOptions && (horizontal != 0 || vertical != 0))
         {
             playerControl.SetHorizontal(horizontal);
             playerControl.SetVertical(vertical);
         }
 
         
-        if (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed)
+        if (!Globals.IsOptions && (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed))
         {
             playerControl.SetJump();
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
+        else if (!Globals.IsOptions && Input.GetKeyDown(KeyCode.E))
         {
             actions.UsePressed();
         }
-
-        if (Input.GetMouseButtonDown(0))
+        else if (!Globals.IsOptions && Input.GetMouseButtonDown(0))
         {
-            actions.UseHit();
+            actions.UseHit(HitType.None);
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (!characterPanel.IsMainPanelOpened)
+            {
+                characterPanel.OpenInventory();
+            }
+            else
+            {
+                characterPanel.CloseCharacterPanel();
+            }
+                
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (characterPanel.IsMainPanelOpened)
+            {
+                characterPanel.CloseCharacterPanel();                
+            }                
         }
 
+        if (Globals.IsOptions) return;
 
         Vector3 mouseDelta = new Vector3(
             Input.GetAxis("Mouse X") * Globals.MOUSE_X_SENS * Time.deltaTime, 

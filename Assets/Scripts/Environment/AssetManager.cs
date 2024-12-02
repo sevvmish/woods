@@ -39,7 +39,7 @@ public class AssetManager : MonoBehaviour
     {
         assetInteraction = GetComponent<AssetInteraction>();
 
-        cellPool = new ObjectPool(200, cell.gameObject, transform);
+        cellPool = new ObjectPool(300, cell.gameObject, transform);
 
         if (assets != null && assets.Length > 0)
         {

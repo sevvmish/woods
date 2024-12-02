@@ -232,6 +232,8 @@ public enum AssetTypes
     resource_mushroom,
     medium_stone,
     axe_1h,
-    hammer_1h
+    hammer_1h,
+    pickaxe_1h,
+    flare_1h
 
 }

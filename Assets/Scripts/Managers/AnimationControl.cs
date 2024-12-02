@@ -20,6 +20,7 @@ public class AnimationControl : MonoBehaviour
     {
         _animator = GetComponent<Animator>();        
         pc = transform.parent.GetComponent<PlayerControl>();
+        equipControl = transform.parent.GetComponent<EquipControl>();
         pc.SetAnimatorData(this);
         AnimationState = AnimationStates.None;
         idle();
@@ -35,16 +36,15 @@ public class AnimationControl : MonoBehaviour
         checkMovement();
     }
 
-    public async UniTask<bool> Hit()
+    public async UniTask Hit(HitType _type)
     {
-        await hit().AsUniTask();
-        return true;
+        await hit(_type);
     }
 
-    public async UniTask<bool> Collect(Asset asset)
+    public async UniTask Collect(Asset asset)
     {
-        await collect(asset).AsUniTask();
-        return true;
+        await collect(asset);
+        return;
     }
 
     public void JumpStart()
@@ -146,38 +146,58 @@ public class AnimationControl : MonoBehaviour
         }
     }
 
-    private async UniTask<bool> hit()
+    private async UniTask hit(HitType _type)
     {
-        if (AnimationState == AnimationStates.Hit) return false;
+        if (AnimationState == AnimationStates.Hit) return;
 
         AnimationState = AnimationStates.Hit;
 
-        string anim = "";
-
-        if (1 == 1)
+        if (equipControl.RightHandItem == null)
         {
-            int rnd = UnityEngine.Random.Range(0, 2);
-
-            switch(rnd)
+            playHitAnimationUnarmed();
+        }
+        else
+        {
+            switch (_type)
             {
-                case 0:
-                    anim = "Unarmed Hit R";
-                    
+                case HitType.Chop:
+                    playHitAnimation1HMeleeHorizontal();
                     break;
 
-                case 1:
-                    anim = "Unarmed Hit L";
+                case HitType.Mine:
+                    playHitAnimation1HMeleeVertical();
+                    break;
+
+                default:
+                    switch (equipControl.RightHandItem.ItemType)
+                    {
+                        case ItemTypes.Axe1H:
+                            playHitAnimation1HMeleeHorizontal();
+                            break;
+
+                        case ItemTypes.Flare1H:
+                            playHitAnimation1HMeleeHorizontal();
+                            break;
+
+                        case ItemTypes.Pickaxe1H:
+                            playHitAnimation1HMeleeVertical();
+                            break;
+
+                        default:
+                            playHitAnimation1HMeleeHorizontal();
+                            break;
+                    }
                     break;
             }
-            
         }
 
-        _animator.Play(anim);
+                
+        
         int awaited = 0;
         bool isHitted = false;
 
         await UniTask.Delay(100);
-        pc.Effects.PlayEffectAtLocation(pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+        
 
         while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
         {
@@ -193,13 +213,53 @@ public class AnimationControl : MonoBehaviour
         }
 
         AnimationState = AnimationStates.Idle;
-        checkMovement();
-        return true;
+        checkMovement();        
     }
 
-    private async UniTask<bool> collect(Asset asset)
+    private void playHitAnimationUnarmed()
     {
-        if (AnimationState == AnimationStates.Collect) return false;
+        string anim = "";
+
+        int rnd = UnityEngine.Random.Range(0, 2);
+
+        switch (rnd)
+        {
+            case 0:
+                anim = "Unarmed Hit R";
+
+                break;
+
+            case 1:
+                anim = "Unarmed Hit L";
+                break;
+        }
+
+        _animator.Play(anim);
+
+        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+    }
+
+    private void playHitAnimation1HMeleeHorizontal()
+    {
+        string anim = "Hit 1H hor";
+        
+        _animator.Play(anim);
+
+        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+    }
+
+    private void playHitAnimation1HMeleeVertical()
+    {
+        string anim = "Hit 1H vert";
+
+        _animator.Play(anim);
+
+        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+    }
+
+    private async UniTask collect(Asset asset)
+    {
+        if (AnimationState == AnimationStates.Collect) return;
 
         AnimationState = AnimationStates.Collect;
 
@@ -249,7 +309,6 @@ public class AnimationControl : MonoBehaviour
 
         AnimationState = AnimationStates.Idle;
         checkMovement();
-        return true;
     }
 
 

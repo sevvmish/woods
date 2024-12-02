@@ -19,6 +19,11 @@ MonoBehaviour:
   Attack: Attack
   Block: Block
   Jump: Jump
+  Inventory: Inventory
+  Menu: Menu
+  Crafting: Crafting
+  Map: Map
+  QuickBar: Quick bar
   Collect: Collect
   Chop: Chop
   Mine: Extract
@@ -32,3 +37,25 @@ MonoBehaviour:
   Flower: Flower
   WoodLog: Wood log
   Campfire: Campfire
+  ItemsTranslation:
+  - ID: 0
+    Name: 
+    Description: 
+  - ID: 0
+    Name: Simple wood
+    Description: Using for crafting and building
+  - ID: 0
+    Name: Stone axe
+    Description: Chops simple wood
+  - ID: 0
+    Name: Stone
+    Description: Using for crafting and building
+  - ID: 0
+    Name: Mushroom
+    Description: Using in magic and cooking
+  - ID: 0
+    Name: Stone pickaxe
+    Description: For mining stone
+  - ID: 0
+    Name: Simple flare
+    Description: Used for light

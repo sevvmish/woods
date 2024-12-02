@@ -61,7 +61,7 @@ public class ActionControl : MonoBehaviour
                 if (Asset.IsChop(asset.AssetType))
                 {
                     lookAt(asset.gameObject.transform.position);
-                    UseHit();
+                    UseHit(HitType.Chop);
                 }
                 else if (Asset.IsCollect(asset.AssetType) && asset.TryGetComponent(out Interactable i))
                 {
@@ -71,7 +71,7 @@ public class ActionControl : MonoBehaviour
                 if (Asset.IsMine(asset.AssetType))
                 {
                     lookAt(asset.gameObject.transform.position);
-                    UseHit();
+                    UseHit(HitType.Mine);
                 }
             }
 
@@ -87,9 +87,9 @@ public class ActionControl : MonoBehaviour
         playerControl.transform.DOLookAt(toLookAt, 0.2f).SetEase(Ease.Linear);
     }
 
-    public void UseHit()
+    public void UseHit(HitType _type)
     {
-        playerControl.SetHit();
+        playerControl.SetHit(_type);
     }
 
     public void UseCollect(Asset asset)

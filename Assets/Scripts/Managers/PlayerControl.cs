@@ -13,6 +13,8 @@ public class PlayerControl : MonoBehaviour
     [Inject] private EffectsManager effects;
     [Inject] private HitControl hitControl;
     [Inject] private AssetManager assetManager;
+    [Inject] private Inventory inventory;
+    [Inject] private EquipControl equipControl;
 
     [Header("Controls")]    
     private AnimationControl animationControl;
@@ -32,7 +34,13 @@ public class PlayerControl : MonoBehaviour
     public Action<Asset> ActivateCollect;
 
         
-    public void SetHit() => isHit = true;
+    public void SetHit(HitType _type)
+    {
+        isHit = true;
+        hitType = _type;
+    }
+    private HitType hitType;
+        
     public Rigidbody GetRigidbody => _rigidbody;
     public void SetForward(bool isOk) => isForward = isOk;
     private float horizontal;
@@ -182,11 +190,12 @@ public class PlayerControl : MonoBehaviour
         }
                 
         if (isHit && IsCanAct && animationControl.AnimationState != AnimationStates.Fly)
-        {
-            MakeHit().Forget();
+        {            
+            MakeHit(hitType).Forget();
         }
         else
         {
+            hitType = HitType.None;
             isHit = false;
             if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0 || Mathf.Abs(angleY) > 0)
             {
@@ -230,22 +239,52 @@ public class PlayerControl : MonoBehaviour
         IsCanAct = false;
         IsCanWalk = false;        
         _rigidbody.velocity = Vector3.zero;
-        
-        await animationControl.Collect(asset).AsUniTask();
+
+        await animationControl.Collect(asset);
 
         IsCanAct = true;
         IsCanWalk = true;        
     }
 
-    private async UniTaskVoid MakeHit()
+    private async UniTaskVoid MakeHit(HitType _type)
     {        
         IsCanAct = false;
         IsCanWalk = false;
+        hitType = HitType.None;
 
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.AddRelativeForce(Vector3.forward * 10f, ForceMode.Impulse);
 
-        await animationControl.Hit().AsUniTask();
+        switch(_type)
+        {
+            case HitType.Chop:
+                if (equipControl.RightHandItem == null ||  (equipControl.RightHandItem.ItemType != ItemTypes.Axe1H && equipControl.RightHandItem.ItemType != ItemTypes.Axe2H))
+                {
+                    Item item = inventory.GetAnyAxeFromInventory();
+                    if (item != null)
+                    {
+                        equipControl.EquipRightHand(item);
+                        await UniTask.Delay(20);
+                    }
+                }
+
+                break;
+
+            case HitType.Mine:
+                if (equipControl.RightHandItem == null || (equipControl.RightHandItem.ItemType != ItemTypes.Pickaxe1H && equipControl.RightHandItem.ItemType != ItemTypes.Pickaxe2H))
+                {
+                    Item item = inventory.GetAnyPickaxeFromInventory();
+                    if (item != null)
+                    {                        
+                        equipControl.EquipRightHand(item);
+                        await UniTask.Delay(20);
+                    }
+                }
+
+                break;
+        }
+
+        await animationControl.Hit(_type);
         
         isHit = false;
         IsCanAct = true;
@@ -519,4 +558,11 @@ public enum AnimationStates
     Walk,
     Hit,
     Collect
+}
+
+public enum HitType
+{
+    None,
+    Chop,
+    Mine
 }

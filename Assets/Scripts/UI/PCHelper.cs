@@ -12,6 +12,8 @@ public class PCHelper : MonoBehaviour
     [SerializeField] private TextMeshProUGUI attack;
     [SerializeField] private TextMeshProUGUI block;
     [SerializeField] private TextMeshProUGUI jump;
+    [SerializeField] private TextMeshProUGUI inventory;
+    [SerializeField] private TextMeshProUGUI menu;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,8 @@ public class PCHelper : MonoBehaviour
         attack.text = Globals.Language.Attack;
         block.text = Globals.Language.Block;
         jump.text = Globals.Language.Jump;
+        inventory.text = Globals.Language.Inventory;
+        menu.text = Globals.Language.Menu;
     }
 
     

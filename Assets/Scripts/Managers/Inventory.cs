@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VContainer;
 
 public class Inventory : MonoBehaviour
 {
     [Inject] private ItemManager itemManager;
+
+    public InventoryPosition[] GetAllInventory => inventory.Values.ToArray();
 
     private Dictionary<int, InventoryPosition> inventory = new Dictionary<int, InventoryPosition>();
     private const int maxLimit = 32;
@@ -28,6 +31,38 @@ public class Inventory : MonoBehaviour
             }
             print("=================");
         }
+    }
+
+    public Item GetAnyAxeFromInventory()
+    {
+        HashSet<ItemTypes> axes = new HashSet<ItemTypes>() { ItemTypes.Axe1H, ItemTypes.Axe2H };
+
+        for (int i = 0; i < maxLimit; i++)
+        {
+            Item item = itemManager.GetItemByID(inventory[i].ItemID);
+            if (item != null && axes.Contains(item.ItemType))
+            {
+                return itemManager.GetItemByID(inventory[i].ItemID);
+            }
+        }
+
+        return null;
+    }
+
+    public Item GetAnyPickaxeFromInventory()
+    {
+        HashSet<ItemTypes> pickaxes = new HashSet<ItemTypes>() { ItemTypes.Pickaxe1H, ItemTypes.Pickaxe2H };
+
+        for (int i = 0; i < maxLimit; i++)
+        {
+            Item item = itemManager.GetItemByID(inventory[i].ItemID);
+            if (item != null && pickaxes.Contains(item.ItemType))
+            {
+                return itemManager.GetItemByID(inventory[i].ItemID);
+            }
+        }
+
+        return null;
     }
 
     public bool TryAddItem(int id, int amount)

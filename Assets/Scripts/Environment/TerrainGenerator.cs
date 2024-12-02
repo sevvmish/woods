@@ -77,7 +77,7 @@ public class TerrainGenerator : MonoBehaviour
 
         natureGenerator.GenerateNatureInTerrainChunk(data, false).Forget();
 
-        await UniTask.Delay(1100);
+        await UniTask.Delay(1200);
         isCreatingTerrain = false;
     }
 
@@ -104,6 +104,10 @@ public class TerrainGenerator : MonoBehaviour
         //right down
         regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z - distanceForCheking) / 100f) * 100));
 
+        //==============================
+
+        //==============================
+        
         
         if (!Globals.IsLowFPS)
         {
@@ -125,7 +129,6 @@ public class TerrainGenerator : MonoBehaviour
                 //down
                 regions.Add(new Vector3(Mathf.RoundToInt((farPos.x) / 100f) * 100, 0, Mathf.RoundToInt((farPos.z - distanceForCheking) / 100f) * 100));
             }
-
         }
 
         arrangeTerrains(regions);
@@ -163,7 +166,7 @@ public class TerrainGenerator : MonoBehaviour
             if (!readyTerrains[key].activeSelf)
             {
                 float distance = (key - mainPlayer.position).magnitude;
-                if (distance > 200)
+                if (distance > 260)
                 {
                     //readyTerrains[key].GetComponent<TerrainData>().ReleaseCells(assetManager);
                     TerrainData data = readyTerrains[key].GetComponent<TerrainData>();

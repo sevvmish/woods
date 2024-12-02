@@ -27,10 +27,16 @@ public class EffectsManager : MonoBehaviour
 
     public void PlayEffectAtLocation(ObjectPool poolEffect, Vector3 pos, float _timer)
     {
-        playEffectAtLocation(poolEffect, pos, _timer).Forget();
+        playEffectAtLocation(0, poolEffect, pos, _timer).Forget();
     }
-    private async UniTaskVoid playEffectAtLocation(ObjectPool poolEffect, Vector3 pos, float _timer)
+    public void PlayEffectAtLocation(float delay, ObjectPool poolEffect, Vector3 pos, float _timer)
     {
+        playEffectAtLocation(delay, poolEffect, pos, _timer).Forget();
+    }
+    private async UniTaskVoid playEffectAtLocation(float delay, ObjectPool poolEffect, Vector3 pos, float _timer)
+    {
+        await UniTask.Delay((int)(delay * 1000));
+
         GameObject g = poolEffect.GetObject();
         g.transform.position = pos;
         g.transform.localScale = Vector3.one;
@@ -40,4 +46,7 @@ public class EffectsManager : MonoBehaviour
 
         poolEffect.ReturnObject(g);
     }
+
+    
+    
 }
