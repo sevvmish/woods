@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -25,9 +27,12 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ItemDescriptionText;
     [SerializeField] private TextMeshProUGUI ItemAdditionalInfoText;
 
+
     private ObjectPool cellItemPool;
     private Translation lang;
     private List<GameObject> shownItems = new List<GameObject>();
+    private ItemCellUI lastOutlined;
+    private PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
 
     public void Init()
     {
@@ -45,12 +50,47 @@ public class InventoryUI : MonoBehaviour
         ItemAdditionalInfoText.text = "";
     }
 
-       
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            pointerEventData.position = Input.mousePosition;
+
+            List<RaycastResult> raycastResultList = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
+
+            if (raycastResultList.Count > 0)
+            {
+                for (global::System.Int32 i = 0; i < raycastResultList.Count; i++)
+                {
+                    if (raycastResultList[i].gameObject.layer == 11)
+                    {
+                        ItemCellUI item = raycastResultList[i].gameObject.GetComponent<ItemCellUI>();
+                        showItemInfo(item.ItemCell);
+                        if (lastOutlined != null)
+                        {
+                            lastOutlined.Setoutline(false);
+                        }
+                        item.Setoutline(true);
+                        lastOutlined = item;
+                    }                    
+                }                
+            }
+        }
+        
+        
+    }
 
     private void OnEnable()
     {
-        
+        recalculateInventory();
+    }
+
+    private void recalculateInventory()
+    {
         InventoryPosition[] items = inventory.GetAllInventory;
+        if (shownItems.Count > 0) shownItems.ForEach(i => cellItemPool.ReturnObject(i));
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -60,16 +100,8 @@ public class InventoryUI : MonoBehaviour
             {
                 GameObject g = cellItemPool.GetObject();
                 g.SetActive(true);
-
                 Item item = itemManager.GetItemByID(items[i].ItemID);
-
-                g.transform.GetChild(0).GetComponent<Image>().sprite = item.UISprite;
-                g.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = items[i].Amount.ToString();
-
-                
-                g.transform.parent = baseCells[i].transform;
-                g.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                g.transform.localScale = Vector3.one;
+                g.GetComponent<ItemCellUI>().SetData(item, items[i].Amount, i, baseCells[i].gameObject);
                 shownItems.Add(g);
             }
         }
@@ -83,7 +115,7 @@ public class InventoryUI : MonoBehaviour
 
     private void showItemInfo(Item item)
     {
-        ItemIcon.gameObject.SetActive(false);
+        ItemIcon.gameObject.SetActive(true);
         ItemIcon.sprite = item.UISprite;
 
         ItemNameText.text = lang.ItemsTranslation[item.ID].Name;

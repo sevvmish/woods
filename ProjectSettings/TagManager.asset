@@ -16,8 +16,8 @@ TagManager:
   - cell
   - terrain
   - interactable
-  - 
-  - 
+  - empty cell
+  - filled cell
   - 
   - 
   - 
