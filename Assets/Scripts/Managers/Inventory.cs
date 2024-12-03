@@ -33,6 +33,30 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void ReplaceIndex(int from, int to)
+    {
+        if (from == to) return;
+
+        InventoryPosition fromItem = inventory[from];
+        InventoryPosition toItem = inventory[to];
+
+        //print("from: index - " + from + ", ID - " + fromItem.ItemID + ", amount - " + fromItem.Amount);
+        //print("from: index - " + to + ", ID - " + toItem.ItemID + ", amount - " + toItem.Amount);
+
+        if (fromItem.ItemID <= 0) return;
+        
+        if (toItem.ItemID <= 0)
+        {
+            inventory[to] = new InventoryPosition(fromItem.ItemID, fromItem.Amount);
+            inventory[from] = new InventoryPosition(0, 0);
+        }
+        else if (toItem.ItemID > 0 && fromItem.ItemID > 0 && toItem.ItemID != fromItem.ItemID)
+        {
+            inventory[to] = new InventoryPosition(fromItem.ItemID, fromItem.Amount);
+            inventory[from] = new InventoryPosition(toItem.ItemID, toItem.Amount);
+        }
+    }
+
     public Item GetAnyAxeFromInventory()
     {
         HashSet<ItemTypes> axes = new HashSet<ItemTypes>() { ItemTypes.Axe1H, ItemTypes.Axe2H };

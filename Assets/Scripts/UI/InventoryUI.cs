@@ -32,7 +32,16 @@ public class InventoryUI : MonoBehaviour
     private Translation lang;
     private List<GameObject> shownItems = new List<GameObject>();
     private ItemCellUI lastOutlined;
+
     private PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+    private List<RaycastResult> raycastResultList = new List<RaycastResult>();
+
+    private bool isItemGrabed;
+    private ItemCellUI itemGrabed;
+    private RectTransform itemGrabedRect;
+    private Vector3 itemGrabedPosition;
+    private Vector3 mouseLastPosition;
+
 
     public void Init()
     {
@@ -56,8 +65,7 @@ public class InventoryUI : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             pointerEventData.position = Input.mousePosition;
-
-            List<RaycastResult> raycastResultList = new List<RaycastResult>();
+            raycastResultList.Clear();
             EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
 
             if (raycastResultList.Count > 0)
@@ -67,19 +75,63 @@ public class InventoryUI : MonoBehaviour
                     if (raycastResultList[i].gameObject.layer == 11)
                     {
                         ItemCellUI item = raycastResultList[i].gameObject.GetComponent<ItemCellUI>();
-                        showItemInfo(item.ItemCell);
+                        itemGrabed = item;
+                        itemGrabedRect = itemGrabed.GetComponent<RectTransform>();
+                        isItemGrabed = true;
+                        mouseLastPosition = Input.mousePosition;
+                        itemGrabed.transform.parent = transform.parent;
                         if (lastOutlined != null)
                         {
                             lastOutlined.Setoutline(false);
                         }
-                        item.Setoutline(true);
+                        //item.Setoutline(true);
+                        showItemInfo(item.ItemCell);
                         lastOutlined = item;
                     }                    
                 }                
             }
         }
-        
-        
+        else if (Input.GetMouseButtonUp(0) && isItemGrabed)
+        {
+            pointerEventData.position = Input.mousePosition;
+            raycastResultList.Clear();
+            EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
+
+            if (raycastResultList.Count > 0)
+            {
+                for (global::System.Int32 i = 0; i < raycastResultList.Count; i++)
+                {
+                    if (raycastResultList[i].gameObject.layer == 10)
+                    {
+                        for (global::System.Int32 j = 0; j < baseCells.Length; j++)
+                        {
+                            if (baseCells[j].Equals(raycastResultList[i].gameObject.transform))
+                            {
+                                inventory.ReplaceIndex(itemGrabed.PositionIndex, j);
+                            }
+                        }
+                    }
+                }
+            }
+
+            isItemGrabed = false;
+            //itemGrabed.ReturnBack();
+            recalculateInventory();
+        }
+
+        if (isItemGrabed)
+        {
+            Vector3 delta = Input.mousePosition - mouseLastPosition;
+
+            mouseLastPosition = Input.mousePosition;
+                        
+            itemGrabedRect.anchoredPosition += new Vector2(delta.x, delta.y);
+            //Vector3 n = _camera.ScreenToWorldPoint(Input.mousePosition);
+            //delta = new Vector3(n.x, n.y, 0) - itemSelected.transform.position;
+
+            //newPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+            //itemSelected.transform.position = new Vector3(newPosition.x, newPosition.y, -0.1f) - delta;
+        }
     }
 
     private void OnEnable()

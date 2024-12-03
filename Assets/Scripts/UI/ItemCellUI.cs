@@ -43,4 +43,10 @@ public class ItemCellUI : MonoBehaviour
 
     public void Setoutline(bool isActive) => outline.SetActive(isActive);
 
+    public void ReturnBack()
+    {
+        transform.parent = ParentObject.transform;
+        Rect.anchoredPosition = Vector2.zero;
+    }
+
 }
