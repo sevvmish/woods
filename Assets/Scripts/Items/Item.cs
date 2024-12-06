@@ -16,12 +16,68 @@ public class Item : ScriptableObject
     public Sprite UISprite;
     public int MaxStack;
     public int AssetID;
+    public float Damage;
 
     public static bool IsItemWeapon(int ID)
     {
         HashSet<int> IDsForWeapons = new HashSet<int>() { 2 };
 
         return IDsForWeapons.Contains(ID);
+    }
+
+    public static string QualityText(ItemsQuality quality)
+    {
+        switch(quality)
+        {
+            case ItemsQuality.common:
+                return Globals.Language.Common;
+
+            case ItemsQuality.good:
+                return Globals.Language.Good;
+
+            case ItemsQuality.perfect:
+                return Globals.Language.Perfect;
+
+            case ItemsQuality.super:
+                return Globals.Language.Super;
+
+            case ItemsQuality.legendary:
+                return Globals.Language.Legendary;
+
+            default:
+                return "";
+        }
+    }
+
+    public static bool IsItemForChop(Item item)
+    {
+        if (item.ItemType == ItemTypes.Axe1H || item.ItemType == ItemTypes.Axe2H)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool IsItemForMine(Item item)
+    {
+        if (item.ItemType == ItemTypes.Pickaxe1H || item.ItemType == ItemTypes.Pickaxe2H)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool IsEquipRightHand(ItemTypes _type)
+    {
+        HashSet<ItemTypes> set = new HashSet<ItemTypes>() {ItemTypes.Axe1H, ItemTypes.Axe2H, ItemTypes.Pickaxe1H, ItemTypes.Pickaxe2H, ItemTypes.Flare1H };
+
+        return set.Contains(_type);
     }
 
     public override bool Equals(object obj)

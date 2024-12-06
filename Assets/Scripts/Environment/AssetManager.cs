@@ -61,7 +61,8 @@ public class AssetManager : MonoBehaviour
             }
         }
 
-        prepareAdditionalPools().Forget();
+        //ADDING additional pool
+        //prepareAdditionalPools().Forget();
     }
     private void addAssetByType(Asset _asset)
     {
@@ -100,6 +101,16 @@ public class AssetManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            foreach (var item in assetsPools.Keys)
+            {
+                print(assetsPools[item].OverallAmount + " = " + assetsPools[item].AmountOfActive);
+            }
+        }
+    }
 
     public GameObject GetAssetByID(int id)
     {

@@ -34,6 +34,18 @@ public class TerrainGenerator : MonoBehaviour
     {
         mainPlayer = pc.transform;
         terrainLocation = transform;
+
+        float distanceLimit = 200;
+        Vector3 playerPosOnTerrain = new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100);
+        
+        for (float x = (mainPlayer.position.x - distanceLimit); x <= (mainPlayer.position.x + distanceLimit); x += 100)
+        {
+            for (float z = (mainPlayer.position.z - distanceLimit); z <= (mainPlayer.position.z + distanceLimit); z += 100)
+            {                
+                makeTerrainChunk(new Vector3(x, 0, z));
+            }
+        }
+
         checkAround();
     }
 
@@ -85,6 +97,7 @@ public class TerrainGenerator : MonoBehaviour
     {
         List<Vector3> regions = new List<Vector3>();
 
+                
         //center
         regions.Add(new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100));
         //left up
@@ -104,8 +117,7 @@ public class TerrainGenerator : MonoBehaviour
         //right down
         regions.Add(new Vector3(Mathf.RoundToInt((mainPlayer.position.x + distanceForCheking) / 100f) * 100, 0, Mathf.RoundToInt((mainPlayer.position.z - distanceForCheking) / 100f) * 100));
 
-        //==============================
-
+        
         //==============================
         
         
@@ -152,7 +164,7 @@ public class TerrainGenerator : MonoBehaviour
         {            
             if (!readyTerrains.ContainsKey(regions[i]))
             {
-                makeTerrainChunk(regions[i]);
+                //makeTerrainChunk(regions[i]);
             }
             else if (!readyTerrains[regions[i]].activeSelf)
             {
@@ -160,6 +172,7 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
+        /*
         List<Vector3> keysToRemove = new List<Vector3>();
         foreach (Vector3 key in readyTerrains.Keys)
         {
@@ -180,7 +193,7 @@ public class TerrainGenerator : MonoBehaviour
         for (int i = 0; i < keysToRemove.Count; i++)
         {
             if (readyTerrains.ContainsKey(keysToRemove[i])) readyTerrains.Remove(keysToRemove[i]);
-        }
+        }*/
     }
 
     private void makeTerrainChunk(Vector3 pos)

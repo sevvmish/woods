@@ -53,10 +53,10 @@ public class ShowDPSUI : MonoBehaviour
         
     }
 
-    public void ShowDPS(int amount, Transform point, Vector3 UPVector)
+    public void ShowDPS(float amount, Transform point, Vector3 UPVector)
     {
         GameObject s = dpsSignPool.GetObject();
-        s.GetComponent<TextMeshProUGUI>().text = amount.ToString();
+        s.GetComponent<TextMeshProUGUI>().text = amount.ToString("f0");
         s.GetComponent<TextMeshProUGUI>().fontSize = 50;
         s.SetActive(true);
 

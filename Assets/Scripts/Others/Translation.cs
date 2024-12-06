@@ -22,6 +22,13 @@ public class Translation : ScriptableObject
     [Header("UIs")]
     public string QuickBar;
 
+    [Header("Qualities")]
+    public string Common;
+    public string Good;
+    public string Perfect;
+    public string Super;
+    public string Legendary;
+
 
     public string Collect;
     public string Chop;

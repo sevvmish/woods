@@ -170,12 +170,8 @@ public class InputControl : MonoBehaviour
             playerControl.SetVertical(vertical);
         }
 
-        
-        if (!Globals.IsOptions && (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed))
-        {
-            playerControl.SetJump();
-        }
-        else if (!Globals.IsOptions && Input.GetKeyDown(KeyCode.E))
+
+        if (!Globals.IsOptions && Input.GetKeyDown(KeyCode.E))
         {
             actions.UsePressed();
         }
@@ -183,6 +179,10 @@ public class InputControl : MonoBehaviour
         {
             actions.UseHit(HitType.None);
         }
+        else if (!Globals.IsOptions && (Input.GetKeyDown(KeyCode.Space) || jumpButton.IsPressed))
+        {
+            playerControl.SetJump();
+        }        
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (!characterPanel.IsMainPanelOpened)

@@ -9,9 +9,9 @@ public class AssetGiver : MonoBehaviour
 {
     [SerializeField] private Transform locationForResource;
     [SerializeField] private GameObject VFX;
-    [SerializeField] private AudioSource _audio;
     [SerializeField] private BoxCollider boxC;
-
+    
+    private Sounds sounds;
     private GameObject resource;
     private bool isGiven;
     private AssetManager assets;
@@ -19,6 +19,11 @@ public class AssetGiver : MonoBehaviour
 
     private int itemID;
     private int amountOfItem;
+
+    private void Start()
+    {
+        sounds = GameObject.Find("Sounds").GetComponent<Sounds>();
+    }
 
     public void SetData(AssetManager a, int resourceID, int itemID, int amount, ObjectPool rp)
     {
@@ -71,7 +76,7 @@ public class AssetGiver : MonoBehaviour
         transform.parent = t;
         transform.DOLocalMove(new Vector3(0, 2f, 0), 0.2f).SetEase(Ease.Linear);
 
-        _audio.Play();        
+        sounds.PlayGrabSound();
 
         await UniTask.Delay(200);
         

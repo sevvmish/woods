@@ -35,11 +35,8 @@ public class CharacterPanelUI : MonoBehaviour
     [SerializeField] private AudioClip closeSound;
 
     private void Start()
-    {
-        inventoryUI.SetInventory(inventory);
+    {        
         inventoryUI.Init();
-
-        inventoryUI.SetItemManager(itemManager);
 
         mainPanel.SetActive(false);
 

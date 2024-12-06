@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using VContainer;
 
 public class InventoryUI : MonoBehaviour
 {
-    public void SetInventory(Inventory i) => inventory = i;
-    private Inventory inventory;
-    public void SetItemManager(ItemManager i) => itemManager = i;
-    private ItemManager itemManager;
+    [Inject] private Sounds sounds;
+    [Inject] private Inventory inventory;
+    [Inject] private ItemManager itemManager;
+
         
     [Header("Base")]
     [SerializeField] private TextMeshProUGUI inventoryText;
@@ -26,6 +28,10 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ItemQualityText;
     [SerializeField] private TextMeshProUGUI ItemDescriptionText;
     [SerializeField] private TextMeshProUGUI ItemAdditionalInfoText;
+
+    [Header("Highlight for quickbar")]
+    [SerializeField] private GameObject numbers;
+    [SerializeField] private GameObject backs;
 
 
     private ObjectPool cellItemPool;
@@ -57,6 +63,17 @@ public class InventoryUI : MonoBehaviour
         ItemQualityText.text = "";
         ItemDescriptionText.text = "";
         ItemAdditionalInfoText.text = "";
+
+        if (Globals.IsMobile)
+        {
+            numbers.SetActive(false);
+            backs.SetActive(false);
+        }
+        else
+        {
+            numbers.SetActive(true);
+            backs.SetActive(true);
+        }
     }
 
 
@@ -80,6 +97,7 @@ public class InventoryUI : MonoBehaviour
                         isItemGrabed = true;
                         mouseLastPosition = Input.mousePosition;
                         itemGrabed.transform.parent = transform.parent;
+                        sounds.InventoryTakeSound();
                         if (lastOutlined != null)
                         {
                             lastOutlined.Setoutline(false);
@@ -108,9 +126,10 @@ public class InventoryUI : MonoBehaviour
                             if (baseCells[j].Equals(raycastResultList[i].gameObject.transform))
                             {
                                 inventory.ReplaceIndex(itemGrabed.PositionIndex, j);
+                                sounds.InventoryPutSound();
                             }
                         }
-                    }
+                    }                    
                 }
             }
 
@@ -151,6 +170,7 @@ public class InventoryUI : MonoBehaviour
             if (items[i].ItemID > 0)
             {
                 GameObject g = cellItemPool.GetObject();
+                g.transform.localScale = Vector3.one;
                 g.SetActive(true);
                 Item item = itemManager.GetItemByID(items[i].ItemID);
                 g.GetComponent<ItemCellUI>().SetData(item, items[i].Amount, i, baseCells[i].gameObject);
@@ -171,7 +191,7 @@ public class InventoryUI : MonoBehaviour
         ItemIcon.sprite = item.UISprite;
 
         ItemNameText.text = lang.ItemsTranslation[item.ID].Name;
-        ItemQualityText.text = item.Quality.ToString();
+        ItemQualityText.text = Item.QualityText(item.Quality);
         ItemDescriptionText.text = lang.ItemsTranslation[item.ID].Description;
         ItemAdditionalInfoText.text = "";
     }

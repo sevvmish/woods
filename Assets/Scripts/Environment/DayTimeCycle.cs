@@ -163,7 +163,11 @@ public class DayTimeCycle : MonoBehaviour
         {
             sunTransform.localEulerAngles = new Vector3(270, 0, 0);
             sun.gameObject.SetActive(false);
+            
             stars.gameObject.SetActive(true);
+            stars.GetComponent<ParticleSystem>().Play();
+            stars.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+
             moon.gameObject.SetActive(true);
             float _timer = 1 * 60 * 60 / Globals.TIME_SPEED_KOEF;
             switch (hour)

@@ -48,7 +48,7 @@ public class PlayerData
         TerrainSeed = 22;
         NatureSeed = 199;
 
-        Inv = new int[32, 3];
+        Inv = new int[32, 3];//Inventory
 
         Debug.Log("created PlayerData instance");
     }

@@ -144,6 +144,7 @@ public class Asset : MonoBehaviour
             case AssetTypes.wood_log:
                 return true;
 
+            
             default:
                 return false;
 
@@ -157,6 +158,7 @@ public class Asset : MonoBehaviour
             case AssetTypes.medium_stone:
                 return true;
 
+     
             default:
                 return false;
 

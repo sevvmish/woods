@@ -189,6 +189,7 @@ public class PlayerControl : MonoBehaviour
             movement(false);
         }
                 
+        
         if (isHit && IsCanAct && animationControl.AnimationState != AnimationStates.Fly)
         {            
             MakeHit(hitType).Forget();
@@ -253,7 +254,12 @@ public class PlayerControl : MonoBehaviour
         hitType = HitType.None;
 
         _rigidbody.velocity = Vector3.zero;
-        _rigidbody.AddRelativeForce(Vector3.forward * 10f, ForceMode.Impulse);
+
+        /*
+        UniTask.RunOnThreadPool(async () => {
+            await UniTask.Delay(200);
+            _rigidbody.AddRelativeForce(Vector3.forward * 10f, ForceMode.Impulse); 
+        }).Forget();*/
 
         switch(_type)
         {

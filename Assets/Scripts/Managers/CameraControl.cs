@@ -229,7 +229,7 @@ public class CameraControl : MonoBehaviour
                 
     }
 
-    /*
+    
     private void FixedUpdate()
     {
         
@@ -244,7 +244,7 @@ public class CameraControl : MonoBehaviour
             _timer += Time.deltaTime;
         }
     }
-    */
+    
 
     private Vector3 mainPlayerPoint => mainPlayer.position + Vector3.up * 1.2f;
 
@@ -255,7 +255,7 @@ public class CameraControl : MonoBehaviour
 
         Vector3 playerPoint = mainPlayerPoint;
 
-        if (Physics.Raycast(playerPoint + Vector3.up * 0.5f, (mainCamera.position - playerPoint).normalized, out hit, defaultCameraDistance, mainMask))
+        if (Physics.Raycast(playerPoint + Vector3.down * 0.4f, (mainCamera.position - playerPoint).normalized, out hit, defaultCameraDistance, mainMask))
         {
             float distToBarrier = (playerPoint - hit.point).magnitude;
 

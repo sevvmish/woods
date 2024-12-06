@@ -42,10 +42,8 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public int AmountOfActive()
-    {
-        return (index - poolOfObjects.Count);
-    }
+    public int AmountOfActive => poolOfObjects.Count;
+    
 
     public int OverallAmount => index;
 

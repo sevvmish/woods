@@ -13,6 +13,10 @@ public class Sounds : MonoBehaviour
     [SerializeField] private AudioClip pop;
     [SerializeField] private AudioClip coin;
 
+    [SerializeField] private AudioClip grab01;
+    [SerializeField] private AudioClip grab02;
+
+
     private AudioSource _audio;
 
     private void Awake()
@@ -29,6 +33,43 @@ public class Sounds : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         PlaySound(_type);
+    }
+
+    public void InventoryTakeSound()
+    {
+        _audio.pitch = 1;
+        _audio.volume = 0.5f;
+        _audio.clip = grab02;
+        _audio.Play();
+    }
+
+    public void InventoryPutSound()
+    {
+        _audio.pitch = 1;
+        _audio.volume = 0.5f;
+        _audio.clip = grab01;
+        _audio.Play();
+    }
+
+    public void PlayGrabSound()
+    {
+        int rnd = UnityEngine.Random.Range(0, 2);
+
+        _audio.pitch = 1;
+        _audio.volume = 0.5f;
+
+        switch (rnd)
+        {
+            case 0:
+                _audio.clip = grab01;
+                _audio.Play();
+                break;
+
+            case 1:
+                _audio.clip = grab02;
+                _audio.Play();
+                break;
+        }
     }
 
     public void PlaySound(SoundTypes _type)
@@ -92,9 +133,6 @@ public class Sounds : MonoBehaviour
                 _audio.clip = coin;
                 _audio.Play();
                 break;
-
-
-
         }
     }
 

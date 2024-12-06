@@ -8,7 +8,7 @@ public class NavMeshSurfaceCreator : MonoBehaviour
 {
     [SerializeField] private NavMeshSurface surface;
 
-    private void Start()
+    private void OnEnable()
     {
         surface.BuildNavMesh();
         NavMeshData data = surface.navMeshData;

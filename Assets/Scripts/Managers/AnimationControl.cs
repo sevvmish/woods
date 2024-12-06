@@ -208,7 +208,8 @@ public class AnimationControl : MonoBehaviour
             if (awaited > 100 && !isHitted)
             {
                 isHitted = true;
-                pc.Hits.MakeHit(pc.transform, Vector3.up * 1.2f);
+                pc.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 7f, ForceMode.Impulse);
+                pc.Hits.MakeHit(pc.transform, Vector3.up * 1.2f, equipControl.RightHandItem);
             }
         }
 
@@ -236,7 +237,7 @@ public class AnimationControl : MonoBehaviour
 
         _animator.Play(anim);
 
-        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, Vector3.zero, Vector3.one, 0.5f);
     }
 
     private void playHitAnimation1HMeleeHorizontal()
@@ -245,7 +246,7 @@ public class AnimationControl : MonoBehaviour
         
         _animator.Play(anim);
 
-        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, Vector3.zero, Vector3.one, 0.5f);
     }
 
     private void playHitAnimation1HMeleeVertical()
@@ -254,7 +255,7 @@ public class AnimationControl : MonoBehaviour
 
         _animator.Play(anim);
 
-        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, 0.5f);
+        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, Vector3.zero, Vector3.one, 0.5f);
     }
 
     private async UniTask collect(Asset asset)

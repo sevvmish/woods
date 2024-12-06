@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using VContainer;
 public class Inventory : MonoBehaviour
 {
     [Inject] private ItemManager itemManager;
+
+    public Action OnInventoryChanged;
 
     public InventoryPosition[] GetAllInventory => inventory.Values.ToArray();
 
@@ -50,11 +53,34 @@ public class Inventory : MonoBehaviour
             inventory[to] = new InventoryPosition(fromItem.ItemID, fromItem.Amount);
             inventory[from] = new InventoryPosition(0, 0);
         }
-        else if (toItem.ItemID > 0 && fromItem.ItemID > 0 && toItem.ItemID != fromItem.ItemID)
+        else if (toItem.ItemID > 0 && fromItem.ItemID > 0 )
         {
-            inventory[to] = new InventoryPosition(fromItem.ItemID, fromItem.Amount);
-            inventory[from] = new InventoryPosition(toItem.ItemID, toItem.Amount);
+            if (toItem.ItemID != fromItem.ItemID || (toItem.ItemID == fromItem.ItemID && itemManager.GetItemByID(toItem.ItemID).MaxStack == 1))
+            {
+                inventory[to] = new InventoryPosition(fromItem.ItemID, fromItem.Amount);
+                inventory[from] = new InventoryPosition(toItem.ItemID, toItem.Amount);
+            }
+            else if (toItem.ItemID == fromItem.ItemID && itemManager.GetItemByID(toItem.ItemID).MaxStack > 1 && toItem.Amount < itemManager.GetItemByID(toItem.ItemID).MaxStack)
+            {
+                int fromAmount = fromItem.Amount;
+                int toAmount = toItem.Amount;
+
+                int toAmountMaxCapacity = itemManager.GetItemByID(toItem.ItemID).MaxStack - toAmount;
+
+                if (toAmountMaxCapacity >= fromAmount)
+                {
+                    inventory[to] = new InventoryPosition(toItem.ItemID, toAmount + fromAmount);
+                    inventory[from] = new InventoryPosition(0, 0);
+                }
+                else
+                {
+                    inventory[to] = new InventoryPosition(toItem.ItemID, toAmount + toAmountMaxCapacity);
+                    inventory[from] = new InventoryPosition(fromItem.ItemID, fromAmount - toAmountMaxCapacity);
+                }
+            }            
         }
+
+        OnInventoryChanged?.Invoke();
     }
 
     public Item GetAnyAxeFromInventory()
@@ -91,7 +117,7 @@ public class Inventory : MonoBehaviour
 
     public bool TryAddItem(int id, int amount)
     {
-        if (id < 1) return true;
+        if (id < 1) return false;
 
         Item item = itemManager.GetItemByID(id);
 
@@ -104,6 +130,7 @@ public class Inventory : MonoBehaviour
                 if (diff >= amount)
                 {
                     inventory[existingKey].AddAmount(amount);
+                    OnInventoryChanged?.Invoke();
                     return true;
                 }      
                 else
@@ -123,6 +150,7 @@ public class Inventory : MonoBehaviour
         else
         {
             inventory[index] = new InventoryPosition(id, amount);
+            OnInventoryChanged?.Invoke();
             return true;
         }
     }
