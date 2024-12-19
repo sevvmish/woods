@@ -24,11 +24,11 @@ public class AssetInteraction : MonoBehaviour
         g.transform.position = pos + Vector3.down;
         g.SetActive(true);
 
-        int x = UnityEngine.Random.Range(-2, 3);
-        int z = UnityEngine.Random.Range(-2, 3);
+        int x = UnityEngine.Random.Range(-1, 2);
+        int z = UnityEngine.Random.Range(-1, 2);
 
         Vector3 lastPos = pos + new Vector3(x, 0, z);
-        g.transform.DOMove(g.transform.position + new Vector3(x/2f, 0, z/2f) + Vector3.up * 2, 0.3f).SetEase(Ease.OutSine).OnComplete(() =>
+        g.transform.DOMove(g.transform.position + new Vector3(x, 0, z) + Vector3.up * 2, 0.3f).SetEase(Ease.OutSine).OnComplete(() =>
         {
             g.transform.DOMove(lastPos, 0.5f).SetEase(Ease.OutBounce);
         });

@@ -48,6 +48,8 @@ public class CameraControl : MonoBehaviour
     private WaitForSeconds fixedDelta = new WaitForSeconds(0.02f);
     private float previousDistance;
 
+    public Vector3 BasePositionShiftForCamera;
+
     private void Awake()
     {
         fovControl.SetFOV();
@@ -60,9 +62,20 @@ public class CameraControl : MonoBehaviour
         playerControl = mainPlayer.GetComponent<PlayerControl>();
         mainCamera = _camera.transform.parent;
         outerCamera = mainCamera.parent;
-        mainCamera.localPosition = Globals.BasePosition;
+
+        if (Globals.IsMobile)
+        {
+            BasePositionShiftForCamera = Globals.BasePositionMob;
+        }
+        else
+        {
+            BasePositionShiftForCamera = Globals.BasePositionPC;
+        }
+        
+
+        mainCamera.localPosition = BasePositionShiftForCamera;
         mainCamera.localEulerAngles = Globals.BaseRotation;
-        baseCameraBodyPosition = Globals.BasePosition;
+        baseCameraBodyPosition = BasePositionShiftForCamera;
 
         ignoreMask = LayerMask.GetMask(new string[] { "trigger", "player", "ragdoll", "danger" });
         mainMask = LayerMask.GetMask(new string[] { "terrain" });
@@ -204,8 +217,8 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        mainCamera.localPosition = Globals.BasePosition;
-        baseCameraBodyPosition = Globals.BasePosition;
+        mainCamera.localPosition = BasePositionShiftForCamera;
+        baseCameraBodyPosition = BasePositionShiftForCamera;
 
 
         if (zoomTimer > 10)
@@ -224,7 +237,7 @@ public class CameraControl : MonoBehaviour
         }
 
 
-        outerCamera.position = mainPlayer.position;
+        outerCamera.position = mainPlayer.position + Vector3.up * 2;
         outerCamera.eulerAngles = new Vector3(outerCamera.eulerAngles.x, playerControl.angleYForMobile, outerCamera.eulerAngles.z);
                 
     }

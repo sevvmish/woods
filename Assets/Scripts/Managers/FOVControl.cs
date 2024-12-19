@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,5 +44,14 @@ public class FOVControl : MonoBehaviour
             fovClose.localPosition = new Vector3(0, 5, 42);
             fovClose.localEulerAngles = new Vector3(180, 0, 0);
         }
+
+        showFovers().Forget();
+    }
+
+    private async UniTaskVoid showFovers()
+    {
+        await UniTask.Delay(200);
+        fovClose.gameObject.SetActive(true);
+        fovFar.gameObject.SetActive(true);
     }
 }

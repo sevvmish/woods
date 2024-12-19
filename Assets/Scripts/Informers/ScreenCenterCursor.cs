@@ -10,7 +10,7 @@ public class ScreenCenterCursor : MonoBehaviour
 
     private ActionControl actions;
     private Transform playerTransform;
-    private LayerMask ignoreMask;    
+    private LayerMask aimMask;    
     private RaycastHit hit;
     private float _timer;
     private float _cooldown = 0.15f;
@@ -25,7 +25,7 @@ public class ScreenCenterCursor : MonoBehaviour
         actions = playerControl.GetComponent<ActionControl>();
 
         playerTransform = playerControl.transform;
-        ignoreMask = LayerMask.GetMask(new string[] { "interactable" });        
+        aimMask = LayerMask.GetMask(new string[] { "interactable" });        
     }
 
     // Update is called once per frame
@@ -44,7 +44,7 @@ public class ScreenCenterCursor : MonoBehaviour
 
     private void checkAim()
     {
-        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward * 100, out hit, 16, ignoreMask))
+        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out hit, 16, aimMask))
         {
             if (hit.collider.gameObject != null)
             {

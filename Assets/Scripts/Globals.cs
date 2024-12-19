@@ -41,11 +41,12 @@ public class Globals : MonoBehaviour
     public const float DRAG = 5f; //1
     public const float ANGULAR_DRAG = 5f;
 
-    public const float ZOOM_DELTA = 0.5f;//0.3f;
-    public const float ZOOM_LIMIT_LOW = 30f;
-    public const float ZOOM_LIMIT_HIGH = 80f;
+    public const float ZOOM_DELTA = 1f;//0.5f;
+    public const float ZOOM_LIMIT_LOW = 35f;
+    public const float ZOOM_LIMIT_HIGH = 60f;
 
-    public static readonly Vector3 BasePosition = new Vector3(0.25f, 8f, -4f);
+    public static readonly Vector3 BasePositionPC = new Vector3(0.5f, 5.6f, -4f);//new Vector3(0.5f, 6.3f, -4.5f);
+    public static readonly Vector3 BasePositionMob = new Vector3(0.5f, 5.6f, -4f);
     public static readonly Vector3 BaseRotation = new Vector3(50, 0, 0);
 
     public const float MOUSE_X_SENS = 600f;

@@ -175,7 +175,7 @@ public class InputControl : MonoBehaviour
         {
             actions.UsePressed();
         }
-        else if (!Globals.IsOptions && Input.GetMouseButtonDown(0))
+        else if (!Globals.IsOptions && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q)))
         {
             actions.UseHit(HitType.None);
         }
@@ -234,7 +234,7 @@ public class InputControl : MonoBehaviour
         
         if (Mathf.Abs(mouseDelta.y) > 0)
         {            
-            cameraControl.ChangeCameraAngleX(mouseDelta.y * -7 * Time.deltaTime);
+            cameraControl.ChangeCameraAngleX(mouseDelta.y * -10 * Time.deltaTime);
         }
     }
 

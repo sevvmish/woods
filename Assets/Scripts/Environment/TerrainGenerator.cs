@@ -17,7 +17,7 @@ public class TerrainGenerator : MonoBehaviour
     
     //making terrain in update
     private float _currentTimer = 0;
-    private float _cooldown = 2;
+    private float _cooldown = 0.5f;
     private float distanceForCheking = 100;
     private bool isFirstRow;
 
@@ -35,7 +35,7 @@ public class TerrainGenerator : MonoBehaviour
         mainPlayer = pc.transform;
         terrainLocation = transform;
 
-        float distanceLimit = 200;
+        float distanceLimit = 100;
         Vector3 playerPosOnTerrain = new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100);
         
         for (float x = (mainPlayer.position.x - distanceLimit); x <= (mainPlayer.position.x + distanceLimit); x += 100)

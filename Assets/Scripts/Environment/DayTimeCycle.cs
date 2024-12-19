@@ -154,7 +154,11 @@ public class DayTimeCycle : MonoBehaviour
             sunTransform.DOLocalRotate(new Vector3(270, 0, 0), _timer).SetEase(Ease.Linear);
 
             moon.gameObject.SetActive(false);
-            stars.gameObject.SetActive(false);
+
+            stars.gameObject.SetActive(true);
+            stars.GetComponent<ParticleSystem>().Play();
+            stars.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+            
             sun.gameObject.SetActive(true);
             sun.localEulerAngles = new Vector3(90, 0, 0);
             sun.DOLocalRotate(new Vector3(130, 0, 0), _timer).SetEase(Ease.Linear);

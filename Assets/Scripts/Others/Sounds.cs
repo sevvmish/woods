@@ -38,7 +38,7 @@ public class Sounds : MonoBehaviour
     public void InventoryTakeSound()
     {
         _audio.pitch = 1;
-        _audio.volume = 0.5f;
+        _audio.volume = 0.75f;
         _audio.clip = grab02;
         _audio.Play();
     }
@@ -46,7 +46,7 @@ public class Sounds : MonoBehaviour
     public void InventoryPutSound()
     {
         _audio.pitch = 1;
-        _audio.volume = 0.5f;
+        _audio.volume = 0.75f;
         _audio.clip = grab01;
         _audio.Play();
     }
