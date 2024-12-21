@@ -151,6 +151,7 @@ public class Asset : MonoBehaviour
         }
     }
 
+
     public static bool IsMine(AssetTypes _type)
     {
         switch (_type)
@@ -204,6 +205,9 @@ public class Asset : MonoBehaviour
             case AssetTypes.wood_log:
                 return lang.WoodLog;
 
+            case AssetTypes.hen_simple:
+                return lang.Hen;
+
             default:
                 return "";
 
@@ -236,6 +240,7 @@ public enum AssetTypes
     axe_1h,
     hammer_1h,
     pickaxe_1h,
-    flare_1h
+    flare_1h,
+    hen_simple
 
 }

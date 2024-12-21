@@ -35,7 +35,7 @@ public class TerrainGenerator : MonoBehaviour
         mainPlayer = pc.transform;
         terrainLocation = transform;
 
-        float distanceLimit = 100;
+        float distanceLimit = 200;
         Vector3 playerPosOnTerrain = new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100);
         
         for (float x = (mainPlayer.position.x - distanceLimit); x <= (mainPlayer.position.x + distanceLimit); x += 100)
@@ -202,7 +202,8 @@ public class TerrainGenerator : MonoBehaviour
         g.transform.parent = terrainLocation;
         g.transform.position = pos;
         g.transform.eulerAngles = Vector3.zero;
-        g.SetActive(true);
+        g.SetActive(false);
+
         TerrainData data = g.GetComponent<TerrainData>();
 
         for (float x = -37.5f; x <= 37.7f; x+=25)

@@ -5,7 +5,7 @@ using VContainer.Unity;
 public class GameLifetimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
-    {        
+    {
         if (Globals.MainPlayerData == null)
         {
 

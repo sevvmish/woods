@@ -31,7 +31,7 @@ public class CameraControl : MonoBehaviour
     private LayerMask ignoreMask;
     private Ray ray;
     private RaycastHit hit;
-
+        
     private float xLimitUp = 40;
     private float xLimitDown = 270;
 
@@ -85,6 +85,20 @@ public class CameraControl : MonoBehaviour
 
         outerCamera.eulerAngles += new Vector3(-25, 0, 0);
         defaultCameraDistance = (mainPlayerPoint - mainCamTransformForRaycast.position).magnitude;
+    }
+
+    public void ShakeCameraRot(Ease ease, float angle, float _time)
+    {
+        mainCamTransformForRaycast.DOKill();
+        mainCamTransformForRaycast.localEulerAngles = new Vector3(0, 0, angle);
+        mainCamTransformForRaycast.DOLocalRotate(Vector3.zero, _time).SetEase(ease);
+    }
+
+    public void ShakeCameraPos(Ease ease, float alt, float _time)
+    {
+        mainCamTransformForRaycast.DOKill();
+        mainCamTransformForRaycast.localPosition += Vector3.up * alt;
+        mainCamTransformForRaycast.DOLocalMove(Vector3.zero, _time).SetEase(ease);
     }
 
     public void SwapControlBody(Transform newTransform)

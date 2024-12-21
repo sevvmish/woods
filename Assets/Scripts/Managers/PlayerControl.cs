@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     [Inject] private AssetManager assetManager;
     [Inject] private Inventory inventory;
     [Inject] private EquipControl equipControl;
+    [Inject] private Sounds sound;
 
     [Header("Controls")]    
     private AnimationControl animationControl;
@@ -231,7 +232,7 @@ public class PlayerControl : MonoBehaviour
     private void makeCollect(Asset asset)
     {
         if (IsCanAct && animationControl.AnimationState != AnimationStates.Fly)
-        {
+        {            
             playCollect(asset).Forget();
         }
     }

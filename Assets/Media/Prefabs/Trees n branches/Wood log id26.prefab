@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 273879664294920295}
   - component: {fileID: 2486788923302537635}
   - component: {fileID: 6208921800136233396}
+  - component: {fileID: 4736516917305806688}
   m_Layer: 9
   m_Name: Wood log id26
   m_TagString: Untagged
@@ -69,6 +70,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 4.5}
   m_Center: {x: 0, y: 0.3, z: -0.12}
+--- !u!114 &4736516917305806688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172902253561160264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010147ae4cd00044e9d49da936df7743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPamount: 15
+  dropsBeforeEnd: 2
+  dropsAtEnd: 3
+  resourceID: 25
+  itemID: 1
+  forUpVector: 1
 --- !u!1 &5752439192665126610
 GameObject:
   m_ObjectHideFlags: 0

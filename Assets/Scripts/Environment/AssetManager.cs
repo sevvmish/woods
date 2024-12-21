@@ -33,7 +33,7 @@ public class AssetManager : MonoBehaviour
     private int howmanyReturned;
 
     private AssetInteraction assetInteraction;
-    public void SpawnAssetGiverAtLocation(Vector3 pos, int resourceID, int itemID, int amountOfItem) => assetInteraction.SpawnAssetGiverAtLocation(pos, resourceID, itemID, amountOfItem);
+    public void SpawnAssetGiverAtLocation(Vector3 pos, int resourceID, int itemID, int amountOfItem, Asset asset) => assetInteraction.SpawnAssetGiverAtLocation(pos, resourceID, itemID, amountOfItem, asset);
 
     private void Awake()
     {
@@ -45,6 +45,13 @@ public class AssetManager : MonoBehaviour
         {
             for (int i = 0; i < assets.Length; i++)
             {
+                if (assets[i] == null) continue;
+
+                if (assets[i].ID != i)
+                {
+                    print("Wrong place: ID - " + assets[i].ID + ", index is - " + i);
+                }
+
                 if (assetsDictionary.ContainsKey(assets[i].ID))
                 {
                     Debug.LogError("such ID allready in assets: " + assets[i].ID);

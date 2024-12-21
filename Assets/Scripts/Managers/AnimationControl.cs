@@ -292,6 +292,7 @@ public class AnimationControl : MonoBehaviour
 
         await UniTask.Delay(100);
         
+        
         while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             awaited += 20;

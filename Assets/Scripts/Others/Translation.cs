@@ -45,6 +45,7 @@ public class Translation : ScriptableObject
     public string Flower;
     public string WoodLog;
     public string Campfire;
+    public string Hen;
 
     [Header("Items")]
     public ItemTranslation[] ItemsTranslation;

@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010147ae4cd00044e9d49da936df7743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPamount: 10
+  HPamount: 20
   dropsBeforeEnd: 2
   dropsAtEnd: 3
   resourceID: 25

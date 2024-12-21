@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour
 {
+    [SerializeField] private CameraControl cameraControl;
+
     [SerializeField] private GameObject punchSwing;
     [SerializeField] private GameObject punchImpactBlunt;
     [SerializeField] private GameObject chopWoodEffect;
     [SerializeField] private GameObject mineStoneEffect;
     [SerializeField] private GameObject stoneDestroyed;
     [SerializeField] private GameObject treeDestroyed;
+    [SerializeField] private GameObject collectResource;
+    [SerializeField] private GameObject navMeshOnPlace;
 
+    public CameraControl GetCameraControl { get => cameraControl; }
 
     public ObjectPool PunchSwingPool { get => punchSwingPool; }
     private ObjectPool punchSwingPool;
@@ -30,6 +35,12 @@ public class EffectsManager : MonoBehaviour
 
     public ObjectPool TreeDestroyedPool { get => treeDestroyedPool; }
     private ObjectPool treeDestroyedPool;
+
+    public ObjectPool CollectResourcePool { get => collectResourcePool; }
+    private ObjectPool collectResourcePool;
+
+    public ObjectPool NavMeshOnPlacePool { get => navMeshOnPlacePool; }
+    private ObjectPool navMeshOnPlacePool;
 
 
     // Start is called before the first frame update
@@ -52,7 +63,14 @@ public class EffectsManager : MonoBehaviour
 
         treeDestroyed.SetActive(false);
         treeDestroyedPool = new ObjectPool(2, treeDestroyed, transform);
+
+        collectResource.SetActive(false);
+        collectResourcePool = new ObjectPool(2, collectResource, transform);
+
+        navMeshOnPlace.SetActive(false);
+        navMeshOnPlacePool = new ObjectPool(10, navMeshOnPlace, transform);
     }
+
 
 
     public void PlayEffectAtLocation(ObjectPool poolEffect, Vector3 pos, float _timer)

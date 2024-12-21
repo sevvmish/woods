@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010147ae4cd00044e9d49da936df7743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPamount: 5
+  HPamount: 10
   dropsBeforeEnd: 1
   dropsAtEnd: 2
   resourceID: 25
