@@ -14,8 +14,9 @@ public class InventoryUI : MonoBehaviour
     [Inject] private Sounds sounds;
     [Inject] private Inventory inventory;
     [Inject] private ItemManager itemManager;
+    [Inject] private ItemActivation itemActivation;
 
-        
+
     [Header("Base")]
     [SerializeField] private TextMeshProUGUI inventoryText;
     [SerializeField] private TextMeshProUGUI quickBarText;
@@ -49,6 +50,7 @@ public class InventoryUI : MonoBehaviour
     private Vector3 mouseLastPosition;
 
 
+
     public void Init()
     {
         lang = Globals.Language;
@@ -79,7 +81,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isItemGrabed)
         {
             pointerEventData.position = Input.mousePosition;
             raycastResultList.Clear();
@@ -96,6 +98,7 @@ public class InventoryUI : MonoBehaviour
                         itemGrabedRect = itemGrabed.GetComponent<RectTransform>();
                         isItemGrabed = true;
                         mouseLastPosition = Input.mousePosition;
+                        itemGrabedPosition = Input.mousePosition;
                         itemGrabed.transform.parent = transform.parent;
                         sounds.InventoryTakeSound();
                         if (lastOutlined != null)
@@ -119,37 +122,35 @@ public class InventoryUI : MonoBehaviour
             {
                 for (global::System.Int32 i = 0; i < raycastResultList.Count; i++)
                 {
-                    if (raycastResultList[i].gameObject.layer == 10)
+                    if ((itemGrabedPosition - Input.mousePosition).magnitude < 3)
+                    {
+                        itemActivation.ActivateItem(itemGrabed.PositionIndex);                        
+                        break;
+                    }
+                    else if (raycastResultList[i].gameObject.layer == 10)
                     {
                         for (global::System.Int32 j = 0; j < baseCells.Length; j++)
                         {
                             if (baseCells[j].Equals(raycastResultList[i].gameObject.transform))
                             {
                                 inventory.ReplaceIndex(itemGrabed.PositionIndex, j);
-                                sounds.InventoryPutSound();
+                                sounds.InventoryPutSound();                                
                             }
                         }
-                    }                    
+                    }      
+                    
                 }
             }
 
             isItemGrabed = false;
-            //itemGrabed.ReturnBack();
             recalculateInventory();
         }
 
         if (isItemGrabed)
         {
             Vector3 delta = Input.mousePosition - mouseLastPosition;
-
-            mouseLastPosition = Input.mousePosition;
-                        
+            mouseLastPosition = Input.mousePosition;                        
             itemGrabedRect.anchoredPosition += new Vector2(delta.x, delta.y);
-            //Vector3 n = _camera.ScreenToWorldPoint(Input.mousePosition);
-            //delta = new Vector3(n.x, n.y, 0) - itemSelected.transform.position;
-
-            //newPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-            //itemSelected.transform.position = new Vector3(newPosition.x, newPosition.y, -0.1f) - delta;
         }
     }
 
@@ -160,7 +161,7 @@ public class InventoryUI : MonoBehaviour
 
     private void recalculateInventory()
     {
-        InventoryPosition[] items = inventory.GetAllInventory;
+        InventoryPosition[] items = inventory.MainInventory.Values.ToArray();
         if (shownItems.Count > 0) shownItems.ForEach(i => cellItemPool.ReturnObject(i));
 
         for (int i = 0; i < items.Length; i++)
@@ -173,10 +174,19 @@ public class InventoryUI : MonoBehaviour
                 g.transform.localScale = Vector3.one;
                 g.SetActive(true);
                 Item item = itemManager.GetItemByID(items[i].ItemID);
-                g.GetComponent<ItemCellUI>().SetData(item, items[i].Amount, i, baseCells[i].gameObject);
+                g.GetComponent<ItemCellUI>().SetData(item, items[i].Amount, i, baseCells[i].gameObject, inventory.MainInventory[i]);
+
+                baseCells[i].GetChild(1).gameObject.SetActive(items[i].IsEquiped);
+
                 shownItems.Add(g);
             }
+            else
+            {
+                baseCells[i].GetChild(1).gameObject.SetActive(false);
+            }
         }
+
+        
     }
 
         

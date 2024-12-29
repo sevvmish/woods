@@ -190,6 +190,6 @@ MonoBehaviour:
   HPamount: 10
   dropsBeforeEnd: 1
   dropsAtEnd: 2
-  resourceID: 25
-  itemID: 1
+  resourceID_for_visual: 25
+  itemID_for_inventory: 1
   forUpVector: 0.5

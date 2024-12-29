@@ -17,6 +17,7 @@ public class Item : ScriptableObject
     public int MaxStack;
     public int AssetID;
     public float Damage;
+    public int MaxDurability;
 
     public static bool IsItemWeapon(int ID)
     {
@@ -103,7 +104,9 @@ public enum ItemTypes
     Axe2H,
     Pickaxe1H,
     Pickaxe2H,
-    Flare1H
+    Flare1H,
+    Fibres,
+    Cabbage
 }
 
 public enum ItemsQuality

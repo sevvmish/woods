@@ -15,6 +15,8 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] private GameObject treeDestroyed;
     [SerializeField] private GameObject collectResource;
     [SerializeField] private GameObject navMeshOnPlace;
+    [SerializeField] private GameObject bushBreak;
+    [SerializeField] private GameObject bushHit;
 
     public CameraControl GetCameraControl { get => cameraControl; }
 
@@ -41,6 +43,12 @@ public class EffectsManager : MonoBehaviour
 
     public ObjectPool NavMeshOnPlacePool { get => navMeshOnPlacePool; }
     private ObjectPool navMeshOnPlacePool;
+
+    public ObjectPool BushBreakPool { get => bushBreakPool; }
+    private ObjectPool bushBreakPool;
+
+    public ObjectPool BushHitPool { get => bushHitPool; }
+    private ObjectPool bushHitPool;
 
 
     // Start is called before the first frame update
@@ -69,6 +77,12 @@ public class EffectsManager : MonoBehaviour
 
         navMeshOnPlace.SetActive(false);
         navMeshOnPlacePool = new ObjectPool(10, navMeshOnPlace, transform);
+
+        bushBreak.SetActive(false);
+        bushBreakPool = new ObjectPool(10, bushBreak, transform);
+
+        bushHit.SetActive(false);
+        bushHitPool = new ObjectPool(10, bushHit, transform);
     }
 
 

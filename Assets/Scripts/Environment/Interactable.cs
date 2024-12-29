@@ -12,8 +12,8 @@ public class Interactable : MonoBehaviour
     
     [SerializeField] private int dropsAtEnd = 3;
 
-    [SerializeField] private int resourceID;
-    [SerializeField] private int itemID;
+    [SerializeField] private int resourceID_for_visual;
+    [SerializeField] private int itemID_for_inventory;
 
     [SerializeField] private float forUpVector = 1f;
 
@@ -44,13 +44,17 @@ public class Interactable : MonoBehaviour
 
         if (CurrentHP <= 0)
         {
-            assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID, itemID, dropsAtEnd, currentAsset);
+            assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsAtEnd, currentAsset);
 
             if (!isBefore && dropsBeforeEnd > 0)
             {
-                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID, itemID, dropsBeforeEnd, currentAsset);
+                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, currentAsset);
             }
 
+            if (gameObject.TryGetComponent(out AdditionalLoot loot))
+            {
+                loot.Giveloot();
+            }
             
             if (Asset.IsChop(_type))
             {
@@ -65,6 +69,10 @@ public class Interactable : MonoBehaviour
             {
                 effects.PlayEffectAtLocation(effects.CollectResourcePool, transform.position, 1f);
             }
+            else if (currentAsset.AssetType == AssetTypes.bush)
+            {
+                effects.PlayEffectAtLocation(effects.BushBreakPool, transform.position, 1.5f);
+            }
 
 
             assets.ReturnAsset(gameObject);
@@ -74,7 +82,7 @@ public class Interactable : MonoBehaviour
             if (dropsBeforeEnd > 0 && !isBefore && (HPamount / 2f) >= CurrentHP)
             {
                 isBefore = true;
-                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID, itemID, dropsBeforeEnd, currentAsset);
+                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, currentAsset);
             }
 
             if (Asset.IsChop(_type))

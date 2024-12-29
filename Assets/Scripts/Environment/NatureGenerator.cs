@@ -233,7 +233,7 @@ public class NatureGenerator : MonoBehaviour
             else
             {
                 lowerIndex = -500;
-                listWithIDs = new List<int> { 44, 45, 38, 38, 38, 10, 10, 10, 19, 19, 19, 22, 22, 22, 23, 23, 23, 20, 20, 20, 21, 21, 21, 36 };
+                listWithIDs = new List<int> { 44, 45, 38, 10, 10, 10, 10, 19, 19, 19, 19, 22, 22, 22, 23, 23, 20, 20, 21, 21, 36, 26, 27 };
             }
 
             int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);

@@ -68,8 +68,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 6, z: 5}
-  m_Center: {x: 0, y: 3, z: 0.18}
+  m_Size: {x: 5, y: 8, z: 5}
+  m_Center: {x: 0, y: 4, z: 0.18}
 --- !u!114 &2438304521728176163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,8 +85,8 @@ MonoBehaviour:
   HPamount: 20
   dropsBeforeEnd: 2
   dropsAtEnd: 3
-  resourceID: 25
-  itemID: 1
+  resourceID_for_visual: 25
+  itemID_for_inventory: 1
   forUpVector: 1
 --- !u!1 &6478033862572162711
 GameObject:
@@ -291,7 +291,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5732250509326480108, guid: 0347ed91f6382aa44a250b77ad9bd0e1, type: 3}
 --- !u!4 &3058204885903959235 stripped

@@ -24,6 +24,8 @@ public class PlayerData
     public int D;
 
     public int[,] Inv;
+    public int[] Equip;
+    public int[,] Dur;
 
 
     public float Zoom;
@@ -48,7 +50,9 @@ public class PlayerData
         TerrainSeed = 22;
         NatureSeed = 199;
 
-        Inv = new int[32, 3];//Inventory
+        Inv = new int[32, 2]; //Inventory ID and Amount
+        Equip = new int[0]; //what index in Inventory is equiped on player
+        Dur = new int[0,0]; //current durability of a specific items
 
         Debug.Log("created PlayerData instance");
     }

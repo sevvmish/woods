@@ -9,6 +9,7 @@ public class HitControl : MonoBehaviour
     [Inject] private EffectsManager effects;
     [Inject] private ShowDPSUI showDPS;
     [Inject] private Camera _camera;
+    [Inject] private Inventory inventory;
 
     public void MakeHit(Transform player, Vector3 UPCorrection, Item weapon)
     {
@@ -20,6 +21,7 @@ public class HitControl : MonoBehaviour
         hitter.transform.rotation = player.transform.rotation;
 
         EndHit(hitter).Forget();
+        inventory.RightHandEquipDurability?.Invoke();
     }
     private async UniTaskVoid EndHit(GameObject hitter)
     {

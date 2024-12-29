@@ -74,6 +74,19 @@ public class HitBox : MonoBehaviour
                 //showDPS.ShowDPS(2, other.gameObject.transform, Vector3.up * 1.2f);
                 //effects.PlayEffectAtLocation(effects.PunchImpactBluntPool, other.gameObject.transform.position + Vector3.up * 1.2f, 0.5f);
             }
+            else
+            {
+                if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)
+                {
+                    i.GetHit(4);
+                    showDPS.ShowDPS(4, other.gameObject.transform, Vector3.up * 1.2f);
+
+                    if (asset.AssetType == AssetTypes.bush)
+                    {
+                        effects.PlayEffectAtLocation(effects.BushHitPool, other.gameObject.transform.position, 1.5f);
+                    }
+                }
+            }
         }
     }
 }

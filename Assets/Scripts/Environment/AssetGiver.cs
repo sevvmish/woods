@@ -38,6 +38,17 @@ public class AssetGiver : MonoBehaviour
         boxC.enabled = false;
 
         resource = assets.GetAssetByID(resourceID);
+
+        if (resource.TryGetComponent(out Interactable i))
+        {
+            i.enabled = false;
+        }
+
+        if (resource.TryGetComponent(out Collider c))
+        {
+            c.enabled = false;
+        }
+
         resource.SetActive(true);
         resource.transform.parent = locationForResource;
         resource.transform.localPosition = new Vector3(0, 0.5f, 0);

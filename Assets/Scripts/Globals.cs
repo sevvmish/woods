@@ -45,15 +45,17 @@ public class Globals : MonoBehaviour
     public const float ZOOM_LIMIT_LOW = 35f;
     public const float ZOOM_LIMIT_HIGH = 60f;
 
-    public static readonly Vector3 BasePositionPC = new Vector3(0.5f, 5.6f, -4f);//new Vector3(0.5f, 6.3f, -4.5f);
-    public static readonly Vector3 BasePositionMob = new Vector3(0.5f, 5.6f, -4f);
-    public static readonly Vector3 BaseRotation = new Vector3(50, 0, 0);
+    public static readonly Vector3 BasePositionPC = new Vector3(0.5f, 5.6f, -5f);//new Vector3(0.5f, 6.3f, -4.5f);
+    public static readonly Vector3 BasePositionMob = new Vector3(0.5f, 5.6f, -5f);
+    public static readonly Vector3 BaseRotation = new Vector3(45, 0, 0);
 
     public const float MOUSE_X_SENS = 600f;
     public const float MOUSE_Y_SENS = 450f;
 
     public static float WORKING_DISTANCE = 20;
     public const float SHADOW_Y_DISTANCE = 8f;
+
+    public static Vector2 LastRandomThrownAsset = new Vector2(0,0);
 
     public static bool IsMobileChecker()
     {        

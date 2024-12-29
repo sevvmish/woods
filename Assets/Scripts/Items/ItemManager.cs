@@ -17,6 +17,7 @@ public class ItemManager : MonoBehaviour
 
         for (int i = 0; i < items.Length; i++)
         {
+            if (items[i] == null) continue;
             if (items[i].ID == ID) return items[i];
         }
         print("no such itemID: " + ID);

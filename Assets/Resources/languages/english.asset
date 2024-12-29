@@ -24,6 +24,11 @@ MonoBehaviour:
   Crafting: Crafting
   Map: Map
   QuickBar: Quick bar
+  Common: Common
+  Good: Good
+  Perfect: Perfect
+  Super: Super
+  Legendary: Legendary
   Collect: Collect
   Chop: Chop
   Mine: Extract
@@ -37,6 +42,7 @@ MonoBehaviour:
   Flower: Flower
   WoodLog: Wood log
   Campfire: Campfire
+  Hen: Hen
   ItemsTranslation:
   - ID: 0
     Name: 
@@ -59,3 +65,6 @@ MonoBehaviour:
   - ID: 0
     Name: Simple flare
     Description: Used for light
+  - ID: 0
+    Name: Fibres
+    Description: Used in production

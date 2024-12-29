@@ -24,14 +24,27 @@ public class AssetInteraction : MonoBehaviour
         g.transform.position = pos + Vector3.down;
         g.SetActive(true);
 
-        int x = UnityEngine.Random.Range(-1, 2);
-        int z = UnityEngine.Random.Range(-1, 2);
+        int x = 0;
+        int z = 0;
 
-        if (asset.AssetType == AssetTypes.tree_hard || asset.AssetType == AssetTypes.medium_stone || asset.AssetType == AssetTypes.wood_log)
+        for (int i = 0; i < 100; i++)
         {
-            x = UnityEngine.Random.Range(-2, 3);
-            z = UnityEngine.Random.Range(-2, 3);
+            x = UnityEngine.Random.Range(-1, 2);
+            z = UnityEngine.Random.Range(-1, 2);
+
+            if (asset.AssetType == AssetTypes.tree_hard || asset.AssetType == AssetTypes.medium_stone || asset.AssetType == AssetTypes.wood_log)
+            {
+                x = UnityEngine.Random.Range(-2, 3);
+                z = UnityEngine.Random.Range(-2, 3);
+            }
+
+            if (new Vector2(x,z) != Globals.LastRandomThrownAsset)
+            {
+                Globals.LastRandomThrownAsset = new Vector2(x,z);
+                break;
+            }
         }
+        
 
         Vector3 lastPos = pos + new Vector3(x, 0, z);
         g.transform.DOMove(g.transform.position + new Vector3(x, 0, z) + Vector3.up * 2, 0.3f).SetEase(Ease.OutSine).OnComplete(() =>

@@ -147,8 +147,8 @@ MonoBehaviour:
   HPamount: 1000
   dropsBeforeEnd: 0
   dropsAtEnd: 1
-  resourceID: 24
-  itemID: 3
+  resourceID_for_visual: 24
+  itemID_for_inventory: 3
   forUpVector: 1
 --- !u!65 &8847490805221991490
 BoxCollider:

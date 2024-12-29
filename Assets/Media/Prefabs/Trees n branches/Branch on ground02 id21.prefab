@@ -85,8 +85,8 @@ MonoBehaviour:
   HPamount: 1000
   dropsBeforeEnd: 0
   dropsAtEnd: 1
-  resourceID: 25
-  itemID: 1
+  resourceID_for_visual: 25
+  itemID_for_inventory: 1
   forUpVector: 1
 --- !u!1 &8079590505195018256
 GameObject:

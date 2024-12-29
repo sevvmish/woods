@@ -24,3 +24,4 @@ MonoBehaviour:
   MaxStack: 1
   AssetID: 46
   Damage: 5
+  MaxDurability: 100

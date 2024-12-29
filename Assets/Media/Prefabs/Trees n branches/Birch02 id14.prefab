@@ -174,7 +174,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 3, z: 0.3}
+  m_Size: {x: 0.6, y: 3, z: 0.6}
   m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &3334703709023400303
 MonoBehaviour:
@@ -191,8 +191,8 @@ MonoBehaviour:
   HPamount: 10
   dropsBeforeEnd: 1
   dropsAtEnd: 2
-  resourceID: 25
-  itemID: 1
+  resourceID_for_visual: 25
+  itemID_for_inventory: 1
   forUpVector: 0.5
 --- !u!1 &3708691571873010669
 GameObject:

@@ -93,10 +93,7 @@ public class Asset : MonoBehaviour
 
             case AssetTypes.branch_on_ground:
                 return true;
-
-            case AssetTypes.bush:
-                return true;
-
+                            
             case AssetTypes.mushroom:
                 return true;
 
@@ -241,6 +238,9 @@ public enum AssetTypes
     hammer_1h,
     pickaxe_1h,
     flare_1h,
-    hen_simple
+    hen_simple,
+    resource_fibres,
+    resource_berries,
+    resource_cabbage
 
 }
