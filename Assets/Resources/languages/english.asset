@@ -33,6 +33,10 @@ MonoBehaviour:
   Chop: Chop
   Mine: Extract
   E: E
+  YouNeedAxe: You need an axe!
+  YouNeedBetterAxe: You need a better axe!
+  YouNeedPickaxe: You need a pickaxe!
+  YouNeedBetterPickaxe: You need a better pickaxe!
   TreeSmall: Young tree
   TreeHard: Solid tree
   Brunches: Branches
@@ -43,6 +47,8 @@ MonoBehaviour:
   WoodLog: Wood log
   Campfire: Campfire
   Hen: Hen
+  Raspberry: Raspberry
+  Cabbage: Cabbage
   ItemsTranslation:
   - ID: 0
     Name: 
@@ -68,3 +74,9 @@ MonoBehaviour:
   - ID: 0
     Name: Fibres
     Description: Used in production
+  - ID: 0
+    Name: Cabbage
+    Description: For food
+  - ID: 0
+    Name: Raspberry
+    Description: For food

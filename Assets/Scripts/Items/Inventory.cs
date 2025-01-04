@@ -8,6 +8,7 @@ using VContainer;
 public class Inventory : MonoBehaviour
 {
     [Inject] private ItemManager itemManager;
+    [Inject] private InventoryInformerUI inventoryInformerUI;
 
     public Action OnInventoryChanged;
     public Action RightHandEquipDurability;
@@ -108,6 +109,8 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < maxLimit; i++)
         {
+            if (MainInventory[i].ItemID <= 0) continue;
+
             Item item = itemManager.GetItemByID(MainInventory[i].ItemID);
             if (item != null && axes.Contains(item.ItemType))
             {
@@ -124,6 +127,8 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < maxLimit; i++)
         {
+            if (MainInventory[i].ItemID <= 0) continue;
+
             Item item = itemManager.GetItemByID(MainInventory[i].ItemID);
             if (item != null && pickaxes.Contains(item.ItemType))
             {
@@ -149,6 +154,7 @@ public class Inventory : MonoBehaviour
                 if (diff >= amount)
                 {
                     MainInventory[existingKey].AddAmount(amount);
+                    inventoryInformerUI.AddItemInfo(id, amount);
                     OnInventoryChanged?.Invoke();
                     return true;
                 }      
@@ -169,6 +175,7 @@ public class Inventory : MonoBehaviour
         else
         {
             MainInventory[index] = new InventoryPosition(id, amount, false, item.MaxDurability);
+            inventoryInformerUI.AddItemInfo(id, amount);
             OnInventoryChanged?.Invoke();
             return true;
         }
@@ -191,8 +198,32 @@ public class Inventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
+    public void EquipItemRightHand(Item item)
+    {
+        int index = -1;
+
+        for (int i = 0; i < maxLimit; i++)
+        {            
+            if (MainInventory[i].ItemID > 0 && Item.IsEquipRightHand(itemManager.GetItemByID(MainInventory[i].ItemID).ItemType))
+            {
+                MainInventory[i].SetInUse(false);
+            }
+
+            if (MainInventory[i].ItemID > 0 && index <=0 && item.ID == MainInventory[i].ItemID)
+            {
+                index = i;
+            }
+        }
+
+        MainInventory[index].SetInUse(true);
+        rightHandIndex = index;
+        OnInventoryChanged?.Invoke();
+    }
+
     private void changeDurabilityRightHand()
     {
+        if (rightHandIndex < 0) return;
+
         if (MainInventory[rightHandIndex].ItemID > 0 && Item.IsEquipRightHand(itemManager.GetItemByID(MainInventory[rightHandIndex].ItemID).ItemType))
         {
             int value = MainInventory[rightHandIndex].Durability - 1;

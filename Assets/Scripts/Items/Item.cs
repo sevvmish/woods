@@ -106,7 +106,8 @@ public enum ItemTypes
     Pickaxe2H,
     Flare1H,
     Fibres,
-    Cabbage
+    Cabbage,
+    Raspberry
 }
 
 public enum ItemsQuality

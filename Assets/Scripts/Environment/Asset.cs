@@ -97,7 +97,24 @@ public class Asset : MonoBehaviour
             case AssetTypes.mushroom:
                 return true;
 
-            
+            case AssetTypes.cabbage:
+                return true;
+
+
+            default:
+                return false;
+
+        }
+    }
+
+    public static bool IsPickUp(AssetTypes _type)
+    {
+        switch (_type)
+        {
+            case AssetTypes.raspberry:
+                return true;
+
+          
             default:
                 return false;
 
@@ -107,7 +124,7 @@ public class Asset : MonoBehaviour
     public static BodyLevel GetBodyLevelByAsset(AssetTypes _type)
     {
         HashSet<AssetTypes> lows = new HashSet<AssetTypes>() { AssetTypes.mushroom, AssetTypes.flowers, AssetTypes.grass, AssetTypes.branch_on_ground, AssetTypes.small_stone };
-        HashSet<AssetTypes> mediums = new HashSet<AssetTypes>();
+        HashSet<AssetTypes> mediums = new HashSet<AssetTypes>() {AssetTypes.raspberry };
         HashSet<AssetTypes> high = new HashSet<AssetTypes>();
 
         if (lows.Contains(_type))
@@ -142,6 +159,20 @@ public class Asset : MonoBehaviour
                 return true;
 
             
+            default:
+                return false;
+
+        }
+    }
+
+    public static bool IsAnyhit(AssetTypes _type)
+    {
+        switch (_type)
+        {
+            case AssetTypes.bush:
+                return true;
+
+
             default:
                 return false;
 
@@ -205,6 +236,12 @@ public class Asset : MonoBehaviour
             case AssetTypes.hen_simple:
                 return lang.Hen;
 
+            case AssetTypes.raspberry:
+                return lang.Raspberry;
+
+            case AssetTypes.cabbage:
+                return lang.Cabbage;
+
             default:
                 return "";
 
@@ -241,6 +278,10 @@ public enum AssetTypes
     hen_simple,
     resource_fibres,
     resource_berries,
-    resource_cabbage
+    resource_cabbage,
+    raspberry,
+    resource_raspberry,
+    bush_for_raspberry,
+    cabbage
 
 }

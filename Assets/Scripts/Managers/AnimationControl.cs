@@ -278,7 +278,7 @@ public class AnimationControl : MonoBehaviour
                 break;
 
             case BodyLevel.Medium:
-                anim = "Loot fast";
+                anim = "Loot middle";
                 break;
 
             case BodyLevel.High:

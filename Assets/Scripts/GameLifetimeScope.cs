@@ -30,7 +30,7 @@ public class GameLifetimeScope : LifetimeScope
             //Globals.IsLowFPS = true;
 
             Globals.MainPlayerData.Inv = new int[32, 2] { { 2, 1 }, {5, 1 }, { 1, 10 }, { 0, 0 }, { 6, 1 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, {  0, 0 }, { 0, 0 }, {  0, 0 }, {  0, 0 }, { 0, 0 }, {  0, 0 }, {  0, 0 }, { 0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, { 0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, {  0, 0 }, };
-            Globals.MainPlayerData.Equip = new int[] { 1 };
+            Globals.MainPlayerData.Equip = new int[] { 0 };
             Globals.MainPlayerData.Dur = new int[3,2] { {0,100 }, {1,100 }, {4,100 } };
 
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
@@ -40,8 +40,12 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<Musics>();
         builder.RegisterComponentInHierarchy<Camera>();
 
+        builder.RegisterComponentInHierarchy<GameplayInformerUI>();
+
         builder.RegisterComponentInHierarchy<AssetManager>();
         builder.RegisterComponentInHierarchy<ItemManager>();
+
+        builder.RegisterComponentInHierarchy<InventoryInformerUI>();
 
         builder.RegisterComponentInHierarchy<EffectsManager>();
         builder.RegisterComponentInHierarchy<Joystick>();        
@@ -58,8 +62,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<PlayerControl>();        
         builder.RegisterComponentInHierarchy<FOVControl>();
         builder.RegisterComponentInHierarchy<GameManager>();
-        builder.RegisterComponentInHierarchy<CameraControl>();
-        
+        builder.RegisterComponentInHierarchy<CameraControl>();        
         builder.RegisterComponentInHierarchy<HitControl>();
 
         //UI        

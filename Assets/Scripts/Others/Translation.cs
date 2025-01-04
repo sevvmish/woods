@@ -35,6 +35,13 @@ public class Translation : ScriptableObject
     public string Mine;
     public string E;
 
+    [Header("Base informers")]
+    public string YouNeedAxe;
+    public string YouNeedBetterAxe;
+    public string YouNeedPickaxe;
+    public string YouNeedBetterPickaxe;
+
+
     [Header("Assets")]
     public string TreeSmall;
     public string TreeHard;
@@ -46,6 +53,8 @@ public class Translation : ScriptableObject
     public string WoodLog;
     public string Campfire;
     public string Hen;
+    public string Raspberry;
+    public string Cabbage;
 
     [Header("Items")]
     public ItemTranslation[] ItemsTranslation;

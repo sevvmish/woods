@@ -14,7 +14,7 @@ public class PlayerControl : MonoBehaviour
     [Inject] private HitControl hitControl;
     [Inject] private AssetManager assetManager;
     [Inject] private Inventory inventory;
-    [Inject] private EquipControl equipControl;
+    [Inject] private ItemActivation itemActivation;
     [Inject] private Sounds sound;
 
     [Header("Controls")]    
@@ -256,39 +256,25 @@ public class PlayerControl : MonoBehaviour
 
         _rigidbody.velocity = Vector3.zero;
 
-        /*
-        UniTask.RunOnThreadPool(async () => {
-            await UniTask.Delay(200);
-            _rigidbody.AddRelativeForce(Vector3.forward * 10f, ForceMode.Impulse); 
-        }).Forget();*/
 
         switch(_type)
         {
             case HitType.Chop:
-                if (equipControl.RightHandItem == null ||  (equipControl.RightHandItem.ItemType != ItemTypes.Axe1H && equipControl.RightHandItem.ItemType != ItemTypes.Axe2H))
+                if (itemActivation.TryPutAnythingToChop())
                 {
-                    Item item = inventory.GetAnyAxeFromInventory();
-                    if (item != null)
-                    {
-                        equipControl.EquipRightHand(item);
-                        await UniTask.Delay(20);
-                    }
+                    await UniTask.Delay(50);
                 }
 
                 break;
 
             case HitType.Mine:
-                if (equipControl.RightHandItem == null || (equipControl.RightHandItem.ItemType != ItemTypes.Pickaxe1H && equipControl.RightHandItem.ItemType != ItemTypes.Pickaxe2H))
+                if (itemActivation.TryPutAnythingToMine())
                 {
-                    Item item = inventory.GetAnyPickaxeFromInventory();
-                    if (item != null)
-                    {                        
-                        equipControl.EquipRightHand(item);
-                        await UniTask.Delay(20);
-                    }
+                    await UniTask.Delay(50);
                 }
-
                 break;
+
+            
         }
 
         await animationControl.Hit(_type);
@@ -571,5 +557,6 @@ public enum HitType
 {
     None,
     Chop,
-    Mine
+    Mine,
+    Any
 }

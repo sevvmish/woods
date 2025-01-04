@@ -70,6 +70,7 @@ public class NatureGenerator : MonoBehaviour
         for (int i = 0; i < verts.Length; i++)
         {
             if (busyIndexes.Contains(i)) continue;
+            int[] grasses = new int[3] { 18, 52, 18 };
 
             int lowerIndex = 0;
             bool isInEmpty = IsInEmptyZone(mf.transform.position + verts[i]);
@@ -83,7 +84,9 @@ public class NatureGenerator : MonoBehaviour
 
                     if (rndIndexGrass < 2)
                     {
-                        AddNewGrass(assetManager.GetAssetByID(18),
+                        int rndG = UnityEngine.Random.Range(0, grasses.Length);
+
+                        AddNewGrass(assetManager.GetAssetByID(grasses[rndG]),
                         mf.transform.position + verts[i] + Vector3.down * 0.1f,
                         new Vector3(90, 0, 0),
                         normals[i]
@@ -97,7 +100,7 @@ public class NatureGenerator : MonoBehaviour
                 else
                 {
                     lowerIndex = -80;
-                    listWithIDs = new List<int> { 18, 18, 18, 9, 9, 9, 17 };
+                    listWithIDs = new List<int> { 18, 52, 18, 9, 9, 9, 17 };
                 }
 
                 if (Globals.IsLowFPS) lowerIndex -= 10;
@@ -112,7 +115,9 @@ public class NatureGenerator : MonoBehaviour
 
                         if (rndIndexGrass == 1)
                         {
-                            AddNewGrass(assetManager.GetAssetByID(18),
+                            int rndG = UnityEngine.Random.Range(0, grasses.Length);
+
+                            AddNewGrass(assetManager.GetAssetByID(grasses[rndG]),
                             mf.transform.position + verts[i] + Vector3.down * 0.1f,
                             new Vector3(90, 0, 0),
                             normals[i]
@@ -130,7 +135,9 @@ public class NatureGenerator : MonoBehaviour
 
                         if (rndIndexGrass == 1)
                         {
-                            AddNewGrass(assetManager.GetAssetByID(18),
+                            int rndG = UnityEngine.Random.Range(0, grasses.Length);
+
+                            AddNewGrass(assetManager.GetAssetByID(grasses[rndG]),
                             mf.transform.position + verts[i] + Vector3.down * 0.1f,
                             new Vector3(90, 0, 0),
                             normals[i]
@@ -148,12 +155,12 @@ public class NatureGenerator : MonoBehaviour
                     if (!Globals.IsLowFPS)
                     {
                         lowerIndex = -90;
-                        listWithIDs = new List<int> { 18, 18, 18, 9, 9, 9, 17 };
+                        listWithIDs = new List<int> { 18, 52, 18, 9, 9, 9, 17 };
                     }
                     else
                     {
                         lowerIndex = -150;
-                        listWithIDs = new List<int> { 18, 18, 18, 9, 9, 9, 17 };
+                        listWithIDs = new List<int> { 18, 52, 18, 9, 9, 9, 17 };
                     }
                     
                 }
@@ -228,12 +235,12 @@ public class NatureGenerator : MonoBehaviour
             if (isInEmpty)
             {
                 lowerIndex = -700;
-                listWithIDs = new List<int> { 22, 22, 23, 23, 20, 20, 21, 21, 36 };
+                listWithIDs = new List<int> { 22, 22, 23, 23, 20, 20, 21, 21, 36, 22, 22, 23, 23, 20, 20, 21, 21, 36, 57 };
             }
             else
             {
                 lowerIndex = -500;
-                listWithIDs = new List<int> { 44, 45, 38, 10, 10, 10, 10, 19, 19, 19, 19, 22, 22, 22, 23, 23, 20, 20, 21, 21, 36, 26, 27 };
+                listWithIDs = new List<int> { 44, 45, 38, 10, 10, 10, 10, 19, 19, 19, 19, 22, 22, 22, 23, 23, 20, 20, 21, 21, 36, 26, 27, 54, 57 };
             }
 
             int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);

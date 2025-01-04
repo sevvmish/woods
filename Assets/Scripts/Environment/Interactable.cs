@@ -44,38 +44,49 @@ public class Interactable : MonoBehaviour
 
         if (CurrentHP <= 0)
         {
+            //loot at end
             assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsAtEnd, currentAsset);
 
+            //loot at middle
             if (!isBefore && dropsBeforeEnd > 0)
             {
                 assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, currentAsset);
             }
 
+            //additional loot
             if (gameObject.TryGetComponent(out AdditionalLoot loot))
             {
                 loot.Giveloot();
             }
             
+            //end action
             if (Asset.IsChop(_type))
             {
-
                 effects.PlayEffectAtLocation(effects.TreeDestroyedPool, transform.position, 2f);
+                
             }
             else if (Asset.IsMine(_type))
             {
                 effects.PlayEffectAtLocation(effects.StoneDestroyedPool, transform.position, 2f);
+                
             }
             else if (Asset.IsCollect(_type))
             {
                 effects.PlayEffectAtLocation(effects.CollectResourcePool, transform.position, 1f);
+                
+            }
+            else if (Asset.IsPickUp(_type))
+            {
+                effects.PlayEffectAtLocation(effects.BushHitPool, transform.position, 1.5f);                
             }
             else if (currentAsset.AssetType == AssetTypes.bush)
             {
                 effects.PlayEffectAtLocation(effects.BushBreakPool, transform.position, 1.5f);
+                
             }
 
-
             assets.ReturnAsset(gameObject);
+
         }
         else
         {

@@ -63,15 +63,25 @@ public class ActionControl : MonoBehaviour
                     lookAt(asset.gameObject.transform.position);
                     UseHit(HitType.Chop);
                 }
-                else if (Asset.IsCollect(asset.AssetType) && asset.TryGetComponent(out Interactable i))
+                else if (Asset.IsCollect(asset.AssetType))
                 {
                     lookAt(asset.gameObject.transform.position);
                     UseCollect(asset);
                 }
-                if (Asset.IsMine(asset.AssetType))
+                else if (Asset.IsMine(asset.AssetType))
                 {
                     lookAt(asset.gameObject.transform.position);
                     UseHit(HitType.Mine);
+                }
+                else if (Asset.IsPickUp(asset.AssetType))
+                {
+                    lookAt(asset.gameObject.transform.position);
+                    UseCollect(asset);
+                }
+                else if (Asset.IsAnyhit(asset.AssetType))
+                {
+                    lookAt(asset.gameObject.transform.position);
+                    UseHit(HitType.Any);
                 }
             }
 
