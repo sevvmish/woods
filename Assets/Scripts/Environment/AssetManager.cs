@@ -108,17 +108,7 @@ public class AssetManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            foreach (var item in assetsPools.Keys)
-            {
-                print(assetsPools[item].OverallAmount + " = " + assetsPools[item].AmountOfActive);
-            }
-        }
-    }
-
+    
     public GameObject GetAssetByID(int id)
     {
         if (!assetsDictionary.ContainsKey(id))
@@ -148,6 +138,10 @@ public class AssetManager : MonoBehaviour
         if (g.TryGetComponent(out Asset asset))
         {
             id = asset.ID;
+        }
+        else if (g.transform.parent.TryGetComponent(out Asset asset1))
+        {
+            id = asset1.ID;
         }
         else
         {

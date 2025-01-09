@@ -55,6 +55,8 @@ public class Translation : ScriptableObject
     public string Hen;
     public string Raspberry;
     public string Cabbage;
+    public string Carrot;
+
 
     [Header("Items")]
     public ItemTranslation[] ItemsTranslation;

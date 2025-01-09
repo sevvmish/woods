@@ -45,6 +45,8 @@ public class NatureGenerator : MonoBehaviour
         if (!isFast) await UniTask.Delay(50);
         generateGrass();
         if (!isFast) await UniTask.Delay(50);
+        generateNPC();
+        if (!isFast) await UniTask.Delay(50);
         clearAll();
 
     }
@@ -234,13 +236,13 @@ public class NatureGenerator : MonoBehaviour
 
             if (isInEmpty)
             {
-                lowerIndex = -700;
-                listWithIDs = new List<int> { 22, 22, 23, 23, 20, 20, 21, 21, 36, 22, 22, 23, 23, 20, 20, 21, 21, 36, 57 };
+                lowerIndex = -2400;//1500
+                listWithIDs = new List<int> { 22, 22, 23, 23, 20, 20, 21, 21, 36, 22, 22, 23, 23, 20, 20, 21, 21, 36, 57, 59, 44 };
             }
             else
             {
-                lowerIndex = -500;
-                listWithIDs = new List<int> { 44, 45, 38, 10, 10, 10, 10, 19, 19, 19, 19, 22, 22, 22, 23, 23, 20, 20, 21, 21, 36, 26, 27, 54, 57 };
+                lowerIndex = -1600;//1200
+                listWithIDs = new List<int> { 44, 45, 38, 10, 10, 10, 10, 19, 19, 19, 19, 22, 22, 22, 23, 23,23, 20, 20, 21, 21, 36, 26, 27, 54, 57, 59 };
             }
 
             int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);
@@ -256,6 +258,45 @@ public class NatureGenerator : MonoBehaviour
                 {
                     busyIndexes.Add(i);
                 }
+            }
+        }
+    }
+
+
+    private void generateNPC()
+    {
+
+        //resources
+        for (int i = 0; i < verts.Length; i++)
+        {
+            if (IsInVoidZone(mf.transform.position + positionOnMesh[i])) continue;
+            if (busyIndexes.Contains(i)) continue;
+
+            List<int> listWithIDs = new List<int>();
+            int lowerIndex = 0;
+
+            bool isInEmpty = IsInEmptyZone(mf.transform.position + positionOnMesh[i]);
+
+            if (isInEmpty)
+            {
+                lowerIndex = -350; //350
+                listWithIDs = new List<int> { 50 };
+            }
+            else
+            {
+                lowerIndex = -170; //170
+                listWithIDs = new List<int> { 50 };
+            }
+
+            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 4);
+
+            if (rndIndex >= 0)
+            {                
+                AddNewNPC(
+                    listWithIDs[rndIndex],
+                    mf.transform.position + verts[i] + Vector3.up * 0.2f,
+                    i);
+
             }
         }
     }
@@ -307,6 +348,41 @@ public class NatureGenerator : MonoBehaviour
                 break;
             }
         }
+        g.SetActive(true);
+    }
+
+    private void AddNewNPC(int id, Vector3 pos, int index)
+    {
+        busyIndexes.Add(index);
+        HashSet<int> smallNPC = new HashSet<int>();
+
+        GameObject g = assetManager.GetAssetByID(id);
+
+        g.transform.position = pos;
+
+        if (smallNPC.Contains(id))
+        {
+            for (int j = 0; j < data.Cells.Count; j++)
+            {
+                if (data.Cells[j].IsInsideBounds(g.transform.position))
+                {
+                    g.transform.parent = data.Cells[j].LocationClose;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int j = 0; j < data.Cells.Count; j++)
+            {
+                if (data.Cells[j].IsInsideBounds(g.transform.position))
+                {
+                    g.transform.parent = data.Cells[j].LocationFar;
+                    break;
+                }
+            }
+        }
+                
         g.SetActive(true);
     }
 

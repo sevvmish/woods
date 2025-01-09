@@ -15,7 +15,7 @@ public class HitControl : MonoBehaviour
     {
         GameObject hitter = Instantiate(Resources.Load<GameObject>("HitBox"));
         hitter.GetComponent<HitBox>().SetHitBox(effects, showDPS, weapon, player);
-        hitter.transform.localScale = new Vector3(1, 1.5f, 1.5f);
+        hitter.transform.localScale = new Vector3(2, 1.5f, 1.5f);
         
         hitter.transform.position = player.transform.position + player.transform.forward + UPCorrection;
         hitter.transform.rotation = player.transform.rotation;

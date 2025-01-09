@@ -107,7 +107,8 @@ public enum ItemTypes
     Flare1H,
     Fibres,
     Cabbage,
-    Raspberry
+    Raspberry,
+    Carrot
 }
 
 public enum ItemsQuality

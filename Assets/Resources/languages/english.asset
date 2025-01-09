@@ -49,6 +49,7 @@ MonoBehaviour:
   Hen: Hen
   Raspberry: Raspberry
   Cabbage: Cabbage
+  Carrot: Carrot
   ItemsTranslation:
   - ID: 0
     Name: 
@@ -79,4 +80,7 @@ MonoBehaviour:
     Description: For food
   - ID: 0
     Name: Raspberry
+    Description: For food
+  - ID: 10
+    Name: Carrot
     Description: For food

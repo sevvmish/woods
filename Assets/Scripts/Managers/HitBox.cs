@@ -20,15 +20,16 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {        
-        if (!colliders.Contains(other) && other.TryGetComponent(out Asset asset))
+        if (!colliders.Contains(other) && other.TryGetComponent(out Interactable i))
         {            
             colliders.Add(other);
+            Asset asset = i.CurrentAsset;
 
             if (Asset.IsChop(asset.AssetType))
             {
                 float damage = 0;
 
-                if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)
+                if (/*asset.TryGetComponent(out Interactable i) && */i.CurrentHP > 0)
                 {                    
                     if (weapon != null && Item.IsItemForChop(weapon))
                     {
@@ -48,7 +49,7 @@ public class HitBox : MonoBehaviour
             {
                 float damage = 0;
 
-                if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)
+                if (/*asset.TryGetComponent(out Interactable i) && */i.CurrentHP > 0)
                 {
                     if (weapon != null && Item.IsItemForMine(weapon))
                     {
@@ -66,16 +67,16 @@ public class HitBox : MonoBehaviour
             }
             else if (Asset.IsCollect(asset.AssetType) || Asset.IsPickUp(asset.AssetType))
             {
-                if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)
+                if (/*asset.TryGetComponent(out Interactable i) && */i.CurrentHP > 0)
                 {
                     i.GetHit(2);
                 }
 
-            }
+            }            
             else
             {
-                if (asset.TryGetComponent(out Interactable i) && i.CurrentHP > 0)
-                {
+                if (/*asset.TryGetComponent(out Interactable i) && */i.CurrentHP > 0)
+                {                    
                     i.GetHit(4);
                     showDPS.ShowDPS(4, other.gameObject.transform, Vector3.up * 1.2f);
 

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    public Asset CurrentAsset { get; private set; }
+    public float CurrentHP { get; private set; }
+
     [SerializeField] private float HPamount = 10;
     [SerializeField] private int dropsBeforeEnd = 2;
 
@@ -17,16 +20,28 @@ public class Interactable : MonoBehaviour
 
     [SerializeField] private float forUpVector = 1f;
 
-    private Asset currentAsset;
+    
     private AssetManager assets;
     private EffectsManager effects;
     
-
-    public float CurrentHP { get; private set; }
+    public void SetHP(float hp)
+    {
+        HPamount = hp;
+        CurrentHP = hp;
+    }
+    
 
     private void Start()
     {
-        currentAsset = GetComponent<Asset>();
+        if (TryGetComponent(out Asset a))
+        {
+            CurrentAsset = a;
+        }
+        else if (transform.parent.TryGetComponent(out Asset a1))
+        {
+            CurrentAsset = a1;
+        }
+            
         assets = GameObject.Find("AssetManager").GetComponent<AssetManager>();
         effects = GameObject.Find("EffectsManager").GetComponent<EffectsManager>();
     }
@@ -40,17 +55,17 @@ public class Interactable : MonoBehaviour
     public void GetHit(float damage)
     {
         CurrentHP -= damage;
-        AssetTypes _type = currentAsset.AssetType;
+        AssetTypes _type = CurrentAsset.AssetType;
 
         if (CurrentHP <= 0)
         {
             //loot at end
-            assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsAtEnd, currentAsset);
+            assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsAtEnd, CurrentAsset);
 
             //loot at middle
             if (!isBefore && dropsBeforeEnd > 0)
             {
-                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, currentAsset);
+                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, CurrentAsset);
             }
 
             //additional loot
@@ -79,13 +94,13 @@ public class Interactable : MonoBehaviour
             {
                 effects.PlayEffectAtLocation(effects.BushHitPool, transform.position, 1.5f);                
             }
-            else if (currentAsset.AssetType == AssetTypes.bush)
+            else if (CurrentAsset.AssetType == AssetTypes.bush)
             {
                 effects.PlayEffectAtLocation(effects.BushBreakPool, transform.position, 1.5f);
                 
             }
 
-            assets.ReturnAsset(gameObject);
+            assets.ReturnAsset(CurrentAsset.gameObject);
 
         }
         else
@@ -93,12 +108,12 @@ public class Interactable : MonoBehaviour
             if (dropsBeforeEnd > 0 && !isBefore && (HPamount / 2f) >= CurrentHP)
             {
                 isBefore = true;
-                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, currentAsset);
+                assets.SpawnAssetGiverAtLocation(transform.position + Vector3.up * forUpVector, resourceID_for_visual, itemID_for_inventory, dropsBeforeEnd, CurrentAsset);
             }
 
             if (Asset.IsChop(_type))
             {
-                if (currentAsset.AssetType == AssetTypes.tree_small)
+                if (CurrentAsset.AssetType == AssetTypes.tree_small)
                 {
                     transform.DOKill();
                     Vector3 rot = transform.eulerAngles;

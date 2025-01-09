@@ -100,6 +100,9 @@ public class Asset : MonoBehaviour
             case AssetTypes.cabbage:
                 return true;
 
+            case AssetTypes.carrot:
+                return true;
+
 
             default:
                 return false;
@@ -113,7 +116,6 @@ public class Asset : MonoBehaviour
         {
             case AssetTypes.raspberry:
                 return true;
-
           
             default:
                 return false;
@@ -187,7 +189,6 @@ public class Asset : MonoBehaviour
             case AssetTypes.medium_stone:
                 return true;
 
-     
             default:
                 return false;
 
@@ -242,6 +243,9 @@ public class Asset : MonoBehaviour
             case AssetTypes.cabbage:
                 return lang.Cabbage;
 
+            case AssetTypes.carrot:
+                return lang.Carrot;
+
             default:
                 return "";
 
@@ -282,6 +286,8 @@ public enum AssetTypes
     raspberry,
     resource_raspberry,
     bush_for_raspberry,
-    cabbage
+    cabbage,
+    carrot,
+    resource_carrot
 
 }
