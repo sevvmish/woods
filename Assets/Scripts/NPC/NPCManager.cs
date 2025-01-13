@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,10 +13,10 @@ public class NPCManager : MonoBehaviour
     [Header("AI")]
     [SerializeField] private NavMeshOnPlaceGenerator navMeshOnPlaceGenerator;
     [SerializeField] private float diameter = 10;
-    private NavMeshAgent agent;
+    private NavMeshAgent agent;    
     private NPCstats stats;
 
-    private void Awake()
+    private void Start()
     {
         navMeshOnPlaceGenerator.Create(Vector3.one * diameter);
         navMeshOnPlaceGenerator.gameObject.SetActive(false);
@@ -22,7 +24,7 @@ public class NPCManager : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         agent.Warp(transform.parent.position);
-
+        
         stats = GetComponent<NPCstats>();
     }
     private async UniTaskVoid createNavMeshSurface()
@@ -32,7 +34,7 @@ public class NPCManager : MonoBehaviour
     }
 
     public bool WalkToPoint(Vector3 point)
-    {
+    {        
         if (agent.isOnNavMesh)
         {
             agent.speed = stats.WalkSpeed;
@@ -42,11 +44,11 @@ public class NPCManager : MonoBehaviour
         else
         {
             return false;
-        }        
+        }
     }
-
+    
     public bool RunToPoint(Vector3 point)
-    {
+    {        
         if (agent.isOnNavMesh)
         {
             agent.speed = stats.MaxSpeed;

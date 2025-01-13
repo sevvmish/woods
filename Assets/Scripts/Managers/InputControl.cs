@@ -139,7 +139,7 @@ public class InputControl : MonoBehaviour
         if (delta2.x > 0 || delta2.x < 0)
         {            
             int sign = delta2.x > 0 ? 1 : -1;
-            playerControl.SetRotationAngle(delta2.x * 25 * 1 * Time.deltaTime);
+            playerControl.SetRotationAngle(delta2.x * 22 * 1 * Time.deltaTime);
         }
         else if (delta2.x == 0)
         {
@@ -148,7 +148,7 @@ public class InputControl : MonoBehaviour
 
         if (Mathf.Abs(delta.y) > 0)
         {
-            cameraControl.ChangeCameraAngleX(delta.y * -100 * Time.deltaTime);
+            cameraControl.ChangeCameraAngleX(delta.y * -90 * Time.deltaTime);
         }        
     }
 

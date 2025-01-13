@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 957843815619411075}
   - component: {fileID: 6471971227290280090}
   - component: {fileID: 8463920597655299551}
+  - component: {fileID: 4758300511339764293}
   m_Layer: 0
   m_Name: Tree_Log_1A
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.09, y: 0.09, z: 0.43}
   m_Center: {x: -0.0005590022, y: 0.046199005, z: 0.01}
+--- !u!208 &4758300511339764293
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543733044240696065}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.045, y: 0.045, z: 0.215}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.046000004, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &9096176024459401921
 GameObject:
   m_ObjectHideFlags: 0

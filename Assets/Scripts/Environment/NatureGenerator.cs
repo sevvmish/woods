@@ -101,8 +101,8 @@ public class NatureGenerator : MonoBehaviour
                 }
                 else
                 {
-                    lowerIndex = -80;
-                    listWithIDs = new List<int> { 18, 52, 18, 9, 9, 9, 17 };
+                    lowerIndex = -70;
+                    listWithIDs = new List<int> { /*18, 52, 18,*/ 9, 9, 9, 17 };
                 }
 
                 if (Globals.IsLowFPS) lowerIndex -= 10;
@@ -156,13 +156,13 @@ public class NatureGenerator : MonoBehaviour
                 {
                     if (!Globals.IsLowFPS)
                     {
-                        lowerIndex = -90;
-                        listWithIDs = new List<int> { 18, 52, 18, 9, 9, 9, 17 };
+                        lowerIndex = -50;
+                        listWithIDs = new List<int> { /*18, 52, 18,*/ 9, 9, 9, 17 };
                     }
                     else
                     {
-                        lowerIndex = -150;
-                        listWithIDs = new List<int> { 18, 52, 18, 9, 9, 9, 17 };
+                        lowerIndex = -50;
+                        listWithIDs = new List<int> { /*18, 52, 18,*/ 9, 9, 9, 17 };
                     }
                     
                 }
@@ -210,6 +210,41 @@ public class NatureGenerator : MonoBehaviour
             if (IsInVoidZone(mf.transform.position + positionOnMesh[i])) continue;
             if (IsInEmptyZone(mf.transform.position + positionOnMesh[i])) continue;
 
+
+
+
+
+
+            int lowerIndex = 0;            
+            List<int> listWithIDs = new List<int>();
+
+            if (Globals.IsMobile && Globals.IsLowFPS)
+            {
+                lowerIndex = -350;
+                listWithIDs = new List<int> { 7, 31, 7, 31, 7, 31,      5, 6,        8, 3, 4, 32, 8, 3, 4, 32, 8, 3, 4, 32, 8, 3, 4, 32, };
+            }
+            else
+            {
+                lowerIndex = -300;
+                listWithIDs = new List<int> { 13, 29, 13, 29, 13, 29,     11, 28,               14, 12, 30, 14, 12, 30, 14, 12, 30, 14, 12, 30};
+            }
+
+
+
+            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed);
+
+            if (rndIndex >= 0)
+            {
+                AddNewTree(assetManager.GetAssetByID(listWithIDs[rndIndex]) ,
+                    mf.transform.position + positionOnMesh[i] + Vector3.down * 0.2f,
+                    new Vector3(0, UnityEngine.Random.Range(90, 270), 0), i);
+            }
+
+
+
+
+
+            /*
             int rndIndex = worldGenerator.GetRandomIndex(-150, i, 8, Globals.MainPlayerData.NatureSeed);
 
             if (rndIndex >= 0)
@@ -217,7 +252,7 @@ public class NatureGenerator : MonoBehaviour
                 AddNewTree(assetManager.GetTree(AssetTypes.terrain_flat, rndIndex),
                     mf.transform.position + positionOnMesh[i] + Vector3.down * 0.2f,
                     new Vector3(0, UnityEngine.Random.Range(90, 270), 0), i);
-            }
+            }*/
         }
     }
 
@@ -236,13 +271,13 @@ public class NatureGenerator : MonoBehaviour
 
             if (isInEmpty)
             {
-                lowerIndex = -2400;//1500
-                listWithIDs = new List<int> { 22, 22, 23, 23, 20, 20, 21, 21, 36, 22, 22, 23, 23, 20, 20, 21, 21, 36, 57, 59, 44 };
+                lowerIndex = -2300;//1500
+                listWithIDs = new List<int> { 36, 57, 59, 44,10,19,         22, 22, 23, 23, 20, 20, 21, 21, 36, 22, 22, 23, 23, 20, 20, 21, 21 };
             }
             else
             {
-                lowerIndex = -1600;//1200
-                listWithIDs = new List<int> { 44, 45, 38, 10, 10, 10, 10, 19, 19, 19, 19, 22, 22, 22, 23, 23,23, 20, 20, 21, 21, 36, 26, 27, 54, 57, 59 };
+                lowerIndex = -1500;//1200
+                listWithIDs = new List<int> { 36, 26, 27, 54, 57, 59, 44, 45, 38,      10, 10, 10, 10, 10, 19, 19, 19, 19, 19, 22, 22, 22, 23, 23, 23, 20, 20, 21, 21 };
             }
 
             int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);

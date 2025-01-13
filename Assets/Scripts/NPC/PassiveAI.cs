@@ -17,6 +17,8 @@ public class PassiveAI : MonoBehaviour
     private float _timerCheckEnemy;
     private float cooldown;
 
+    private Rigidbody _rb;
+
     private void OnEnable()
     {
         if (npc == null) npc = GetComponent<NPCManager>();
@@ -32,6 +34,7 @@ public class PassiveAI : MonoBehaviour
         cooldown = 0;
         timer = 0;
 
+        onUpdate = null;
         onUpdate += checkEnemy;
         onUpdate += usualWalking;
     }

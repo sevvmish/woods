@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4826742331784428114}
   - component: {fileID: 8601729520565157317}
   - component: {fileID: 1031834148423507501}
+  - component: {fileID: 8493558358973038791}
   m_Layer: 0
   m_Name: Lowpoly_Pine_02
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 3, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7512082709304840492}
@@ -103,8 +104,24 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 3.5, z: 0.3}
-  m_Center: {x: -0.00085002184, y: 1.7, z: 0.021499991}
+  m_Size: {x: 0.35, y: 3.5, z: 0.35}
+  m_Center: {x: 0, y: 1.7, z: 0.021499991}
+--- !u!208 &8493558358973038791
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488346247213689295}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.175, y: 1.75, z: 0.175}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.7, z: 0.021}
+  m_TimeToStationary: 0.5
 --- !u!1 &6444299571027181361
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,13 +20,15 @@ public class NavMeshOnPlaceGenerator : MonoBehaviour
         surface.center = Vector3.zero;
         surface.size = size;
 
-        
+        surface.BuildNavMesh();
+        data = surface.navMeshData;
+        surface.UpdateNavMesh(data);
     }
 
     private void OnEnable()
     {
-        surface.BuildNavMesh();
-        data = surface.navMeshData;
-        surface.UpdateNavMesh(data);
+        //surface.BuildNavMesh();
+        //data = surface.navMeshData;
+        //surface.UpdateNavMesh(data);
     }
 }

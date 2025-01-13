@@ -36,7 +36,7 @@ public class TerrainGenerator : MonoBehaviour
         terrainLocation = transform;
 
         float distanceLimit = 200;
-        Vector3 playerPosOnTerrain = new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100);
+        //Vector3 playerPosOnTerrain = new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100);
         
         for (float x = (mainPlayer.position.x - distanceLimit); x <= (mainPlayer.position.x + distanceLimit); x += 100)
         {

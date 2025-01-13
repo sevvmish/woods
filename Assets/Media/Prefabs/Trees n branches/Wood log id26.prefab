@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 2313814384109245275}
   - component: {fileID: 8553169727939226595}
   - component: {fileID: 9148226289087142195}
+  - component: {fileID: 5858590369282491601}
   m_Layer: 0
   m_Name: wood_log
   m_TagString: Untagged
@@ -193,3 +194,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.56}
   m_Center: {x: 0, y: -0.04, z: -0.02}
+--- !u!208 &5858590369282491601
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5752439192665126610}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.05, y: 0.05, z: 0.28}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.04, z: -0.02}
+  m_TimeToStationary: 0.5

@@ -25,11 +25,11 @@ public class FOVControl : MonoBehaviour
             else
             {
                 fovFar.localScale = new Vector3(1.1f, 1, 1.2f);
-                fovFar.localPosition = new Vector3(0, 5, 85);
+                fovFar.localPosition = new Vector3(0, 5, 82);
                 fovFar.localEulerAngles = new Vector3(180, 0, 0);
 
                 fovClose.localScale = new Vector3(0.65f, 0.3f, 0.55f);
-                fovClose.localPosition = new Vector3(0, 2.5f, 42);
+                fovClose.localPosition = new Vector3(0, 2.5f, 40);
                 fovClose.localEulerAngles = new Vector3(180, 0, 0);
             }
             
@@ -37,11 +37,11 @@ public class FOVControl : MonoBehaviour
         else
         {
             fovFar.localScale = new Vector3(1.1f, 1, 1.3f);
-            fovFar.localPosition = new Vector3(0, 5, 90);
+            fovFar.localPosition = new Vector3(0, 5, 85);
             fovFar.localEulerAngles = new Vector3(180, 0, 0);
 
             fovClose.localScale = new Vector3(0.65f, 0.3f, 0.6f);
-            fovClose.localPosition = new Vector3(0, 2.5f, 42);
+            fovClose.localPosition = new Vector3(0, 2.5f, 40);
             fovClose.localEulerAngles = new Vector3(180, 0, 0);
         }
 

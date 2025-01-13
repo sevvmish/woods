@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.56, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1.7}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7070656367917691147}
@@ -183,7 +183,8 @@ GameObject:
   - component: {fileID: 5301454575764024135}
   - component: {fileID: 1980869580128196200}
   - component: {fileID: 631256326793084036}
-  - component: {fileID: 1190780568079666352}
+  - component: {fileID: 626671821489208352}
+  - component: {fileID: 7332604444448014327}
   m_Layer: 0
   m_Name: elka01 center
   m_TagString: Untagged
@@ -201,7 +202,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7070656367917691147}
@@ -256,8 +257,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1190780568079666352
-MeshCollider:
+--- !u!65 &626671821489208352
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -274,7 +275,22 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2877045756801082735, guid: f84dc04f54b5fe443b063d77e7870edb, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.3, y: 1.1, z: 10}
+  m_Center: {x: 0.055, y: 0, z: 4.5}
+--- !u!208 &7332604444448014327
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032368546872968159}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.65, y: 0.55, z: 5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.055000003, y: 0, z: 4.5}
+  m_TimeToStationary: 0.5
