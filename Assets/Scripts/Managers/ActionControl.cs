@@ -26,7 +26,7 @@ public class ActionControl : MonoBehaviour
 
         if (Globals.IsMobile)
         {
-            if (currentAim == null)
+            if (currentAim == null || !currentAim.TryGetComponent(out Asset asset))
             {
                 inputControl.ShowHitButton();
             }
@@ -77,8 +77,13 @@ public class ActionControl : MonoBehaviour
                 {
                     lookAt(asset.gameObject.transform.position);
                     UseCollect(asset);
-                }
+                }/*
                 else if (Asset.IsAnyhit(asset.AssetType))
+                {
+                    lookAt(asset.gameObject.transform.position);
+                    UseHit(HitType.Any);
+                }*/
+                else
                 {
                     lookAt(asset.gameObject.transform.position);
                     UseHit(HitType.Any);

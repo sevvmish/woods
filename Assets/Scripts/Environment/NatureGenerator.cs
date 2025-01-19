@@ -34,6 +34,7 @@ public class NatureGenerator : MonoBehaviour
         normals = mesh.normals;
         positionOnMesh = verts.ToList();
 
+
         if (worldGenerator.IsEmptyPlace(terrainChunk.transform.position))
         {            
             emptyZones.Add(new VoidZone(terrainChunk.transform.position, 40));            
@@ -263,29 +264,35 @@ public class NatureGenerator : MonoBehaviour
         for (int i = 0; i < verts.Length; i++)
         {
             if (IsInVoidZone(mf.transform.position + positionOnMesh[i])) continue;
+            if (busyIndexes.Contains(i)) continue;
 
+            
             List<int> listWithIDs = new List<int>();
             int lowerIndex = 0;
+
             
             bool isInEmpty = IsInEmptyZone(mf.transform.position + positionOnMesh[i]);
 
             if (isInEmpty)
             {
-                lowerIndex = -2300;//1500
-                listWithIDs = new List<int> { 36, 57, 59, 44,10,19,         22, 22, 23, 23, 20, 20, 21, 21, 36, 22, 22, 23, 23, 20, 20, 21, 21 };
+                lowerIndex = -2000;//2300
+                listWithIDs = new List<int> { 36, 57, 59, 44,10,19, 54,    22, 23, 20, 21};
+                
             }
             else
             {
-                lowerIndex = -1500;//1200
-                listWithIDs = new List<int> { 36, 26, 27, 54, 57, 59, 44, 45, 38,      10, 10, 10, 10, 10, 19, 19, 19, 19, 19, 22, 22, 22, 23, 23, 23, 20, 20, 21, 21 };
+                lowerIndex = -1200;//1500
+                listWithIDs = new List<int> { 36, 26, 27, 54, 57, 59, 44, 45, 38,      10, 19,  22, 23, 20, 21 };
+                
             }
 
-            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 1);
 
+            int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 7);
+            
             if (rndIndex >= 0)
             {
-                AddNewResource(assetManager.GetAssetByIndexFromLists(listWithIDs, rndIndex),
-                    mf.transform.position + verts[i] + Vector3.down * 0.1f,
+                AddNewResource(/*assetManager.GetAssetByIndexFromLists(listWithIDs, rndIndex),*/assetManager.GetAssetByID(listWithIDs[rndIndex]),
+                    mf.transform.position + verts[i],
                     new Vector3(0, UnityEngine.Random.Range(90, 270), 0));
 
                 //medium stones
@@ -314,13 +321,13 @@ public class NatureGenerator : MonoBehaviour
 
             if (isInEmpty)
             {
-                lowerIndex = -350; //350
-                listWithIDs = new List<int> { 50 };
+                lowerIndex = -550; //350
+                listWithIDs = new List<int> { 50, 61 };
             }
             else
             {
-                lowerIndex = -170; //170
-                listWithIDs = new List<int> { 50 };
+                lowerIndex = -350; //170
+                listWithIDs = new List<int> { 50, 61 };
             }
 
             int rndIndex = worldGenerator.GetRandomIndex(lowerIndex, i, listWithIDs.Count, Globals.MainPlayerData.NatureSeed + 4);
@@ -392,7 +399,14 @@ public class NatureGenerator : MonoBehaviour
         HashSet<int> smallNPC = new HashSet<int>();
 
         GameObject g = assetManager.GetAssetByID(id);
-
+        for (int i = 0; i < g.transform.childCount; i++)
+        {
+            if (g.transform.GetChild(i).TryGetComponent(out NPCManager npc))
+            {
+                npc.Restart();
+                break;
+            }
+        }
         g.transform.position = pos;
 
         if (smallNPC.Contains(id))

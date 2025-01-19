@@ -93,7 +93,6 @@ public class PlayerControl : MonoBehaviour
     private LayerMask ignoreMask;
 
     private WaitForSeconds ZeroOne = new WaitForSeconds(0.1f);
-    private WaitForSeconds FixedOne = new WaitForSeconds(0.02f);
 
     // Start is called before the first frame update
     void Start()
@@ -550,7 +549,10 @@ public enum AnimationStates
     Fly,
     Walk,
     Hit,
-    Collect
+    Collect,
+    Dead,
+    GetHit
+
 }
 
 public enum HitType

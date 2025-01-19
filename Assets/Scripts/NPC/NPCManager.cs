@@ -8,28 +8,69 @@ using UnityEngine.AI;
 
 public class NPCManager : MonoBehaviour
 {
-    public float Diameter => diameter;    
+    public float Diameter => diameter;
+    public bool IsDead { get; private set; } = false;
+    public float CurrentSpeed => agent.velocity.magnitude;
+
+    private HitControl hitControl;
+    public HitControl HitControl => hitControl;
 
     [Header("AI")]
-    [SerializeField] private NavMeshOnPlaceGenerator navMeshOnPlaceGenerator;
-    [SerializeField] private float diameter = 10;
+    [SerializeReference] private NavMeshOnPlaceGenerator navMeshOnPlaceGenerator;
+    [SerializeReference] private float diameter = 10;
     private NavMeshAgent agent;    
     private NPCstats stats;
+    private NPCAnimator animator;
+    private bool isCanAct = true;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        stats = GetComponent<NPCstats>();
+        animator = transform.GetChild(0).GetComponent<NPCAnimator>();
+    }
+
+    public void Restart()
+    {
+        IsDead = false;
+        stats.Restart();
+        agent.Warp(transform.parent.position);
+        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+    }
+
+    public void MakeDead()
+    {
+        IsDead = true;
+        animator.Dead();
+        agent.isStopped = true;
+        agent.ResetPath();
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    public void GetHit()
+    {
+        animator.GetHit();
+    }
+        
 
     private void Start()
     {
+        hitControl = GameObject.Find("=====MAIN=====").GetComponent<HitControl>();
         navMeshOnPlaceGenerator.Create(Vector3.one * diameter);
         navMeshOnPlaceGenerator.gameObject.SetActive(false);
         createNavMeshSurface().Forget();
 
-        agent = GetComponent<NavMeshAgent>();
-        agent.Warp(transform.parent.position);
         
-        stats = GetComponent<NPCstats>();
+        //agent.Warp(transform.parent.position);
+        
+        
     }
     private async UniTaskVoid createNavMeshSurface()
     {
-        await UniTask.Delay(500);
+        await UniTask.Delay(100);
         navMeshOnPlaceGenerator.gameObject.SetActive(true);
     }
 
@@ -45,6 +86,18 @@ public class NPCManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public async UniTaskVoid Hit()
+    {
+        if (isCanAct)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+            isCanAct = false;
+            await animator.Hit();
+            isCanAct = true;
+        }        
     }
     
     public bool RunToPoint(Vector3 point)

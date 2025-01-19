@@ -19,8 +19,25 @@ public class NPCstats : MonoBehaviour
     [SerializeField] private float agroRadius = 2;
     public float AgroRadius => agroRadius;
 
+    [SerializeField] private float hitRadius = 3;
+    public float HitRadius => hitRadius;
+
+    [SerializeField] private float attackSpeed = 3;
+    public float AttackSpeed => attackSpeed;
+
+    [SerializeField] private float bodyHitDistance = 1;
+    public float BodyHitDistance => bodyHitDistance;
+
+    [SerializeField] private float idleWalkingRadius = 6;
+    public float IdleWalkingRadius => idleWalkingRadius;
+
 
     private void Awake()
+    {
+        Restart();        
+    }
+
+    public void Restart()
     {
         currentHP = maxHP;
 

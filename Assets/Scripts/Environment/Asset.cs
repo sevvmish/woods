@@ -32,6 +32,11 @@ public class Asset : MonoBehaviour
             {
                 isChopable = true;
             }
+            else if (IsMine(lastAsset.AssetType))
+            {
+                isMinable = true;
+            }
+                        
             return lastName;
         }
 
@@ -39,7 +44,8 @@ public class Asset : MonoBehaviour
         {
             lastObject = g;
             lastAsset = asset;
-            lastName = getName(asset.AssetType);
+            lastName = GetName(asset.AssetType);
+            
 
             if (IsCollect(asset.AssetType))
             {
@@ -48,6 +54,32 @@ public class Asset : MonoBehaviour
             else if (IsChop(asset.AssetType))
             {
                 isChopable = true;
+            }
+            else if (IsMine(asset.AssetType))
+            {
+                isMinable = true;
+            }
+
+            return lastName;
+        }
+        else if (g.transform.parent.TryGetComponent(out Asset asset1))
+        {
+            lastObject = g;
+            lastAsset = asset1;
+            lastName = GetName(asset1.AssetType);
+
+
+            if (IsCollect(asset1.AssetType))
+            {
+                isCollectable = true;
+            }
+            else if (IsChop(asset1.AssetType))
+            {
+                isChopable = true;
+            }
+            else if (IsMine(asset1.AssetType))
+            {
+                isMinable = true;
             }
 
             return lastName;
@@ -70,7 +102,15 @@ public class Asset : MonoBehaviour
         {
             lastObject = g;
             lastAsset = asset;
-            lastName = getName(asset.AssetType);
+            lastName = GetName(asset.AssetType);
+
+            return lastName;
+        }
+        else if (g.transform.parent.TryGetComponent(out Asset asset1))
+        {
+            lastObject = g;
+            lastAsset = asset1;
+            lastName = GetName(asset1.AssetType);
 
             return lastName;
         }
@@ -195,7 +235,7 @@ public class Asset : MonoBehaviour
         }
     }
 
-    public static string getName(AssetTypes _type)
+    public static string GetName(AssetTypes _type)
     {
         Translation lang = Globals.Language;
 
@@ -246,6 +286,9 @@ public class Asset : MonoBehaviour
             case AssetTypes.carrot:
                 return lang.Carrot;
 
+            case AssetTypes.boar_simple:
+                return lang.Boar;
+
             default:
                 return "";
 
@@ -288,6 +331,7 @@ public enum AssetTypes
     bush_for_raspberry,
     cabbage,
     carrot,
-    resource_carrot
+    resource_carrot,
+    boar_simple
 
 }

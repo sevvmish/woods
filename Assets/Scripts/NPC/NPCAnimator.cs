@@ -10,7 +10,10 @@ public class NPCAnimator : MonoBehaviour
     public bool IsGrounded = true;
 
     private Animator _animator;
-    private NavMeshAgent agent;
+    private NPCManager npc;
+    private NPCstats stats;
+    private NPCsfx sfx;
+    private IInteractable interactable;
     private float speedLimit = 2f;
     private float minSpeed = 0.1f;
     private float _timer;
@@ -20,7 +23,10 @@ public class NPCAnimator : MonoBehaviour
     private void OnEnable()
     {
         _animator = GetComponent<Animator>();
-        agent = transform.parent.GetComponent<NavMeshAgent>();
+        npc = transform.parent.GetComponent<NPCManager>();
+        stats = npc.GetComponent<NPCstats>();
+        sfx = npc.GetComponent<NPCsfx>();
+        interactable = npc.GetComponent<IInteractable>();
         AnimationState = AnimationStates.None;
         idle();
     }
@@ -30,14 +36,32 @@ public class NPCAnimator : MonoBehaviour
         checkMovement();
     }
 
+    public void Dead()
+    {
+        sfx.PlayDeath();
+        AnimationState = AnimationStates.Dead;
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+        {
+            _animator.Play("Die");
+        }
+
+        this.enabled = false;
+    }
+
+    public void GetHit()
+    {
+        sfx.PlayGetHit();
+        getHit();
+    }
+
     public void Idle()
     {
         checkMovement();
     }
 
-    public async UniTask Hit(HitType _type)
+    public async UniTask Hit()
     {
-        //await hit(_type);
+        await hit();
     }
 
     public async UniTask Collect(Asset asset)
@@ -66,9 +90,11 @@ public class NPCAnimator : MonoBehaviour
 
     private void checkMovement()
     {
-        if (IsGrounded && AnimationState != AnimationStates.Hit && AnimationState != AnimationStates.Collect)
+        if (npc.IsDead) return;
+
+        if (IsGrounded && AnimationState != AnimationStates.Hit)
         {
-            float speed = agent.velocity.magnitude;
+            float speed = npc.CurrentSpeed;
             
             if (speed <= speedLimit && speed > minSpeed)
             {
@@ -78,7 +104,7 @@ public class NPCAnimator : MonoBehaviour
             {
                 run();
             }
-            else if (speed <= minSpeed)
+            else if (speed <= minSpeed && AnimationState != AnimationStates.GetHit)
             {
                 idle();
             }
@@ -107,6 +133,21 @@ public class NPCAnimator : MonoBehaviour
         if (IsGrounded && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             _animator.Play("Idle");
+        }
+        else if (!IsGrounded)
+        {
+            fly();
+        }
+    }
+
+    private void getHit()
+    {
+        if (AnimationState == AnimationStates.GetHit || AnimationState != AnimationStates.Idle) return;
+        AnimationState = AnimationStates.GetHit;
+
+        if (IsGrounded && !_animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
+        {
+            _animator.Play("GetHit");
         }
         else if (!IsGrounded)
         {
@@ -144,59 +185,19 @@ public class NPCAnimator : MonoBehaviour
         }
     }
 
-    /*
-    private async UniTask hit(HitType _type)
+    
+    private async UniTask hit()
     {
         if (AnimationState == AnimationStates.Hit) return;
-
+                
         AnimationState = AnimationStates.Hit;
-
-        if (equipControl.RightHandItem == null)
-        {
-            playHitAnimationUnarmed();
-        }
-        else
-        {
-            switch (_type)
-            {
-                case HitType.Chop:
-                    playHitAnimation1HMeleeHorizontal();
-                    break;
-
-                case HitType.Mine:
-                    playHitAnimation1HMeleeVertical();
-                    break;
-
-                default:
-                    switch (equipControl.RightHandItem.ItemType)
-                    {
-                        case ItemTypes.Axe1H:
-                            playHitAnimation1HMeleeHorizontal();
-                            break;
-
-                        case ItemTypes.Flare1H:
-                            playHitAnimation1HMeleeHorizontal();
-                            break;
-
-                        case ItemTypes.Pickaxe1H:
-                            playHitAnimation1HMeleeVertical();
-                            break;
-
-                        default:
-                            playHitAnimation1HMeleeHorizontal();
-                            break;
-                    }
-                    break;
-            }
-        }
-
-
+        
+        _animator.Play("Attack");
 
         int awaited = 0;
         bool isHitted = false;
 
         await UniTask.Delay(100);
-
 
         while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
@@ -207,45 +208,23 @@ public class NPCAnimator : MonoBehaviour
             if (awaited > 100 && !isHitted)
             {
                 isHitted = true;
-                pc.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 7f, ForceMode.Impulse);
-                pc.Hits.MakeHit(pc.transform, Vector3.up * 1.2f, equipControl.RightHandItem);
+                npc.HitControl.MakeHit(interactable, npc.transform, Vector3.up * 0.5f + npc.transform.forward * stats.BodyHitDistance, null);
+                sfx.PlayAttack();
             }
         }
+
+        await UniTask.Delay((int)(stats.AttackSpeed * 1000));
 
         AnimationState = AnimationStates.Idle;
         checkMovement();
     }
 
-    private void playHitAnimationUnarmed()
-    {
-        string anim = "";
-
-        int rnd = UnityEngine.Random.Range(0, 2);
-
-        switch (rnd)
-        {
-            case 0:
-                anim = "Unarmed Hit R";
-
-                break;
-
-            case 1:
-                anim = "Unarmed Hit L";
-                break;
-        }
-
-        _animator.Play(anim);
-
-        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, Vector3.zero, Vector3.one, 0.5f);
-    }
 
     private void playHitAnimation1HMeleeHorizontal()
     {
         string anim = "Hit 1H hor";
 
         _animator.Play(anim);
-
-        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, Vector3.zero, Vector3.one, 0.5f);
     }
 
     private void playHitAnimation1HMeleeVertical()
@@ -253,10 +232,9 @@ public class NPCAnimator : MonoBehaviour
         string anim = "Hit 1H vert";
 
         _animator.Play(anim);
-
-        pc.Effects.PlayEffectAtLocation(0.1f, pc.Effects.PunchSwingPool, pc.transform.position + Vector3.up * 1.2f, Vector3.zero, Vector3.one, 0.5f);
     }
 
+    /*
     private async UniTask collect(Asset asset)
     {
         if (AnimationState == AnimationStates.Collect) return;

@@ -50,6 +50,7 @@ MonoBehaviour:
   Raspberry: Raspberry
   Cabbage: Cabbage
   Carrot: Carrot
+  Boar: Boar
   ItemsTranslation:
   - ID: 0
     Name: 

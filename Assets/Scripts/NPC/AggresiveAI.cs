@@ -1,0 +1,172 @@
+using DG.Tweening;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AggresiveAI : MonoBehaviour
+{
+    private NPCstats stats;
+    private NPCManager npc;
+    private Transform mainPLayer;    
+    private NPCsfx soundSFX;
+    private Vector3 startPoint;
+    private float radius;
+
+    private Action onUpdate;
+    private float timer;
+    private float _timerCheckEnemy;
+    private float cooldown;
+
+    private Rigidbody _rb;
+
+    private void OnEnable()
+    {
+        if (npc == null) npc = GetComponent<NPCManager>();
+        if (stats == null) stats = GetComponent<NPCstats>();
+        if (mainPLayer == null)
+        {
+            mainPLayer = GameObject.Find("MainPlayer").transform.GetChild(0);
+        }
+        if (soundSFX == null) soundSFX = GetComponent<NPCsfx>();
+
+        radius = npc.Diameter / 2f;
+        startPoint = transform.parent.position;
+        cooldown = 0;
+        timer = 0;
+
+        onUpdate = null;
+        onUpdate += checkEnemy;
+        onUpdate += usualWalking;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (npc.IsDead)
+        {
+            return;
+        }
+
+        onUpdate?.Invoke();
+        //if ((mainPLayer.position - transform.position).magnitude < 10) print("timer: " + timer.ToString("f2") + ", cooldown: " + cooldown.ToString("f2") + ", _timerCheckEnemy: " + _timerCheckEnemy.ToString("f2"));
+    }
+
+    private void usualWalking()
+    {
+        if (timer >= cooldown)
+        {
+            timer = 0;
+            Vector3 newPoint = startPoint + new Vector3(UnityEngine.Random.Range(-radius * 0.9f, radius * 0.9f), 0, UnityEngine.Random.Range(-radius * 0.9f, radius * 0.9f));
+            float distance = (newPoint - transform.position).magnitude;
+            if (npc.WalkToPoint(newPoint))
+            {
+                cooldown = distance / stats.WalkSpeed + UnityEngine.Random.Range(0.5f, 2f);
+                soundSFX.PlayIdle();
+            }
+            else
+            {
+                cooldown = 1.1f;
+            }
+
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
+    private void runAway()
+    {
+        float walkRadius = stats.IdleWalkingRadius;
+
+        List<Vector3> positions = new List<Vector3>() {
+                transform.position - new Vector3(walkRadius,0,0),
+                transform.position - new Vector3(-walkRadius,0,0),
+                transform.position - new Vector3(-walkRadius,0,-walkRadius),
+                transform.position - new Vector3(walkRadius,0,walkRadius),
+                transform.position - new Vector3(walkRadius,0,-walkRadius),
+                transform.position - new Vector3(-walkRadius,0,walkRadius),
+                transform.position - new Vector3(0,0,walkRadius),
+                transform.position - new Vector3(0,0,-walkRadius)
+            };
+
+        _timerCheckEnemy = walkRadius / stats.MaxSpeed;
+
+        float distance = 0;
+        Vector3 bestPosition = Vector3.zero;
+
+        for (int i = 0; i < positions.Count; i++)
+        {
+            if (isInBoundsOfNavMesh(positions[i]))
+            {
+                float currentDistance = (mainPLayer.position - positions[i]).magnitude;
+                if (currentDistance > distance)
+                {
+                    distance = currentDistance;
+                    bestPosition = positions[i];
+                }
+            }
+        }
+
+        if (bestPosition != Vector3.zero)
+        {
+            npc.RunToPoint(bestPosition);
+        }
+    }
+
+    private void checkEnemy()
+    {
+        if (_timerCheckEnemy > 0)
+        {
+            _timerCheckEnemy -= Time.deltaTime;
+            return;
+        }
+
+        _timerCheckEnemy = 0.1f;
+        float distance = (mainPLayer.position - transform.position).magnitude;
+
+        if (distance < stats.AgroRadius)
+        {
+            if (!isInBoundsOfNavMesh(npc.transform.position))
+            {
+                npc.RunToPoint(startPoint);
+
+                float returnDistance = (transform.position - startPoint).magnitude;
+                _timerCheckEnemy = returnDistance / stats.MaxSpeed;
+                timer = 0;
+                cooldown = _timerCheckEnemy;
+                return;
+            }
+            else if (distance <= stats.HitRadius)
+            {
+                npc.transform.DOLookAt(mainPLayer.position, 0.2f).SetEase(Ease.Linear);
+                npc.Hit().Forget();
+            }
+            else
+            {
+                npc.RunToPoint(mainPLayer.position);
+            }
+
+            timer = 0;
+            cooldown = 2f;
+
+        }
+    }
+
+    private bool isInBoundsOfNavMesh(Vector3 point)
+    {
+        if (point.x >= (startPoint.x - radius * 0.9f)
+                && point.x <= (startPoint.x + radius * 0.9f)
+                && point.z >= (startPoint.z - radius * 0.9f)
+                && point.z <= (startPoint.z + radius * 0.9f)
+                )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}

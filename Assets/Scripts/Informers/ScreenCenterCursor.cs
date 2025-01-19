@@ -48,7 +48,7 @@ public class ScreenCenterCursor : MonoBehaviour
         {
             if (hit.collider.gameObject != null)
             {
-                UI.ShowAimCursorText(hit.collider.gameObject, true);
+                UI.ShowAimCursorText(hit.collider.gameObject);
                 actions.SetAim(hit.collider.gameObject);
                 isZeroText = false;
             }            

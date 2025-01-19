@@ -66,6 +66,24 @@ public class WorldGenerator : MonoBehaviour
                 return result;
             }
         }
+        print("ejfwkebfwef");
+        return result;
+    }
+
+    public int GetRandomIndexTest(int from, int index, int maxValue, int seed)
+    {
+        System.Random rnd = new System.Random(seed);
+        int result = 0;
+
+        for (int i = 0; i <= index; i++)
+        {
+            result = rnd.Next(from, maxValue);
+
+            if (i == index)
+            {
+                return result;
+            }
+        }
 
         return result;
     }

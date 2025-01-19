@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8775496988856267842}
   - component: {fileID: 2651765836537435620}
   - component: {fileID: 3855952498844586248}
+  - component: {fileID: 8436300459376569497}
   m_Layer: 3
   m_Name: main player
   m_TagString: Untagged
@@ -105,3 +106,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 1.8, z: 0}
+--- !u!114 &8436300459376569497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3476797182490569524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e565a6dcedb3400499550e70c47efb4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 50
+  maxSpeed: 7
+  walkSpeed: 1

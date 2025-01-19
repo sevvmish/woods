@@ -110,14 +110,14 @@ public class AimInformerUI : MonoBehaviour
         }
     }
 
-    public void ShowAimCursorText(GameObject g, bool isCollect)
+    public void ShowAimCursorText(GameObject g)
     {
         bool isCollectable = false;
         bool isChopable = false;
         bool isMinable = false;
         
         aimSign.text = Asset.GetNameByAsset(g, out isCollectable, out isChopable, out isMinable);
-        string actionText = Globals.Language.Collect;
+        string actionText = "";
 
         if (isChopable)
         {
@@ -127,17 +127,22 @@ public class AimInformerUI : MonoBehaviour
         {
             actionText = Globals.Language.Mine;
         }
-
-        if (isCollect)
+        else if (isCollectable)
         {
-            if (Globals.IsMobile)
-            {
-                aimSign.text += $"\n{actionText}";
-            }
-            else
-            {
-                aimSign.text += $"\n[{Globals.Language.E}] {actionText}";
-            }
+            actionText = Globals.Language.Collect;
+        }
+        else
+        {
+            actionText = "";
+        }
+
+        if (Globals.IsMobile)
+        {
+            aimSign.text += $"\n{actionText}";
+        }
+        else
+        {
+            aimSign.text += $"\n[{Globals.Language.E}] {actionText}";
         }
     }
 
@@ -146,24 +151,24 @@ public class AimInformerUI : MonoBehaviour
         aimSign.text = s;
     }
 
-    public void ShowMobile(Asset asset)
-    {
-        if (!assetsForMobileVisibility.ContainsKey(asset.gameObject))
+    public void ShowMobile(GameObject asset)
+    {        
+        if (!assetsForMobileVisibility.ContainsKey(asset))
         {
             GameObject g = informerPool.GetObject();
             g.SetActive(true);
             g.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Asset.GetNameByAsset(asset.gameObject);
             g.GetComponent<RectTransform>().anchoredPosition = _camera.WorldToScreenPoint(asset.gameObject.transform.position + Vector3.up * 1.5f);
-            assetsForMobileVisibility.Add(asset.gameObject, g.GetComponent<RectTransform>());
+            assetsForMobileVisibility.Add(asset, g.GetComponent<RectTransform>());
         }
     }
 
-    public void HideMobile(Asset asset)
-    {
-        if (assetsForMobileVisibility.ContainsKey(asset.gameObject))
+    public void HideMobile(GameObject asset)
+    {        
+        if (assetsForMobileVisibility.ContainsKey(asset))
         {
-            informerPool.ReturnObject(assetsForMobileVisibility[asset.gameObject].gameObject);
-            assetsForMobileVisibility.Remove(asset.gameObject);
+            informerPool.ReturnObject(assetsForMobileVisibility[asset].gameObject);
+            assetsForMobileVisibility.Remove(asset);
         }
     }
 

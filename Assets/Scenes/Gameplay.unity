@@ -64477,7 +64477,7 @@ MonoBehaviour:
   - {fileID: 6296992891211381330, guid: 929aa4129437a7843a43f0ba95bda8a9, type: 3}
   - {fileID: 8493863449596018023, guid: 1126eafebe3d87b438c423ce98426c07, type: 3}
   - {fileID: 3964924420474232812, guid: 38d5bb4c6abe6e8469e76291f6a58457, type: 3}
-  - {fileID: 0}
+  - {fileID: 910722801335836667, guid: 2738118ca7af643479c0cb8db29e7f35, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -86026,7 +86026,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 50}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &2019323801
 CanvasRenderer:

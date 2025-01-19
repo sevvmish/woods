@@ -42,6 +42,10 @@ public class PassiveAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (npc.IsDead)
+        {
+            return;
+        }
         onUpdate?.Invoke();
         //if ((mainPLayer.position - transform.position).magnitude < 10) print("timer: " + timer.ToString("f2") + ", cooldown: " + cooldown.ToString("f2") + ", _timerCheckEnemy: " + _timerCheckEnemy.ToString("f2"));
     }
@@ -71,17 +75,21 @@ public class PassiveAI : MonoBehaviour
     }
 
     private void runAway()
-    {                
+    {
+        float walkRadius = stats.IdleWalkingRadius;
+
         List<Vector3> positions = new List<Vector3>() {
-                transform.position - new Vector3(6,0,0),
-                transform.position - new Vector3(-6,0,0),
-                transform.position - new Vector3(-6,0,-6),
-                transform.position - new Vector3(6,0,6),
-                transform.position - new Vector3(6,0,-6),
-                transform.position - new Vector3(-6,0,6),
-                transform.position - new Vector3(0,0,6),
-                transform.position - new Vector3(0,0,-6)
+                transform.position - new Vector3(walkRadius,0,0),
+                transform.position - new Vector3(-walkRadius,0,0),
+                transform.position - new Vector3(-walkRadius,0,-walkRadius),
+                transform.position - new Vector3(walkRadius,0,walkRadius),
+                transform.position - new Vector3(walkRadius,0,-walkRadius),
+                transform.position - new Vector3(-walkRadius,0,walkRadius),
+                transform.position - new Vector3(0,0,walkRadius),
+                transform.position - new Vector3(0,0,-walkRadius)
             };
+
+        _timerCheckEnemy = walkRadius / stats.MaxSpeed;
 
         float distance = 0;
         Vector3 bestPosition = Vector3.zero;
@@ -120,7 +128,7 @@ public class PassiveAI : MonoBehaviour
         {
             timer = 0;
             cooldown = 7f;
-            _timerCheckEnemy = 2.5f;
+            
 
             int rnd = UnityEngine.Random.Range(0, 10);
             if (rnd == 0)

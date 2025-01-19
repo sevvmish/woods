@@ -209,7 +209,7 @@ public class AnimationControl : MonoBehaviour
             {
                 isHitted = true;
                 pc.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 7f, ForceMode.Impulse);
-                pc.Hits.MakeHit(pc.transform, Vector3.up * 1.2f, equipControl.RightHandItem);
+                pc.Hits.MakeHit(pc.GetComponent<IInteractable>(), pc.transform, Vector3.up * 1.2f, equipControl.RightHandItem);
             }
         }
 

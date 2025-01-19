@@ -1978,8 +1978,8 @@ GameObject:
   - component: {fileID: 4700390972660531921}
   - component: {fileID: 1950444505434597474}
   - component: {fileID: 4756282653189997649}
-  - component: {fileID: 1379063281024672417}
   - component: {fileID: 765272328307822216}
+  - component: {fileID: 5280759470846215925}
   - component: {fileID: 6527026358756082229}
   - component: {fileID: 1339109114463939620}
   - component: {fileID: 5526378018022297054}
@@ -2024,6 +2024,9 @@ MonoBehaviour:
   maxSpeed: 4
   walkSpeed: 0.8
   agroRadius: 5
+  hitRadius: 3
+  bodyHitDistance: 1
+  idleWalkingRadius: 6
 --- !u!114 &4756282653189997649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,26 +2039,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323e9cb15384b524baea26c0ab4ec9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDead: 0
   navMeshOnPlaceGenerator: {fileID: 340127112964052055}
   diameter: 30
---- !u!114 &1379063281024672417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4842677720618455866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 010147ae4cd00044e9d49da936df7743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HPamount: 10
-  dropsBeforeEnd: 0
-  dropsAtEnd: 1
-  resourceID_for_visual: 25
-  itemID_for_inventory: 1
-  forUpVector: 1
 --- !u!114 &765272328307822216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2068,6 +2054,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3c3b7c66e97464eb901230ca08dd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5280759470846215925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4842677720618455866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0a2affa9101ab48b714f953522ce51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropsAtEnd: 3
+  resourceID_for_visual: 25
+  itemID_for_inventory: 1
+  forUpVector: 1
+  lootData: []
 --- !u!54 &6527026358756082229
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2077,8 +2080,8 @@ Rigidbody:
   m_GameObject: {fileID: 4842677720618455866}
   serializedVersion: 4
   m_Mass: 2
-  m_Drag: 0.5
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2229,6 +2232,9 @@ MonoBehaviour:
   _audio: {fileID: 5526378018022297054}
   idleSound: {fileID: 8300000, guid: c27848299758034439f628abeec20df7, type: 3}
   attentionSound: {fileID: 8300000, guid: f843be5e53a105545acacc3e4827c2cb, type: 3}
+  attackSound: {fileID: 8300000, guid: 03f97cb87d656b34bb7a70af1f643058, type: 3}
+  getHitSound: {fileID: 8300000, guid: 03f97cb87d656b34bb7a70af1f643058, type: 3}
+  deathSound: {fileID: 8300000, guid: 185334e87b543e34cb1ee7fb39b75d25, type: 3}
 --- !u!195 &889479733866187255
 NavMeshAgent:
   m_ObjectHideFlags: 0

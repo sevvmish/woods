@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, IInteractable
 {
     public Asset CurrentAsset { get; private set; }
     public float CurrentHP { get; private set; }

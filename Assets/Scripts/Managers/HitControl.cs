@@ -11,13 +11,13 @@ public class HitControl : MonoBehaviour
     [Inject] private Camera _camera;
     [Inject] private Inventory inventory;
 
-    public void MakeHit(Transform player, Vector3 UPCorrection, Item weapon)
+    public void MakeHit(IInteractable source, Transform player, Vector3 Correction, Item weapon)
     {
         GameObject hitter = Instantiate(Resources.Load<GameObject>("HitBox"));
-        hitter.GetComponent<HitBox>().SetHitBox(effects, showDPS, weapon, player);
-        hitter.transform.localScale = new Vector3(2, 1.5f, 1.5f);
+        hitter.GetComponent<HitBox>().SetHitBox(source, effects, showDPS, weapon, player);
+        hitter.transform.localScale = new Vector3(2, 1.5f, 2f);
         
-        hitter.transform.position = player.transform.position + player.transform.forward + UPCorrection;
+        hitter.transform.position = player.transform.position + player.transform.forward + Correction;
         hitter.transform.rotation = player.transform.rotation;
 
         EndHit(hitter).Forget();

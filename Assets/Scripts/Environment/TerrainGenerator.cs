@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ public class TerrainGenerator : MonoBehaviour
     private float _cooldown = 0.5f;
     private float distanceForCheking = 100;
     private bool isFirstRow;
+    private float currentPlayerRotationY = 0;
 
     private Dictionary<Vector3, GameObject> readyTerrains = new Dictionary<Vector3, GameObject>();
     private List<Vector3> currentlyActivePoints = new List<Vector3>();
@@ -35,9 +37,8 @@ public class TerrainGenerator : MonoBehaviour
         mainPlayer = pc.transform;
         terrainLocation = transform;
 
-        float distanceLimit = 200;
-        //Vector3 playerPosOnTerrain = new Vector3(Mathf.RoundToInt(mainPlayer.position.x / 100f) * 100, 0, Mathf.RoundToInt(mainPlayer.position.z / 100f) * 100);
         
+        float distanceLimit = 200;
         for (float x = (mainPlayer.position.x - distanceLimit); x <= (mainPlayer.position.x + distanceLimit); x += 100)
         {
             for (float z = (mainPlayer.position.z - distanceLimit); z <= (mainPlayer.position.z + distanceLimit); z += 100)
@@ -51,10 +52,17 @@ public class TerrainGenerator : MonoBehaviour
 
     private void Update()
     {
+        if (Mathf.Abs(pc.transform.eulerAngles.y - currentPlayerRotationY) > 3)
+        {
+            _cooldown = 0;
+        }
+        currentPlayerRotationY = pc.transform.eulerAngles.y;
+
         if (_currentTimer > _cooldown)
         {
             isFirstRow = true;
             _currentTimer = 0;
+            _cooldown = 0.5f;
 
             checkAround();
         }

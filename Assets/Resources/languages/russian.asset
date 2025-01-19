@@ -53,6 +53,7 @@ MonoBehaviour:
   Raspberry: "\u041C\u0430\u043B\u0438\u043D\u0430"
   Cabbage: "\u041A\u0430\u043F\u0443\u0441\u0442\u0430"
   Carrot: "\u041C\u043E\u0440\u043A\u043E\u0432\u044C"
+  Boar: "\u041A\u0430\u0431\u0430\u043D"
   ItemsTranslation:
   - ID: 0
     Name: 
