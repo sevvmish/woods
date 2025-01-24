@@ -29,6 +29,10 @@ public class CharacterPanelUI : MonoBehaviour
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private GameObject inventoryPanel;
 
+    [Header("Crafting")]
+    [SerializeField] private CraftingInCharacterPanelUI craftingUI;
+    [SerializeField] private GameObject craftingPanel;
+
     [Header("Sounds")]
     [SerializeField] private AudioSource _audio;
     [SerializeField] private AudioClip openSound;
@@ -58,7 +62,8 @@ public class CharacterPanelUI : MonoBehaviour
     public void OpenInventory()
     {
         mainPanelActivation(true);
-        inventoryPanel.SetActive(true);        
+        inventoryPanel.SetActive(true);
+        craftingPanel.SetActive(false);
         turnOnButton(chooseInventoryButton.gameObject);
         turnOffButton(chooseCraftingButton.gameObject);
         turnOffButton(chooseMapButton.gameObject);
@@ -69,6 +74,23 @@ public class CharacterPanelUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;            
         }                
+    }
+
+    public void OpenCrafting()
+    {
+        mainPanelActivation(true);
+        inventoryPanel.SetActive(false);
+        craftingPanel.SetActive(true);
+        turnOffButton(chooseInventoryButton.gameObject);
+        turnOnButton(chooseCraftingButton.gameObject);
+        turnOffButton(chooseMapButton.gameObject);
+        Globals.IsOptions = true;
+
+        if (!Globals.IsMobile)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
     }
 
     private void turnOffButton(GameObject g)

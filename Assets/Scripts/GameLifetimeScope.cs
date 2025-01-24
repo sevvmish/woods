@@ -8,7 +8,6 @@ public class GameLifetimeScope : LifetimeScope
     {
         if (Globals.MainPlayerData == null)
         {
-
             Globals.MainPlayerData = new PlayerData();
             Globals.IsMobile = Globals.IsMobileChecker();
             Globals.IsSoundOn = true;

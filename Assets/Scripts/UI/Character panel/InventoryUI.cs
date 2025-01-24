@@ -49,17 +49,17 @@ public class InventoryUI : MonoBehaviour
     private Vector3 itemGrabedPosition;
     private Vector3 mouseLastPosition;
 
-
+    private void Awake()
+    {
+        cellItemPool = new ObjectPool(32, cellItemExample, transform);
+        lang = Globals.Language;
+    }
 
     public void Init()
-    {
-        lang = Globals.Language;
-        
+    {                
         inventoryText.text = lang.Inventory;
         quickBarText.text = lang.QuickBar;
-
-        cellItemPool = new ObjectPool(32, cellItemExample, transform);
-
+              
         ItemIcon.gameObject.SetActive(false);
         ItemNameText.text = "";
         ItemQualityText.text = "";

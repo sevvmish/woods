@@ -62,6 +62,12 @@ public class Translation : ScriptableObject
     [Header("Items")]
     public ItemTranslation[] ItemsTranslation;
 
+    [Header("Skills")]
+    public ItemTranslation[] SkillsTranslation;
+
+    [Header("Recipes")]
+    public ItemTranslation[] RecipesTranslation;
+
 
 
     public Translation() { }
@@ -75,5 +81,4 @@ public struct ItemTranslation
     public string Name;
     [TextArea]
     public string Description;
-
 }
