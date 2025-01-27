@@ -57,7 +57,16 @@ public class AggresiveAI : MonoBehaviour
         if (timer >= cooldown)
         {
             timer = 0;
-            Vector3 newPoint = startPoint + new Vector3(UnityEngine.Random.Range(-radius * 0.9f, radius * 0.9f), 0, UnityEngine.Random.Range(-radius * 0.9f, radius * 0.9f));
+            Vector3 newPoint = startPoint;
+
+            //print(radius * 0.85f + " = "  + (mainPLayer.position - startPoint).magnitude + " = " + startPoint);
+
+            if ((transform.position - startPoint).magnitude < radius*0.85f)
+            {
+                newPoint = startPoint + new Vector3(UnityEngine.Random.Range(-stats.IdleWalkingRadius * 0.95f, stats.IdleWalkingRadius * 0.95f), 0, UnityEngine.Random.Range(-stats.IdleWalkingRadius * 0.95f, stats.IdleWalkingRadius * 0.95f));
+            }
+
+                
             float distance = (newPoint - transform.position).magnitude;
             if (npc.WalkToPoint(newPoint))
             {

@@ -52,11 +52,13 @@ public class InventoryUI : MonoBehaviour
     private void Awake()
     {
         cellItemPool = new ObjectPool(32, cellItemExample, transform);
-        lang = Globals.Language;
+        
     }
 
     public void Init()
-    {                
+    {
+        lang = Globals.Language;
+
         inventoryText.text = lang.Inventory;
         quickBarText.text = lang.QuickBar;
               

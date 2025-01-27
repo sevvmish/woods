@@ -8,11 +8,11 @@ public class WorldGenerator : MonoBehaviour
     [Inject] private AssetManager assetManager;    
     [Inject] private PlayerControl pc;
 
-    private const int MAX_TERRAIN_INDEX = 2;
+    //private const int MAX_TERRAIN_INDEX = 2;
       
 
 
-    public int GetTerrainIndex(Vector3 vector)
+    public int GetTerrainIndex(Vector3 vector, int upperValue)
     {
         System.Random rnd = new System.Random(Globals.MainPlayerData.TerrainSeed);
 
@@ -21,7 +21,7 @@ public class WorldGenerator : MonoBehaviour
             for (int y = -5000; y <= 5000; y += 100)
             {
                 Vector2 vec = new Vector2(x, y);
-                int result = rnd.Next(0, MAX_TERRAIN_INDEX);
+                int result = rnd.Next(0, upperValue);
                 if (vec == new Vector2(vector.x, vector.z))
                 {
                     return result;

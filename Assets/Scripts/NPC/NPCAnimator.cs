@@ -14,7 +14,7 @@ public class NPCAnimator : MonoBehaviour
     private NPCstats stats;
     private NPCsfx sfx;
     private IInteractable interactable;
-    private float speedLimit = 2f;
+    private float speedLimit = 1.5f;
     private float minSpeed = 0.1f;
     private float _timer;
     private readonly float coolDown = 0.1f;
@@ -95,6 +95,7 @@ public class NPCAnimator : MonoBehaviour
         if (IsGrounded && AnimationState != AnimationStates.Hit)
         {
             float speed = npc.CurrentSpeed;
+
             
             if (speed <= speedLimit && speed > minSpeed)
             {
@@ -213,7 +214,8 @@ public class NPCAnimator : MonoBehaviour
             }
         }
 
-        await UniTask.Delay((int)(stats.AttackSpeed * 1000));
+        //await UniTask.Delay((int)(stats.AttackSpeed * 1000));
+        //await UniTask.Delay(100);
 
         AnimationState = AnimationStates.Idle;
         checkMovement();

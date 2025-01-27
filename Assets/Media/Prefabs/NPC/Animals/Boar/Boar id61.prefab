@@ -996,7 +996,6 @@ GameObject:
   - component: {fileID: 5882336077318253690}
   - component: {fileID: 3830516074619850560}
   - component: {fileID: 7875065404062407853}
-  - component: {fileID: 2887754723966504466}
   m_Layer: 9
   m_Name: Boar
   m_TagString: Untagged
@@ -1037,7 +1036,7 @@ MonoBehaviour:
   walkSpeed: 0.8
   agroRadius: 10
   hitRadius: 3
-  attackSpeed: 2.5
+  attackSpeed: 2
   bodyHitDistance: 1
   idleWalkingRadius: 10
 --- !u!114 &1323540915870056708
@@ -1052,9 +1051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323e9cb15384b524baea26c0ab4ec9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDead: 0
   navMeshOnPlaceGenerator: {fileID: 2614698107395261418}
-  diameter: 40
+  diameter: 50
 --- !u!114 &2795512930346464710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,31 +1264,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6, y: 0.7, z: 1.7}
-  m_Center: {x: 0, y: 0.9, z: 0.1}
---- !u!136 &2887754723966504466
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5635548326887715785}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.35
-  m_Height: 1.9
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.35, z: 0.15}
+  m_Size: {x: 0.6, y: 0.8, z: 1.7}
+  m_Center: {x: 0, y: 0.8, z: 0.41}
 --- !u!1 &5818278428044524802
 GameObject:
   m_ObjectHideFlags: 0

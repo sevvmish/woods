@@ -22,6 +22,7 @@ public class NPCManager : MonoBehaviour
     private NPCstats stats;
     private NPCAnimator animator;
     private bool isCanAct = true;
+    private bool isCanHit = true;
 
     private void Awake()
     {
@@ -90,15 +91,23 @@ public class NPCManager : MonoBehaviour
 
     public async UniTaskVoid Hit()
     {
-        if (isCanAct)
+        if (isCanAct && isCanHit)
         {
             agent.isStopped = true;
             agent.ResetPath();
             isCanAct = false;
             await animator.Hit();
+            setHitCooldown(stats.AttackSpeed).Forget();
             isCanAct = true;
         }        
     }
+    private async UniTaskVoid setHitCooldown(float _time)
+    {
+        isCanHit = false;
+        await UniTask.Delay((int)(_time * 1000));
+        isCanHit = true;
+    }
+
     
     public bool RunToPoint(Vector3 point)
     {        

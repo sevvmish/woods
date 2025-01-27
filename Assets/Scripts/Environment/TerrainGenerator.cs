@@ -31,6 +31,12 @@ public class TerrainGenerator : MonoBehaviour
     private bool isCleaningTerrain;
     private bool isCreatingTerrain;
 
+    private TerrainPremade terrainPremade;
+
+    private void Awake()
+    {
+        terrainPremade = new TerrainPremade(worldGenerator);
+    }
 
     void Start()
     {
@@ -205,8 +211,8 @@ public class TerrainGenerator : MonoBehaviour
     }
 
     private void makeTerrainChunk(Vector3 pos)
-    {        
-        GameObject g = assetManager.GetAssetByTerrainType(AssetTypes.terrain_flat, worldGenerator.GetTerrainIndex(pos));
+    {
+        GameObject g = assetManager.GetAssetByID(terrainPremade.GetTerrainID(pos));
         g.transform.parent = terrainLocation;
         g.transform.position = pos;
         g.transform.eulerAngles = Vector3.zero;

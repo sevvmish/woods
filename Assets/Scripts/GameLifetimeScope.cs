@@ -34,7 +34,7 @@ public class GameLifetimeScope : LifetimeScope
 
             Globals.Language = Localization.GetInstanse("ru").GetCurrentTranslation();
         }
-                
+ 
         builder.RegisterComponentInHierarchy<Sounds>();
         builder.RegisterComponentInHierarchy<Musics>();
         builder.RegisterComponentInHierarchy<Camera>();
